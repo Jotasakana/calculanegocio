@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import { SITE } from '../data/site.js';
+import { TOOLS, CATEGORIES, PAGES } from '../data/tools.js';
+import { compute, defaultsFor } from '../lib/calculators.js';
+import { articleHtml } from '../lib/articles.js';
+import { breadcrumbLd, webApplicationLd } from '../lib/jsonld.js';
+
+const { toolId } = Astro.props;
+const tool = TOOLS[toolId];
+const category = CATEGORIES[tool.category];
+const crumbs = [
+  { label: 'Inicio', href: PAGES.home.path, path: PAGES.home.path },
+  { label: category.title, href: category.path, path: category.path },
+  { label: tool.title, path: tool.path },
+];
+// Resultado inicial calculado en build: el HTML estático ya incluye cifras reales.
+const initial = compute(tool.id, 0, defaultsFor(tool.fields[0]));
+const body = articleHtml(tool.article, tool.id);
+const related = tool.related.map((id) => TOOLS[id]);
+---
+<BaseLayout
+  title={`${tool.metaTitle} | ${SITE.name}`}
+  description={tool.metaDescription}
+  path={tool.path}
+  jsonLd={[breadcrumbLd(crumbs), webApplicationLd(tool)]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} />
+    <div class="pagehead">
+      <span class="kicker">{tool.kicker}</span>
+      <h1>{tool.title}</h1>
+      <p>{tool.desc}</p>
+      <div class="trusted"><span>✓ Cálculo inmediato</span><span>✓ Sin registro</span><span>✓ Tus datos no salen del navegador</span></div>
+    </div>
+
+    <div class="workspace" data-calculator={tool.id} data-mode="0">
+      <div class="panel">
+        <h2>Introduce tus datos</h2>
+        <div class="subtle">Modifica los importes y el resultado se actualizará.</div>
+        <div class="tabbar" role="tablist" aria-label="Tipo de cálculo">
+          {tool.modes.map((m, i) => (
+            <button class="tab" type="button" role="tab" id={`tab-${tool.id}-${i}`} aria-controls={`panel-${tool.id}-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{m}</button>
+          ))}
+        </div>
+        {tool.fields.map((fields, i) => (
+          <div class="tabpanel" role="tabpanel" id={`panel-${tool.id}-${i}`} aria-labelledby={`tab-${tool.id}-${i}`} hidden={i !== 0}>
+            <div class="fields">
+              {fields.map(([key, label, value, type]) => (
+                <div class={key === 'included' ? 'field full' : 'field'}>
+                  <label for={`f-${tool.id}-${i}-${key}`}>{label}</label>
+                  {type === 'select' ? (
+                    <select id={`f-${tool.id}-${i}-${key}`} data-key={key}>
+                      <option selected={value === 'No'}>No</option>
+                      <option selected={value === 'Sí'}>Sí</option>
+                    </select>
+                  ) : (
+                    <input type="text" inputmode="decimal" autocomplete="off" id={`f-${tool.id}-${i}-${key}`} data-key={key} value={String(value).replace('.', ',')} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+        <div class="error" data-err role="alert" hidden></div>
+        <div style="margin-top:17px"><button class="outline" type="button" data-reset>Restablecer valores</button></div>
+        <noscript><p class="noscript-note">Activa JavaScript para recalcular al modificar los datos. Se muestra el resultado del ejemplo.</p></noscript>
+      </div>
+
+      <div aria-live="polite" class="panel results">
+        <div class="resultlabel" data-label>{initial.label}</div>
+        <div class="mainnumber" data-main>{initial.main}</div>
+        <div class="subtle" data-note>{initial.note}</div>
+        <div data-lines style="margin-top:22px">
+          {initial.lines.map(([k, v]) => <div class="resultline"><span>{k}</span><strong>{v}</strong></div>)}
+        </div>
+        <div class="note" data-assumption>{initial.assumption}</div>
+      </div>
+    </div>
+
+    <article class="content">
+      {!SITE.indexable && <div class="devnote">Nota de desarrollo: contenido explicativo en fase de revisión. La información fiscal requiere validación antes de publicar.</div>}
+      <div set:html={body} />
+      <h2 class="related-title">Herramientas relacionadas</h2>
+      <ul class="related">
+        {related.map((t) => <li><a href={t.path}>{t.title}</a></li>)}
+        <li><a href={category.path}>{category.title}: todas las herramientas</a></li>
+      </ul>
+    </article>
+  </div>
+  <script>
+    import '../scripts/calculator.js';
+  </script>
+</BaseLayout>

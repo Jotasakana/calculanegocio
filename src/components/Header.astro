@@ -1,0 +1,23 @@
+---
+import { PAGES, CATEGORIES } from '../data/tools.js';
+const { currentPath } = Astro.props;
+const links = [
+  [PAGES.home.path, 'Inicio'],
+  [PAGES.tools.path, 'Calculadoras'],
+  [CATEGORIES['margenes-y-precios'].path, 'Márgenes y precios'],
+  [CATEGORIES.facturacion.path, 'Facturación'],
+  [PAGES.methodology.path, 'Metodología'],
+];
+---
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="/"><span class="logomark" aria-hidden="true">▥</span><span>Calcula<strong>Negocio</strong></span></a>
+    <nav aria-label="Navegación principal" class="links" id="siteNav">
+      {links.map(([href, label]) => <a href={href} aria-current={currentPath === href ? 'page' : undefined}>{label}</a>)}
+    </nav>
+    <div class="nav-actions">
+      <a class="navbutton" href={PAGES.tools.path}>Usar calculadoras ↗</a>
+      <button aria-controls="siteNav" aria-expanded="false" aria-label="Abrir menú" class="mobile-toggle" id="mobileToggle" type="button">☰</button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import ToolTile from '../../../components/ToolTile.astro';
+import { TOOLS, CATEGORIES, PAGES } from '../../../data/tools.js';
+import { breadcrumbLd } from '../../../lib/jsonld.js';
+
+const cat = CATEGORIES['margenes-y-precios'];
+const crumbs = [
+  { label: 'Inicio', href: PAGES.home.path, path: PAGES.home.path },
+  { label: cat.title, path: cat.path },
+];
+---
+<BaseLayout
+  title="Márgenes y precios: calculadoras para autónomos | CalculaNegocio"
+  description="Calculadoras de margen comercial, precio de venta y margen bruto y neto para entender cuánto ganas y a qué precio vender."
+  path={cat.path}
+  jsonLd={[breadcrumbLd(crumbs)]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} />
+    <div class="pagehead">
+      <span class="kicker">CATEGORÍA</span>
+      <h1>Márgenes y precios</h1>
+      <p>{cat.description}</p>
+    </div>
+    <div class="grid tools-v3 tools-3">
+      {cat.tools.map((id) => <ToolTile tool={TOOLS[id]} />)}
+    </div>
+    <article class="content">
+      <h2 class="sec" style="margin-top:0">¿Qué calculadora necesito?</h2>
+      <table>
+        <thead><tr><th>Si quieres saber…</th><th>Usa</th></tr></thead>
+        <tbody>
+          <tr><td>Cuánto ganas por unidad vendida y qué margen y recargo representa</td><td><a href={TOOLS.margen.path}>{TOOLS.margen.title}</a></td></tr>
+          <tr><td>A qué precio vender para conseguir un margen, con comisión, descuento e IVA</td><td><a href={TOOLS.precio.path}>{TOOLS.precio.title}</a></td></tr>
+          <tr><td>Qué parte de los ingresos de un período queda como beneficio bruto, operativo y neto</td><td><a href={TOOLS.rentabilidad.path}>{TOOLS.rentabilidad.title}</a></td></tr>
+        </tbody>
+      </table>
+      <h2 class="sec">Margen y recargo no son lo mismo</h2>
+      <p>El margen se mide sobre el precio de venta y el recargo se mide sobre el coste. Con un coste de 60 € y un precio de 100 € sin IVA, el beneficio es de 40 €: un margen del 40 % y un recargo del 66,67 %. Las calculadoras de esta categoría trabajan siempre con importes sin IVA y te indican qué base se utiliza en cada porcentaje.</p>
+      <p>Para trabajar con el IVA de una factura, consulta la categoría <a href={CATEGORIES.facturacion.path}>{CATEGORIES.facturacion.title}</a>.</p>
+    </article>
+  </div>
+</BaseLayout>

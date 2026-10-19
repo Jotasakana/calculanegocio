@@ -1,0 +1,166 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolTile from '../components/ToolTile.astro';
+import { SITE } from '../data/site.js';
+import { TOOLS, TOOL_LIST, CATEGORIES, CATEGORY_LIST, PAGES } from '../data/tools.js';
+import { websiteLd } from '../lib/jsonld.js';
+---
+<BaseLayout
+  title="CalculaNegocio · Calculadoras para autónomos y pequeños negocios"
+  description="Calculadoras gratuitas de márgenes, precios, rentabilidad e IVA para autónomos y pequeños negocios, con fórmulas explicadas y ejemplos resueltos."
+  path="/"
+  jsonLd={[websiteLd()]}
+>
+  <section class="hero">
+    <div class="wrap herogrid">
+      <div>
+        <div class="eyebrow">HERRAMIENTAS PARA AUTÓNOMOS Y PEQUEÑOS NEGOCIOS</div>
+        <h1>Tu negocio, con<br /><em>los números claros.</em></h1>
+        <p>Calculadoras gratuitas para fijar precios, controlar márgenes, entender facturas y tomar decisiones con más criterio.</p>
+        <div class="hero-search" role="search">
+          <span aria-hidden="true">⌕</span>
+          <input aria-label="Buscar calculadoras" autocomplete="off" id="mainSearch" placeholder="Busca una calculadora…" type="search" />
+          <kbd aria-hidden="true">↵</kbd>
+          <div class="search-results" hidden id="searchResults"></div>
+        </div>
+        <div class="actions">
+          <a class="cta" href={PAGES.tools.path}>Explorar calculadoras <span aria-hidden="true">↗</span></a>
+          <a class="ghostbtn" href="#categorias">Ver por categorías</a>
+        </div>
+        <div class="proof">✓ Gratis y sin registro   ✓ Cálculos transparentes   ✓ Datos procesados en tu navegador</div>
+      </div>
+      <div class="showcase main-showcase">
+        <div class="charthead"><span class="kicker">EJEMPLO DE CÁLCULO</span><span class="positive">Margen comercial</span></div>
+        <div class="big-result">
+          <small>MARGEN SOBRE VENTAS</small>
+          <div class="figure">40,00 %</div>
+          <div class="subtle">Por cada 100 € vendidos, quedan 40 € antes de gastos generales.</div>
+        </div>
+        <div class="meter" aria-hidden="true"><b></b><b></b></div>
+        <div class="split"><span>Coste · 60 €</span><span>Margen · 40 €</span></div>
+        <div class="mini-break">
+          <div><span>Precio de venta</span><strong>100,00 €</strong></div>
+          <div><span>Coste unitario</span><strong>60,00 €</strong></div>
+          <div><span>Recargo sobre coste</span><strong>66,67 %</strong></div>
+        </div>
+        <a class="demo-link" href={TOOLS.margen.path}>Abrir calculadora de margen →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="utility-strip">
+    <div class="wrap utility-inner">
+      <span>Una forma más clara de gestionar tus cifras</span>
+      <div><span>01 · Calcula</span><span>02 · Comprende</span><span>03 · Decide</span></div>
+    </div>
+  </section>
+
+  <section class="section section-tools" id="herramientas">
+    <div class="wrap">
+      <div class="sectionhead">
+        <div>
+          <span class="kicker">CALCULADORAS GRATUITAS</span>
+          <h2>Resuelve tus cuentas sin complicaciones</h2>
+          <p class="muted">Introduce tus datos, comprueba los resultados y consulta cómo se obtiene cada cifra.</p>
+        </div>
+        <a class="sectionlink" href={PAGES.tools.path}>Ver todas las calculadoras ↗</a>
+      </div>
+      <div class="grid tools-v3">
+        {TOOL_LIST.map((t) => <ToolTile tool={t} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section guide-section" id="explicaciones">
+    <div class="wrap">
+      <div class="sectionhead">
+        <div>
+          <span class="kicker">EXPLICACIONES INCLUIDAS</span>
+          <h2>Entiende los números, no solo el resultado</h2>
+          <p class="muted">Cada calculadora incluye sus fórmulas, ejemplos resueltos y los errores más frecuentes.</p>
+        </div>
+      </div>
+      <div class="guide-layout">
+        <a class="guide-feature" href={TOOLS.margen.path}>
+          <span class="guide-tag">CALCULADORA DESTACADA · MÁRGENES Y PRECIOS</span>
+          <div class="guide-illustration" aria-hidden="true">
+            <div class="illu-top">MARGEN ≠ RECARGO</div>
+            <div class="illu-numbers"><div><span>Margen</span><b>40 %</b></div><div><span>Recargo</span><b>66,67 %</b></div></div>
+            <div class="illu-bar"><i></i><b></b></div>
+          </div>
+          <h3>Calcula el margen comercial correctamente</h3>
+          <p>Distingue margen, recargo y beneficio con ejemplos resueltos paso a paso.</p>
+          <span class="guide-more">Abrir calculadora y ver la explicación →</span>
+        </a>
+        <div class="guide-stack">
+          <div class="guide-small">
+            <div class="guide-icon" aria-hidden="true">ƒ</div>
+            <div><span class="guide-tag">FÓRMULAS</span><h3>Fórmulas explicadas</h3><p>Ves cómo se obtiene cada cifra y qué base se utiliza.</p></div>
+          </div>
+          <div class="guide-small">
+            <div class="guide-icon" aria-hidden="true">✓</div>
+            <div><span class="guide-tag">EJEMPLOS</span><h3>Ejemplos resueltos</h3><p>Casos con cifras concretas para comprobar el cálculo a mano.</p></div>
+          </div>
+          <div class="guide-small">
+            <div class="guide-icon" aria-hidden="true">!</div>
+            <div><span class="guide-tag">ERRORES FRECUENTES</span><h3>Errores habituales</h3><p>Confundir margen con recargo, calcular con IVA incluido y otros fallos comunes.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section catalogue-section" id="categorias">
+    <div class="wrap">
+      <div class="sectionhead">
+        <div>
+          <span class="kicker">EXPLORA POR TEMA</span>
+          <h2>Encuentra lo que necesitas</h2>
+          <p class="muted">Herramientas organizadas alrededor de decisiones concretas.</p>
+        </div>
+      </div>
+      <div class="catgrid">
+        {CATEGORY_LIST.map((c, i) => (
+          <a href={c.path}>
+            <span>{String(i + 1).padStart(2, '0')}</span>
+            <strong>{c.title}</strong>
+            <small>{c.short}</small>
+            <b aria-hidden="true">↗</b>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section how-section">
+    <div class="wrap">
+      <div class="sectionhead"><div><span class="kicker">NUESTRO ENFOQUE</span><h2>Herramientas claras. Resultados explicados.</h2></div></div>
+      <div class="how-grid">
+        <div><span class="how-num">01</span><h3>Introduces tus cifras</h3><p>Usa costes, precios y porcentajes del caso que quieres resolver, sin crear una cuenta.</p></div>
+        <div><span class="how-num">02</span><h3>Compruebas el cálculo</h3><p>Mostramos las fórmulas, las bases utilizadas y los supuestos para interpretar el resultado.</p></div>
+        <div><span class="how-num">03</span><h3>Decides con más información</h3><p>Compara escenarios y consulta las explicaciones para evitar errores habituales.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about-section" id="transparencia">
+    <div class="wrap about-grid">
+      <div>
+        <span class="kicker">TRANSPARENCIA</span>
+        <h2>Sabes qué estamos calculando</h2>
+        <p>Las calculadoras muestran el criterio utilizado y distinguen importes sin IVA, porcentajes sobre ventas y recargos sobre coste. No confundimos una estimación matemática con asesoramiento fiscal individual.</p>
+        <a class="sectionlink" href={PAGES.methodology.path}>Ver la metodología ↗</a>
+      </div>
+      <div class="about-note">
+        <strong>Cómo usar esta web</strong>
+        <ul>
+          <li>Revisa si los importes se introducen con o sin IVA.</li>
+          <li>Comprueba qué costes se incluyen.</li>
+          <li>Lee los supuestos de cada herramienta.</li>
+          <li>Para obligaciones fiscales, contrasta con fuentes oficiales o tu asesoría.</li>
+        </ul>
+        {!SITE.indexable && <div class="devnote">Nota de desarrollo: las páginas legales y la revisión normativa se completarán antes de publicar.</div>}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

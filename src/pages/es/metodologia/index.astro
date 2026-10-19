@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { SITE } from '../../../data/site.js';
+import { TOOLS, PAGES } from '../../../data/tools.js';
+import { breadcrumbLd } from '../../../lib/jsonld.js';
+
+const crumbs = [
+  { label: 'Inicio', href: PAGES.home.path, path: PAGES.home.path },
+  { label: 'Metodología', path: PAGES.methodology.path },
+];
+---
+<BaseLayout
+  title="Metodología y alcance de las calculadoras | CalculaNegocio"
+  description="Cómo calculan las herramientas de CalculaNegocio: criterios, redondeo, tratamiento del IVA, privacidad de los datos y límites de cada cálculo."
+  path={PAGES.methodology.path}
+  jsonLd={[breadcrumbLd(crumbs)]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} />
+    <div class="pagehead">
+      <span class="kicker">TRANSPARENCIA</span>
+      <h1>Metodología y alcance</h1>
+      <p>Qué calculan las herramientas, con qué criterios y hasta dónde llegan.</p>
+    </div>
+    <article class="content">
+      {!SITE.indexable && <div class="devnote">Nota de desarrollo: esta página describe el funcionamiento actual y se ampliará antes de publicar.</div>}
+      <h2 class="sec" style="margin-top:0">Qué hacen las calculadoras</h2>
+      <p>Cada calculadora aplica fórmulas aritméticas a los datos que introduces y muestra el resultado junto con las fórmulas y los supuestos utilizados. Son estimaciones matemáticas: no constituyen asesoramiento fiscal, contable ni jurídico individual.</p>
+
+      <h2 class="sec">Criterios generales</h2>
+      <ul>
+        <li><strong>Importes sin IVA.</strong> Los cálculos de márgenes, precios y rentabilidad se hacen con importes sin IVA. El IVA se suma al precio y no forma parte del margen ni del beneficio.</li>
+        <li><strong>Margen y recargo.</strong> El margen sobre ventas se mide sobre el precio de venta; el recargo sobre coste se mide sobre el coste. Son porcentajes distintos para el mismo beneficio.</li>
+        <li><strong>Base de los porcentajes.</strong> En la calculadora de margen bruto y neto, todos los porcentajes se calculan sobre los ingresos netos (ventas menos devoluciones y descuentos).</li>
+        <li><strong>Impuestos.</strong> Las calculadoras no estiman cuotas de impuestos. Cuando admiten un impuesto sobre beneficios, es un importe que introduces tú.</li>
+      </ul>
+
+      <h2 class="sec">Redondeo</h2>
+      <p>Los resultados se muestran con dos decimales, pero los cálculos internos no se redondean. La excepción es la <a href={TOOLS.iva.path}>{TOOLS.iva.title}</a> en el modo de varias líneas: la base de cada línea se redondea a dos decimales y la cuota se calcula sobre la base total de cada tipo de IVA.</p>
+
+      <h2 class="sec">Privacidad de los datos</h2>
+      <p>Los cálculos se ejecutan en tu navegador. Las calculadoras no envían los importes que introduces a ningún servidor.</p>
+
+      <h2 class="sec">Cómo revisamos los contenidos</h2>
+      <p>Las explicaciones incluyen ejemplos con cifras concretas que puedes comprobar a mano, y las fórmulas de las calculadoras se comprueban con pruebas automáticas frente a esos ejemplos. La información fiscal (tipos de IVA, retenciones, impuesto sobre beneficios) requiere validación con fuentes oficiales antes de la publicación del sitio.</p>
+
+      <h2 class="sec">Límites</h2>
+      <ul>
+        <li>Las calculadoras no determinan qué tipo de IVA corresponde a cada operación.</li>
+        <li>No incluyen retenciones de IRPF ni estiman impuestos sobre beneficios.</li>
+        <li>No validan cómo clasificas cada partida de coste o gasto ni su tratamiento fiscal.</li>
+        <li>Para tus obligaciones fiscales, contrasta con fuentes oficiales como la Agencia Tributaria o con tu asesoría.</li>
+      </ul>
+
+      <h2 class="related-title">Calculadoras</h2>
+      <ul class="related">
+        {Object.values(TOOLS).map((t) => <li><a href={t.path}>{t.title}</a></li>)}
+      </ul>
+    </article>
+  </div>
+</BaseLayout>

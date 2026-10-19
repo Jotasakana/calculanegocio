@@ -1,0 +1,116 @@
+<p>Esta calculadora resuelve tres situaciones habituales. Tienes un total con IVA y quieres saber cuánto es la base, tienes una base y quieres añadirle el IVA, o tienes una factura con varias líneas y distintos tipos de IVA y necesitas el desglose. Puedes añadir o quitar IVA a cualquier importe y ver la base, la cuota y el total.</p>
+<h3>Cómo usar la calculadora</h3>
+<p>Hay tres modos:</p>
+<ul>
+<li><strong>Tengo la base:</strong> introduces la base imponible y el tipo de IVA. Obtienes la cuota y el total.</li>
+<li><strong>Tengo el total con IVA:</strong> introduces el total y el tipo. Obtienes la base y la cuota.</li>
+<li><strong>Varias líneas:</strong> por cada línea, indicas cantidad, precio unitario sin IVA, descuento (opcional) y tipo de IVA. Obtienes un desglose por tipo.</li>
+</ul>
+<p>El tipo de IVA es editable. En los ejemplos se usan el 21 % y el 10 % como cifras de ejemplo. El tipo que se aplica a cada operación depende de su naturaleza, y puedes comprobarlo en la web de la Agencia Tributaria.</p>
+<h3>Qué es la base imponible</h3>
+<p>La base imponible es el importe sobre el que se calcula el IVA. En una factura corresponde al importe de la operación <strong>sin IVA</strong>, una vez aplicados los descuentos que figuran en ella. La cuota de IVA es lo que resulta de aplicar el tipo a esa base, y el total es la suma de ambas.</p>
+<h3>Fórmulas</h3>
+<h4>Añadir IVA a una base</h4>
+<p><strong>IVA = Base × tipo</strong></p>
+<h4>Quitar IVA a un total (sacar la base)</h4>
+<p><strong>Base = Total ÷ (1 + tipo)</strong></p>
+<p>Se calcula el IVA como diferencia para que base y cuota sumen siempre exactamente el total.</p>
+<h3>Ejemplo 1: añadir IVA a una base</h3>
+<p>Base de 1.250,00 € y tipo del 21 %:</p>
+<ul>
+<li>IVA: 1.250 × 0,21 = <strong>262,50 €</strong></li>
+<li>Total: <strong>1.512,50 €</strong></li>
+</ul>
+<h3>Ejemplo 2: sacar la base desde el total</h3>
+<p>Total de 605,00 € con IVA incluido, tipo del 21 %:</p>
+<ul>
+<li>Base: 605 ÷ 1,21 = <strong>500,00 €</strong></li>
+<li>IVA: 605 − 500 = <strong>105,00 €</strong></li>
+</ul>
+<h3>Ejemplo 3: factura con varias líneas</h3>
+<table>
+<thead>
+<tr>
+  <th>Línea</th>
+  <th>Cálculo</th>
+  <th>Descuento</th>
+  <th style="text-align:right">Base de la línea</th>
+  <th style="text-align:right">Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>3 × 120,00 € = 360,00 €</td>
+  <td>10 %</td>
+  <td style="text-align:right">324,00 €</td>
+  <td style="text-align:right">21 %</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>1 × 450,00 €</td>
+  <td>—</td>
+  <td style="text-align:right">450,00 €</td>
+  <td style="text-align:right">21 %</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>12 × 8,50 € = 102,00 €</td>
+  <td>—</td>
+  <td style="text-align:right">102,00 €</td>
+  <td style="text-align:right">10 %</td>
+</tr>
+</tbody>
+</table>
+<p>La calculadora agrupa por tipo:</p>
+<table>
+<thead>
+<tr>
+  <th>Tipo</th>
+  <th style="text-align:right">Base</th>
+  <th style="text-align:right">Cuota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>21 %</td>
+  <td style="text-align:right">324,00 + 450,00 = 774,00 €</td>
+  <td style="text-align:right">162,54 €</td>
+</tr>
+<tr>
+  <td>10 %</td>
+  <td style="text-align:right">102,00 €</td>
+  <td style="text-align:right">10,20 €</td>
+</tr>
+<tr>
+  <td><strong>Total</strong></td>
+  <td style="text-align:right"><strong>876,00 €</strong></td>
+  <td style="text-align:right"><strong>172,74 €</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total de la factura: 876,00 + 172,74 = 1.048,74 €.</strong></p>
+<h3>Cómo se redondea</h3>
+<p>La calculadora redondea las bases de cada línea a dos decimales y calcula la cuota sobre la base total de cada tipo. Muestra este criterio en pantalla.</p>
+<p>Un caso donde el redondeo importa: un total de 100,00 € con un 21 % de IVA. La base es 100 ÷ 1,21 = 82,6446…, que se muestra como 82,64 €. El IVA se calcula por diferencia, 100,00 − 82,64 = 17,36 €, de modo que 82,64 + 17,36 suman exactamente 100,00 €.</p>
+<p>Si calculas línea a línea y redondeas en cada una, puede aparecer alguna diferencia de céntimos con el cálculo por tipo. Conviene aplicar el mismo criterio en toda tu facturación.</p>
+<h3>El descuento reduce la base</h3>
+<p>El descuento que aparece en una línea reduce la base sobre la que se calcula el IVA. En la línea 1 del ejemplo 3:</p>
+<ul>
+<li>Cálculo correcto: base de 324,00 € → IVA de 68,04 €.</li>
+<li>Cálculo erróneo: IVA sobre 360,00 € (antes del descuento) → 75,60 €. Son 7,56 € de diferencia.</li>
+</ul>
+<h3>Errores frecuentes</h3>
+<h4>Restar el porcentaje en lugar de dividir</h4>
+<p>Con un total de 605 €, restar el 21 % da 477,95 €. Es incorrecto, porque el 21 % se aplica a la base, no al total. La base correcta es 605 ÷ 1,21 = 500 €. Calcular el 21 % del total también es un error: da 127,05 €, cuando el IVA real son 105,00 €.</p>
+<h4>Calcular el IVA antes del descuento</h4>
+<p>Aplicar el tipo sobre el importe sin descontar genera una cuota mayor que la que corresponde (ver el apartado anterior).</p>
+<h4>Mezclar tipos de IVA en una sola base</h4>
+<p>Si una factura tiene líneas con tipos distintos, cada tipo se calcula por separado.</p>
+<h4>Tratar el IVA como ingreso o beneficio</h4>
+<p>El IVA se suma al precio y no forma parte del margen ni del beneficio del negocio. Un precio de 100 € sin IVA y 121 € con IVA tiene un margen que se calcula sobre 100 €. Para ver el efecto en un precio concreto, usa la calculadora de precio de venta, y para el efecto en el margen, la calculadora de margen comercial.</p>
+<h4>Confundir IVA con retención de IRPF</h4>
+<p>Son conceptos distintos. El IVA es un porcentaje que se añade a la base. La retención de IRPF es otra cantidad que puede figurar en una factura y que se trata aparte. Esta calculadora solo trabaja con IVA.</p>
+<h3>Alcance de la herramienta</h3>
+<p>La calculadora hace operaciones aritméticas con los datos y tipos que introduces. No determina qué tipo de IVA corresponde a una operación ni sustituye el asesoramiento de un profesional.</p>
+<p><strong>Fuentes oficiales:</strong> Agencia Tributaria, información sobre el Impuesto sobre el Valor Añadido (tipos aplicables). Ley 37/1992, de 28 de diciembre, del Impuesto sobre el Valor Añadido (BOE), regulación de la base imponible. Más información sobre cómo revisamos los contenidos en <a href="/es/metodologia/">Metodología</a>.</p>
