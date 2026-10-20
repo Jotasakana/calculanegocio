@@ -8,7 +8,7 @@ if (!fs.existsSync(dist)) { console.error('No existe dist/. Ejecuta antes: npm r
 const problems = [];
 const bad = (m) => problems.push(m);
 
-const fileFor = (p) => path.join(dist, p.endsWith('/') ? p + 'index.html' : p);
+const fileFor = (p) => p === '/404/' ? path.join(dist, '404.html') : path.join(dist, p.endsWith('/') ? p + 'index.html' : p);
 const read = (p) => fs.readFileSync(fileFor(p), 'utf8');
 const strip = (h) => h.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '');
 
