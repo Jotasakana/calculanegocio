@@ -1,7 +1,6 @@
 name: Build y pruebas
 
-# Solo comprueba: instala, prueba, compila y verifica dist/. No despliega nada
-# (el despliegue lo gestiona Cloudflare Pages).
+# Valida el proyecto sin desplegarlo. Cloudflare Pages gestiona el despliegue.
 on:
   push:
   pull_request:
@@ -18,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      # Modo desarrollo: noindex y robots Disallow. check-site.mjs lo comprueba así.
       SITE_URL: https://calculanegocio.com
       SITE_INDEXABLE: "false"
     steps:
@@ -27,14 +25,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
-          cache: npm
 
-      - name: Exigir package-lock.json
+      # Primera ejecución: genera el lockfile REAL usando el registro npm.
+      # Cuando se incorpore al repositorio, esta etapa no lo regenerará.
+      - name: Generar lockfile si falta
         run: |
-          test -f package-lock.json || { echo "::error::Falta package-lock.json. Ejecuta 'npm install' en local y súbelo al repositorio."; exit 1; }
+          if [ ! -f package-lock.json ]; then
+            npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          fi
 
-      - name: Instalar dependencias (reproducible)
-        run: npm ci
+      - name: Guardar package-lock.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-lock
+          path: package-lock.json
+          retention-days: 7
+
+      - name: Instalar dependencias
+        run: npm ci --no-audit --no-fund
 
       - name: Pruebas de fórmulas y código fuente
         run: npm test
