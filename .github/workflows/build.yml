@@ -1,0 +1,53 @@
+name: Build y pruebas
+
+# Solo comprueba: instala, prueba, compila y verifica dist/. No despliega nada
+# (el despliegue lo gestiona Cloudflare Pages).
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # Modo desarrollo: noindex y robots Disallow. check-site.mjs lo comprueba así.
+      SITE_URL: https://calculanegocio.com
+      SITE_INDEXABLE: "false"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Exigir package-lock.json
+        run: |
+          test -f package-lock.json || { echo "::error::Falta package-lock.json. Ejecuta 'npm install' en local y súbelo al repositorio."; exit 1; }
+
+      - name: Instalar dependencias (reproducible)
+        run: npm ci
+
+      - name: Pruebas de fórmulas y código fuente
+        run: npm test
+
+      - name: Compilar
+        run: npm run build
+
+      - name: Comprobar dist/
+        run: npm run test:dist
+
+      - name: Guardar dist/ para revisión
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
