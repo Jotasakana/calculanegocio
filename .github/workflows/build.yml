@@ -1,0 +1,61 @@
+name: Build y pruebas
+
+# Valida el proyecto sin desplegarlo. Cloudflare Pages gestiona el despliegue.
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SITE_URL: https://calculanegocio.com
+      SITE_INDEXABLE: "false"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      # Primera ejecución: genera el lockfile REAL usando el registro npm.
+      # Cuando se incorpore al repositorio, esta etapa no lo regenerará.
+      - name: Generar lockfile si falta
+        run: |
+          if [ ! -f package-lock.json ]; then
+            npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          fi
+
+      - name: Guardar package-lock.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-lock
+          path: package-lock.json
+          retention-days: 7
+
+      - name: Instalar dependencias
+        run: npm ci --no-audit --no-fund
+
+      - name: Pruebas de fórmulas y código fuente
+        run: npm test
+
+      - name: Compilar
+        run: npm run build
+
+      - name: Comprobar dist/
+        run: npm run test:dist
+
+      - name: Guardar dist/ para revisión
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7

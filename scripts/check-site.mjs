@@ -8,7 +8,7 @@ if (!fs.existsSync(dist)) { console.error('No existe dist/. Ejecuta antes: npm r
 const problems = [];
 const bad = (m) => problems.push(m);
 
-const fileFor = (p) => path.join(dist, p.endsWith('/') ? p + 'index.html' : p);
+const fileFor = (p) => p === '/404/' ? path.join(dist, '404.html') : path.join(dist, p.endsWith('/') ? p + 'index.html' : p);
 const read = (p) => fs.readFileSync(fileFor(p), 'utf8');
 const strip = (h) => h.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '');
 
@@ -49,6 +49,7 @@ for (const p of pages.concat(['/404/'])) {
   const f = p === '/404/' ? path.join(dist, '404.html') : fileFor(p);
   if (!fs.existsSync(f)) { if (p === '/404/') bad('Falta 404.html'); continue; }
   const html = fs.readFileSync(f, 'utf8');
+  if (p === '/404/') ids[p] = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
   for (const m of html.matchAll(/<a\b[^>]*\shref="([^"]+)"/g)) {
     const href = m[1];
     if (/^(https?:|mailto:|tel:)/.test(href)) continue;

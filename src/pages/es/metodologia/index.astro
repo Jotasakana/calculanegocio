@@ -37,7 +37,7 @@ const crumbs = [
       </ul>
 
       <h2 class="sec">Redondeo</h2>
-      <p>Los resultados se muestran con dos decimales, pero los cálculos internos no se redondean. La excepción es la <a href={TOOLS.iva.path}>{TOOLS.iva.title}</a> en el modo de varias líneas: la base de cada línea se redondea a dos decimales y la cuota se calcula sobre la base total de cada tipo de IVA.</p>
+      <p>Los resultados se muestran con dos decimales, pero los cálculos internos no se redondean. La excepción es la <a href={TOOLS.iva.path}>{TOOLS.iva.title}</a>: trabaja en céntimos, de modo que la base y la cuota se redondean a dos decimales y base + cuota coincide siempre con el total. En el modo de varias líneas, la base de cada línea se redondea y la cuota se calcula sobre la base total de cada tipo de IVA.</p>
 
       <h2 class="sec">Privacidad de los datos</h2>
       <p>Los cálculos se ejecutan en tu navegador. Las calculadoras no envían los importes que introduces a ningún servidor.</p>
