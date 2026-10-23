@@ -1,7 +1,9 @@
 # CalculaNegocio (Astro · HTML estático)
 
-Calculadoras gratuitas para autónomos y pequeños negocios en España. Versión **v0.4**: migración de la Home v0.3 a Astro con URLs reales.
+Calculadoras gratuitas para autónomos y pequeños negocios. Versión **v0.6** (Fase 2A): arquitectura **internacional** —
+fórmulas, textos, configuración regional y componentes separados—, con solo el español publicado.
 **Modo desarrollo**: `noindex` en todas las páginas y `robots.txt` con `Disallow: /`. No publicar ni activar AdSense sin autorización.
+Detalles de la arquitectura: [`docs/INTERNACIONALIZACION.md`](docs/INTERNACIONALIZACION.md) · cambios: [`CAMBIOS-v0.6.md`](CAMBIOS-v0.6.md).
 
 ## Comandos
 
@@ -10,46 +12,44 @@ npm install          # instalar (Node 20.11+ ; recomendado 22)
 npm run dev          # servidor local en http://localhost:4321
 npm run build        # genera dist/ (HTML estático)
 npm run preview      # sirve dist/ para revisar el resultado compilado
-npm test             # fórmulas + comprobaciones de código fuente (no necesita Astro)
-npm run test:dist    # comprueba dist/ (enlaces, SEO, contenido estático) tras el build
-npm run check        # todo lo anterior en orden
+npm test             # fórmulas, idiomas, contenidos y código fuente (no necesita Astro)
+npm run test:dist    # comprueba dist/ (enlaces, SEO, hreflang, contenido estático) tras el build
+npm run test:layout  # Chromium: sin desplazamiento horizontal en móvil/escritorio, RTL y textos largos (requiere playwright-core)
+npm run check        # test + build + test:dist
 ```
 
-`.github/workflows/build.yml` ejecuta instalación, pruebas, compilación y comprobación de `dist/` en cada push. **No despliega nada**; guarda `dist/` como artefacto descargable para revisar la demo.
+`.github/workflows/build.yml` ejecuta todo en cada push. **No despliega nada**; guarda `dist/` como artefacto.
 
-## Mapa de URLs (Plan Maestro SEO)
+## Mapa de URLs
+
+Se generan desde la tabla de rutas (`src/i18n/routes.js`): `/<idioma>/<slug>/`. Hoy:
 
 | URL | Contenido |
 |---|---|
-| `/` | Home v0.3 |
-| `/es/herramientas/` | Listado de calculadoras por categoría |
+| `/` | Redirección temporal (302) a `/es/` |
+| `/es/` | Portada (Home v0.3) |
+| `/es/herramientas/` | Catálogo con filtros y búsqueda |
 | `/es/metodologia/` | Criterios, redondeo, privacidad y límites |
-| `/es/margenes-y-precios/` | Hub → margen comercial, precio de venta, margen bruto y neto |
-| `/es/facturacion/` | Hub → base imponible |
-| `/es/calculadora-margen-comercial/` | Calculadora |
-| `/es/calculadora-precio-de-venta/` | Calculadora |
-| `/es/margen-bruto-y-margen-neto/` | Calculadora |
-| `/es/calculadora-base-imponible/` | Calculadora (añadir y quitar IVA, varias líneas) |
-| `/robots.txt`, `/sitemap.xml`, `404.html` | Generados en build |
-
-`/es/calculadora-iva/` **no existe**: se creará solo cuando esté justificada y desarrollada, sin duplicar la de base imponible.
-Todas las URLs se definen en un único sitio: `src/data/tools.js`.
+| `/es/margenes-y-precios/`, `/es/facturacion/` | Categorías |
+| `/es/calculadora-margen-comercial/`, `/es/calculadora-precio-de-venta/`, `/es/margen-bruto-y-margen-neto/`, `/es/calculadora-base-imponible/` | Calculadoras |
+| `/robots.txt`, `/sitemap.xml` (con hreflang cuando proceda), `404.html` | Generados en build |
 
 ## Estructura
 
 ```
-src/data/tools.js        URLs, categorías, campos y pestañas de cada calculadora
-src/data/site.js         dominio, modo indexable
-src/lib/calculators.js   fórmulas (módulo puro; se usa en build y en el navegador)
-src/lib/articles.js      inyecta en BUILD los textos de src/content/articles/*.html
-src/components, layouts  Header, Footer, Breadcrumbs, CalculatorPage, BaseLayout (SEO)
-src/pages                una página por URL
-src/scripts              JS mínimo: menú/buscador (site.js) y calculadoras (calculator.js)
-src/styles/global.css    CSS aprobado de la Home v0.3 (sin cambios)
-src/styles/additions.css solo accesibilidad, migas y avisos de desarrollo
-scripts/                 pruebas y comprobaciones
+src/domain/       registro neutral de calculadoras + fórmulas puras (sin texto)
+src/i18n/         idiomas, números/monedas, rutas, hreflang, sitemap, publicación y validación
+src/locales/es/   textos (ui, tools, messages), slugs, HTML editorial (articles/, pages/) y estado de revisión
+src/markets/      configuración fiscal por país (hoy: es)
+src/lib/          presentación (present.js), contexto de página, fragmentos, JSON-LD
+src/views, components, layouts, pages   plantillas Astro (una plantilla dinámica para todas las páginas)
+src/scripts/      JS mínimo: menú, buscador y filtros (site.js) y calculadoras (calculator.js)
+src/styles/       site.css (propiedades lógicas, RTL)
+scripts/          pruebas y comprobaciones
 ```
 
 ## Para publicar (cuando se autorice)
 
-Definir `SITE_URL` y `SITE_INDEXABLE=true` en el entorno de build. Con ello desaparecen `noindex`, la etiqueta "DEMO PRIVADA" y los avisos de desarrollo, y `robots.txt` anuncia el sitemap.
+Definir `SITE_URL` y `SITE_INDEXABLE=true` en el entorno de build. Con ello desaparecen `noindex`, la etiqueta "DEMO PRIVADA" y
+los avisos de desarrollo, y `robots.txt` anuncia el sitemap. Antes: páginas legales, validación fiscal con fuentes oficiales y
+consentimiento (CMP) si se usa AdSense.

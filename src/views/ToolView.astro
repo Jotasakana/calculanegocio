@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CalculatorShell from '../components/CalculatorShell.astro';
+import { SITE } from '../data/site.js';
+import { breadcrumbLd, webApplicationLd } from '../lib/jsonld.js';
+import { fragment } from '../locales/fragments.js';
+import { renderFragment } from '../lib/fragments.js';
+
+const { ctx, toolId } = Astro.props;
+const { ui } = ctx;
+const tool = ctx.toolById[toolId];
+const category = ctx.categoryById[tool.category];
+const crumbs = [
+  { label: ui.nav.home, href: ctx.path('home'), path: ctx.path('home') },
+  { label: category.title, href: category.path, path: category.path },
+  { label: tool.title, path: tool.path },
+];
+const body = renderFragment(fragment(ctx.locale, 'articles', tool.article), ctx.fragmentCtx, { currentToolId: tool.id, autolinks: ctx.content.autolinkPhrases });
+const related = tool.related.map((id) => ctx.toolById[id]);
+const currency = tool.currencyFixed ? tool.currency : ctx.defaultCurrency;
+---
+<BaseLayout
+  ctx={ctx}
+  pageKey={tool.key}
+  title={`${tool.metaTitle} | ${ui.site.name}`}
+  description={tool.metaDescription}
+  jsonLd={[breadcrumbLd(crumbs), webApplicationLd(tool, { lang: ctx.loc.hreflang, currency })]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} label={ui.a11y.breadcrumbs} />
+    <div class="pagehead">
+      <span class="kicker">{tool.kicker}</span>
+      <h1>{tool.title}</h1>
+      <p>{tool.desc}</p>
+      <div class="trusted">{ui.tool.trust.map((x) => <span>✓ {x}</span>)}</div>
+    </div>
+
+    <CalculatorShell ctx={ctx} tool={tool} />
+
+    <article class="content">
+      {!SITE.indexable && <div class="devnote">{ui.tool.devNote}</div>}
+      <div class="prose" set:html={body} />
+      <h2 class="related-title">{ui.tool.related}</h2>
+      <ul class="related">
+        {related.map((t) => <li><a href={t.path}>{t.title}</a></li>)}
+        <li><a href={category.path}>{category.title}: {ui.tool.allInCategory}</a></li>
+      </ul>
+    </article>
+  </div>
+  <script>
+    import '../scripts/calculator.js';
+  </script>
+</BaseLayout>

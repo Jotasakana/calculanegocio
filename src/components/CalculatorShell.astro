@@ -1,0 +1,68 @@
+---
+// Calculadora interactiva (HTML estático con el resultado inicial ya calculado; el JS solo mejora).
+// Sirve a todos los idiomas: los textos vienen del contexto, las fórmulas de src/domain.
+import { unitSuffix } from '../lib/present.js';
+
+const { ctx, tool } = Astro.props;
+const { ui, content } = ctx;
+// Fiscales: moneda fija del mercado. Universales: la del idioma, o ninguna, y la persona puede elegirla.
+const currency = tool.currencyFixed ? tool.currency : ctx.defaultCurrency;
+const calc = ctx.calculator(currency);
+const initial = calc.compute(tool.id, 0, calc.defaults(tool.id, 0));
+const defaults = tool.specs.map((_, i) => calc.defaults(tool.id, i));
+const selectLabels = content.selectOptions ?? {};
+---
+<div class="workspace" data-calculator={tool.id} data-mode="0" data-currency={currency ?? ''}>
+  <div class="panel">
+    <h2>{ui.tool.panelTitle}</h2>
+    <div class="subtle">{ui.tool.panelLead}</div>
+    {!tool.currencyFixed && (
+      <div class="field currency-row">
+        <label for={`cur-${tool.id}`}>{ui.tool.currencyLabel}</label>
+        <select id={`cur-${tool.id}`} data-currency-select>
+          <option value="" selected={!currency}>{ui.tool.currencyNone}</option>
+          {ctx.currencies.map((c) => <option value={c.code} selected={c.code === currency}>{c.label}</option>)}
+        </select>
+      </div>
+    )}
+    <div class="tabbar" role="tablist" aria-label={ui.tool.modesLabel}>
+      {tool.specs.map((_, i) => (
+        <button class="tab" type="button" role="tab" id={`tab-${tool.id}-${i}`} aria-controls={`panel-${tool.id}-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{tool.modeLabels[i]}</button>
+      ))}
+    </div>
+    {tool.specs.map((fields, i) => (
+      <div class="tabpanel" role="tabpanel" id={`panel-${tool.id}-${i}`} aria-labelledby={`tab-${tool.id}-${i}`} hidden={i !== 0}>
+        <div class="fields">
+          {fields.map((fld) => (
+            <div class={fld.kind === 'select' ? 'field full' : 'field'}>
+              <label for={`f-${tool.id}-${i}-${fld.key}`} data-base={tool.labels[i][fld.key]} data-kind={fld.kind}>{tool.labels[i][fld.key] + unitSuffix(fld.kind, calc.formatter)}</label>
+              {fld.kind === 'select' ? (
+                <select id={`f-${tool.id}-${i}-${fld.key}`} data-key={fld.key}>
+                  {fld.options.map((value) => <option value={value} selected={value === fld.def}>{selectLabels[fld.key][value]}</option>)}
+                </select>
+              ) : (
+                <input type="text" inputmode="decimal" autocomplete="off" id={`f-${tool.id}-${i}-${fld.key}`} data-key={fld.key} value={defaults[i][fld.key]} />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+    <div class="error" data-err role="alert" hidden></div>
+    <div style="margin-top:17px"><button class="outline" type="button" data-reset>{ui.tool.reset}</button></div>
+    <noscript><p class="noscript-note">{ui.tool.noscript}</p></noscript>
+  </div>
+
+  <div aria-live="polite" class="panel results">
+    <div class="resultlabel" data-label>{initial.label}</div>
+    <div class="mainnumber" data-main dir="auto">{initial.main}</div>
+    <div class="subtle" data-note>{initial.note}</div>
+    <div class="stackbar" data-bar aria-hidden="true">{initial.bar.map((b) => <i class={`s${b.slot}`} style={`width:${b.share}%`}></i>)}</div>
+    <ul class="stacklegend" data-legend>{initial.bar.map((b) => <li class={`s${b.slot}`}>{b.label} · <span dir="auto">{b.text}</span></li>)}</ul>
+    <div data-lines style="margin-top:22px">
+      {initial.lines.map(([k, v]) => <div class="resultline"><span>{k}</span><strong dir="auto">{v}</strong></div>)}
+    </div>
+    <div class="note" data-assumption>{initial.assumption}</div>
+  </div>
+  <script is:inline type="application/json" data-calc-i18n set:html={JSON.stringify(ctx.clientI18n)}></script>
+</div>

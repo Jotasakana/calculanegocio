@@ -1,20 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { PAGES } from '../data/tools.js';
+import { DEFAULT_LOCALE } from '../i18n/locales.js';
+import { buildContext } from '../lib/context.js';
+
+// El 404 es único para todo el sitio (Cloudflare Pages sirve /404.html): usa el idioma por defecto.
+const ctx = buildContext(DEFAULT_LOCALE);
+const n = ctx.ui.notFound;
 ---
-<BaseLayout
-  title="Página no encontrada | CalculaNegocio"
-  description="La página que buscas no existe o ha cambiado de dirección."
-  path="/404/"
-  robots="noindex,follow"
->
+<BaseLayout ctx={ctx} path="/404/" title={n.metaTitle} description={n.metaDescription} robots="noindex,follow">
   <div class="wrap notfound">
-    <span class="kicker">ERROR 404</span>
-    <h1>Esta página no existe</h1>
-    <p>Puede que la dirección haya cambiado o que el enlace no sea correcto. Prueba con alguna de nuestras calculadoras.</p>
+    <span class="kicker">{n.kicker}</span>
+    <h1>{n.title}</h1>
+    <p>{n.text}</p>
     <div class="actions" style="justify-content:center">
-      <a class="cta" href={PAGES.tools.path}>Ver calculadoras</a>
-      <a class="outline" href="/" style="text-decoration:none">Ir al inicio</a>
+      <a class="cta" href={ctx.path('tools')}>{n.cta}</a>
+      <a class="outline" href={ctx.path('home')} style="text-decoration:none">{n.home}</a>
     </div>
   </div>
 </BaseLayout>

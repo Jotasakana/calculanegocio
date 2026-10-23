@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { SITE } from '../data/site.js';
+import { websiteLd } from '../lib/jsonld.js';
+
+const { ctx } = Astro.props;
+const { ui } = ctx;
+const h = ui.home;
+
+// Ejemplo de la portada: se CALCULA con la misma fórmula que la calculadora (nunca cifras escritas a mano).
+const calc = ctx.calculator();
+const f = calc.formatter;
+const example = calc.compute('margen', 0, calc.defaults('margen', 0));
+const d = example.data;
+const sub = (text, params) => text.replace(/\{(\w+)\}/g, (_, k) => params[k]);
+const margenTool = ctx.toolById.margen;
+const costShare = example.bar.find((b) => b.id === 'cost')?.share ?? 0;
+const profitShare = example.bar.find((b) => b.id === 'profit')?.share ?? 0;
+---
+<BaseLayout
+  ctx={ctx}
+  pageKey="home"
+  title={h.metaTitle}
+  description={h.metaDescription}
+  jsonLd={[websiteLd({ name: ui.site.name, path: ctx.path('home'), lang: ctx.loc.hreflang })]}
+>
+  <section class="hero">
+    <div class="wrap herogrid">
+      <div>
+        <div class="eyebrow">{h.eyebrow}</div>
+        <h1>{h.titleA}<br /><em>{h.titleB}</em></h1>
+        <p>{h.lead}</p>
+        <div class="hero-search" role="search">
+          <span aria-hidden="true">⌕</span>
+          <input aria-label={ui.search.label} autocomplete="off" id="mainSearch" placeholder={ui.search.placeholder} type="search" />
+          <kbd aria-hidden="true">↵</kbd>
+          <div class="search-results" hidden id="searchResults"></div>
+        </div>
+        <div class="actions">
+          <a class="cta arrow-out" href={ctx.path('tools')}>{h.explore}</a>
+          <a class="ghostbtn" href="#categorias">{h.byCategory}</a>
+        </div>
+        <div class="proof">{h.proof.map((p) => <span>✓ {p}</span>)}</div>
+      </div>
+      <div class="showcase main-showcase">
+        <div class="charthead"><span class="kicker">{h.exampleKicker}</span><span class="positive">{h.exampleBadge}</span></div>
+        <div class="big-result">
+          <small>{h.exampleLabel}</small>
+          <div class="figure" dir="auto">{example.main}</div>
+          <div class="subtle">{sub(h.exampleCaption, { price: f.money(d.price), benefit: f.money(d.benefit) })}</div>
+        </div>
+        <div class="meter" aria-hidden="true"><b style={`width:${costShare}%`}></b><b style={`width:${profitShare}%`}></b></div>
+        <div class="split"><span>{sub(h.exampleSplitCost, { cost: f.money(d.cost) })}</span><span>{sub(h.exampleSplitMargin, { benefit: f.money(d.benefit) })}</span></div>
+        <div class="mini-break">
+          <div><span>{h.examplePrice}</span><strong dir="auto">{f.money(d.price)}</strong></div>
+          <div><span>{h.exampleUnitCost}</span><strong dir="auto">{f.money(d.cost)}</strong></div>
+          <div><span>{calc.t('margen.line.markup')}</span><strong dir="auto">{f.percent(d.markup)}</strong></div>
+        </div>
+        <a class="demo-link arrow-next" href={margenTool.path}>{h.exampleOpen}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="utility-strip">
+    <div class="wrap utility-inner">
+      <span>{h.strip}</span>
+      <div>{h.steps.map((s) => <span>{s}</span>)}</div>
+    </div>
+  </section>
+
+  <section class="section section-tools" id="herramientas">
+    <div class="wrap">
+      <div class="sectionhead">
+        <div>
+          <span class="kicker">{h.toolsKicker}</span>
+          <h2>{h.toolsTitle}</h2>
+          <p class="muted">{h.toolsLead}</p>
+        </div>
+        <a class="sectionlink arrow-out" href={ctx.path('tools')}>{h.toolsAll}</a>
+      </div>
+      <div class="grid tools-v3">
+        {ctx.tools.map((t) => <ToolCard tool={t} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section guide-section" id="explicaciones">
+    <div class="wrap">
+      <div class="sectionhead">
+        <div>
+          <span class="kicker">{h.explainKicker}</span>
+          <h2>{h.explainTitle}</h2>
+          <p class="muted">{h.explainLead}</p>
+        </div>
+      </div>
+      <div class="guide-layout">
+        <a class="guide-feature" href={margenTool.path}>
+          <span class="guide-tag">{h.featureTag}</span>
+          <div class="guide-illustration" aria-hidden="true">
+            <div class="illu-top">{h.featureIllu}</div>
+            <div class="illu-numbers"><div><span>{h.featureMargin}</span><b>{f.percentCompact(d.margin)}</b></div><div><span>{h.featureMarkup}</span><b>{f.percentCompact(d.markup)}</b></div></div>
+            <div class="illu-bar"><i style={`width:${costShare}%`}></i><b style={`width:${profitShare}%`}></b></div>
+          </div>
+          <h3>{h.featureTitle}</h3>
+          <p>{h.featureText}</p>
+          <span class="guide-more arrow-next">{h.featureMore}</span>
+        </a>
+        <div class="guide-stack">
+          <div class="guide-small">
+            <div class="guide-icon" aria-hidden="true">ƒ</div>
+            <div><span class="guide-tag">{h.smallFormulasTag}</span><h3>{h.smallFormulasTitle}</h3><p>{h.smallFormulasText}</p></div>
+          </div>
+          <div class="guide-small">
+            <div class="guide-icon" aria-hidden="true">✓</div>
+            <div><span class="guide-tag">{h.smallExamplesTag}</span><h3>{h.smallExamplesTitle}</h3><p>{h.smallExamplesText}</p></div>
+          </div>
+          <div class="guide-small">
+            <div class="guide-icon" aria-hidden="true">!</div>
+            <div><span class="guide-tag">{h.smallErrorsTag}</span><h3>{h.smallErrorsTitle}</h3><p>{h.smallErrorsText}</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section catalogue-section" id="categorias">
+    <div class="wrap">
+      <div class="sectionhead">
+        <div>
+          <span class="kicker">{h.categoriesKicker}</span>
+          <h2>{h.categoriesTitle}</h2>
+          <p class="muted">{h.categoriesLead}</p>
+        </div>
+      </div>
+      <div class="catgrid">
+        {ctx.categories.map((c, i) => (
+          <a href={c.path}>
+            <span>{String(i + 1).padStart(2, '0')}</span>
+            <strong>{c.title}</strong>
+            <small>{c.short}</small>
+            <b aria-hidden="true">↗</b>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section how-section">
+    <div class="wrap">
+      <div class="sectionhead"><div><span class="kicker">{h.approachKicker}</span><h2>{h.approachTitle}</h2></div></div>
+      <div class="how-grid">
+        {h.approach.map(([title, text], i) => <div><span class="how-num">{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section about-section" id="transparencia">
+    <div class="wrap about-grid">
+      <div>
+        <span class="kicker">{h.transparencyKicker}</span>
+        <h2>{h.transparencyTitle}</h2>
+        <p>{h.transparencyText}</p>
+        <a class="sectionlink arrow-out" href={ctx.path('methodology')}>{h.transparencyLink}</a>
+      </div>
+      <div class="about-note">
+        <strong>{h.howTitle}</strong>
+        <ul>{h.howItems.map((item) => <li>{item}</li>)}</ul>
+        {!SITE.indexable && <div class="devnote">{h.devNote}</div>}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

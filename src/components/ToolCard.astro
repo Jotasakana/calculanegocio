@@ -1,0 +1,9 @@
+---
+const { tool, category } = Astro.props;
+---
+<a class="tile" href={tool.path} data-filter-item data-category={category ?? tool.category} data-terms={`${tool.title} ${tool.search}`}>
+  <span class="symbol" aria-hidden="true">{tool.symbol}</span>
+  <strong>{tool.menuTitle}</strong>
+  <div class="subtle">{tool.tileText}</div>
+  <div class="go"><span>{tool.tileCta}</span> <b aria-hidden="true" class="arrow-glyph">↗</b></div>
+</a>

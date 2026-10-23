@@ -1,0 +1,14 @@
+---
+// Solo se pinta si la página existe en más de un idioma publicado. Enlaces reales (funciona sin JavaScript);
+// no hay redirección automática por el idioma del navegador.
+const { label, versions } = Astro.props;
+const current = versions.find((v) => v.current);
+---
+<details class="langswitch">
+  <summary aria-label={label}><span aria-hidden="true">🌐</span> {current.name}</summary>
+  <ul>
+    {versions.map((v) => (
+      <li><a href={v.href} hreflang={v.hreflang} lang={v.hreflang} aria-current={v.current ? 'true' : undefined}>{v.name}</a></li>
+    ))}
+  </ul>
+</details>
