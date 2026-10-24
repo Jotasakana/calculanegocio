@@ -4,6 +4,8 @@
 import { ERROR_CODES } from '../domain/formulas.js';
 import { placeholdersIn } from '../lib/fragments.js';
 import { DEFAULT_LOCALE } from './locales.js';
+import { PAGE_IDS } from './publish.js';
+import { LEGAL_FIELDS } from '../lib/legal.js';
 
 /** Aplana un objeto anidado a { 'a.b.0': valor } (los arrays se indexan). */
 export function flatten(obj, prefix = '') {
@@ -100,9 +102,10 @@ export function validateLocale(code, world, io) {
 
   // Slugs: ASCII, únicos y completos (las URLs de otros alfabetos se transliteran)
   const s = c.slugs ?? {};
-  const all = [s.tools, s.methodology, ...Object.values(s.categories ?? {}), ...Object.values(s.toolPages ?? {})];
+  const all = [s.tools, s.methodology, ...Object.values(s.pages ?? {}), ...Object.values(s.categories ?? {}), ...Object.values(s.toolPages ?? {})];
   for (const id of Object.keys(world.tools)) if (!s.toolPages?.[id]) P(`falta el slug de la calculadora "${id}"`);
   for (const id of Object.keys(world.categories)) if (!s.categories?.[id]) P(`falta el slug de la categoría "${id}"`);
+  for (const id of PAGE_IDS) if (!s.pages?.[id]) P(`falta el slug de la página "${id}"`);
   if (!s.tools || !s.methodology) P('faltan slugs de "tools" o "methodology"');
   for (const v of all) if (v && !SLUG.test(v)) P(`slug no válido "${v}" (solo a-z, 0-9 y guiones)`);
   if (new Set(all).size !== all.length) P('slugs repetidos dentro del idioma');
@@ -111,6 +114,7 @@ export function validateLocale(code, world, io) {
   const needs = [
     ...Object.values(world.tools).map((t) => ['articles', t.article]),
     ['pages', 'methodology'],
+    ...PAGE_IDS.map((id) => ['pages', `legal-${id}`]),
     ...Object.keys(world.categories).map((id) => ['pages', `category-${id}`]),
   ];
   for (const [kind, key] of needs) {
@@ -119,7 +123,7 @@ export function validateLocale(code, world, io) {
     for (const ph of placeholdersIn(html)) {
       const m = ph.match(/^\{\{([\w.-]+)(?::([\w-]+))?\}\}$/);
       const [, name, pid] = m;
-      const ok = ['home', 'tools', 'methodology'].includes(name) || ((name === 'tool' || name === 'tool.title') && world.tools[pid]) || ((name === 'category' || name === 'category.title') && world.categories[pid]);
+      const ok = ['home', 'tools', 'methodology'].includes(name) || ((name === 'tool' || name === 'tool.title') && world.tools[pid]) || ((name === 'category' || name === 'category.title') && world.categories[pid]) || (name === 'page' && PAGE_IDS.includes(pid)) || (name === 'legal' && LEGAL_FIELDS.includes(pid));
       if (!ok) P(`${kind}/${key}.html: marcador no válido ${ph}`);
     }
     if (/\\/.test(html)) P(`${kind}/${key}.html: contiene "\\" suelta`);

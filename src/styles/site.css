@@ -250,6 +250,9 @@ a.card:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var
 .about-note li{margin-block:8px}
 .devnote{border-inline-start:4px solid #d9a441;background:#fff7e6;color:#6b5420;border-start-end-radius:10px;border-end-end-radius:10px;padding:13px 18px;margin-block-end:22px;font-size:13.5px}
 .about-note .devnote{margin:14px 0 0;font-size:12.5px}
+.legal-draft{border-inline-start-color:#c0392b;background:#fdecea;color:#6b1f17}
+.legal-pending{background:#fff3db;color:#5c4210;border-radius:6px;padding:1px 7px;font-size:.88em;font-weight:600}
+.legal-updated{color:var(--muted);font-size:14px;margin-block:28px 0}
 
 /* ---------- Preguntas frecuentes y cierre ---------- */
 .faq{max-inline-size:880px}
@@ -330,6 +333,9 @@ a.card:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var
 .footer p{font-size:14px;max-inline-size:320px}
 .footer small,.footer-soon{color:#a2b4c3;font-size:13px}
 .footer-soon{padding-block:7px;opacity:.85}
+.footer .footer-link{all:unset;box-sizing:border-box;cursor:pointer;color:#b7c4d3;font-size:14px;padding-block:7px;min-block-size:36px;display:inline-flex;align-items:center}
+.footer .footer-link:hover{color:#fff;text-decoration:underline}
+.footer .footer-link:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
 .footer-bottom{border-block-start:1px solid rgba(255,255,255,.14);margin-block-start:36px;padding-block-start:20px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13px;color:#a2b4c3}
 .status{background:#fff7e6;border-block-start:1px solid #ecd9a8;color:#6b5420;text-align:center;padding:10px 16px;font-size:12.5px;font-weight:700}
 .status b{color:var(--brand)}

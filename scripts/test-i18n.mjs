@@ -197,7 +197,7 @@ check('ningún borrador publica páginas', Object.keys(LOCALES).filter((c) => LO
 // ---------------------------------------------------------------------------
 const mkEn = (status, extra = {}) => ({
   ...es, code: 'en',
-  slugs: { tools: 'tools', methodology: 'methodology', categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing', crecimiento: 'growth' }, toolPages: { margen: 'profit-margin-calculator', precio: 'selling-price-calculator', rentabilidad: 'gross-and-net-margin', iva: 'vat-calculator', recargo: 'markup-calculator', descuento: 'discount-calculator', equilibrio: 'break-even-calculator', roi: 'roi-calculator' } },
+  slugs: { tools: 'tools', methodology: 'methodology', pages: { contact: 'contact', legal: 'legal-notice', privacy: 'privacy-policy', cookies: 'cookie-policy', terms: 'terms-of-use' }, categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing', crecimiento: 'growth' }, toolPages: { margen: 'profit-margin-calculator', precio: 'selling-price-calculator', rentabilidad: 'gross-and-net-margin', iva: 'vat-calculator', recargo: 'markup-calculator', descuento: 'discount-calculator', equilibrio: 'break-even-calculator', roi: 'roi-calculator' } },
   review: { default: { status }, pages: extra },
 });
 // Mundo sintético SOLO con es + un `en` de prueba; el mercado genérico real (en, pt-br) se vacía para conservar la semántica original.

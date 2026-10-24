@@ -185,6 +185,7 @@ const views = {
   home: (await mod('src/views/HomeView.astro.mjs')).default,
   tools: (await mod('src/views/ToolsHubView.astro.mjs')).default,
   methodology: (await mod('src/views/MethodologyView.astro.mjs')).default,
+  page: (await mod('src/views/LegalView.astro.mjs')).default,
   category: (await mod('src/views/CategoryView.astro.mjs')).default,
   tool: (await mod('src/views/ToolView.astro.mjs')).default,
 };
@@ -199,7 +200,7 @@ const write = (urlPath, html) => {
 for (const rt of routeTable()) {
   const ctx = buildContext(rt.locale);
   const [kind, id] = rt.key.split(':');
-  const props = { ctx, ...(kind === 'category' ? { categoryId: id } : {}), ...(kind === 'tool' ? { toolId: id } : {}) };
+  const props = { ctx, ...(kind === 'category' ? { categoryId: id } : {}), ...(kind === 'page' ? { pageId: id } : {}), ...(kind === 'tool' ? { toolId: id } : {}) };
   write(rt.path, views[kind]({ props }).s);
 }
 write('/404.html', notFound({ props: {} }).s);

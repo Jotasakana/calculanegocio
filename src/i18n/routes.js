@@ -5,12 +5,13 @@
 // Las URLs españolas actuales no cambian (ver el snapshot en scripts/test-i18n.mjs).
 
 import { DEFAULT_LOCALE } from './locales.js';
-import { REAL_WORLD, isPublished, publishedLocales } from './publish.js';
+import { REAL_WORLD, PAGE_IDS, isPublished, publishedLocales } from './publish.js';
 
 export const pageKeys = (world = REAL_WORLD) => [
   'home',
   'tools',
   'methodology',
+  ...PAGE_IDS.map((id) => 'page:' + id),
   ...Object.keys(world.categories).map((id) => 'category:' + id),
   ...Object.keys(world.tools).map((id) => 'tool:' + id),
 ];
@@ -19,7 +20,7 @@ export function pathFor(localeCode, pageKey, world = REAL_WORLD) {
   const prefix = world.locales[localeCode].prefix;
   const slugs = world.content[localeCode].slugs;
   const [kind, id] = pageKey.split(':');
-  const slug = { home: '', tools: slugs.tools, methodology: slugs.methodology, category: slugs.categories?.[id], tool: slugs.toolPages?.[id] }[kind];
+  const slug = { home: '', tools: slugs.tools, methodology: slugs.methodology, page: slugs.pages?.[id], category: slugs.categories?.[id], tool: slugs.toolPages?.[id] }[kind];
   if (slug === undefined) throw new Error(`Falta el slug de "${pageKey}" en "${localeCode}"`);
   return `/${prefix}/${slug ? slug + '/' : ''}`;
 }

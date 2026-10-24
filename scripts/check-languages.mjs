@@ -1,6 +1,7 @@
 // Comprobaciones multilingües sobre dist/ (HTML real): idioma de cada página, selector de idioma, hreflang recíproco,
 // canonical, noindex, enlaces internos, URLs inexistentes y textos del idioma equivocado. Sin navegador.
 // Uso: node scripts/check-languages.mjs [carpeta=dist]
+import { LEGAL } from '../src/data/legal.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { routeTable, pathFor } from '../src/i18n/routes.js';
@@ -29,6 +30,9 @@ const visibleText = (html) => {
   const text = body.replace(/<[^>]+>/g, ' ');
   return (text + ' ' + attrs.join(' ')).replace(/&[a-z]+;|&#\d+;/gi, ' ').replace(/https?:\/\/\S+/g, ' ').replace(/CalculaNegocio/g, ' ').replace(/\s+/g, ' ');
 };
+// Nombres propios que se escriben tal cual en todos los idiomas: la dirección postal del titular (src/data/legal.js) y la
+// lista de nombres de impuestos de las condiciones de uso ("IVA, VAT, GST, ICMS…"), que cita el IVA español a propósito.
+const PROPER_NAMES = [new RegExp(LEGAL.address.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), /\((?:IVA|TVA),[^)]*\)/g];
 const SPANISH = /\b(margen|recargo|coste|costes|precio|aut[oó]nomos?|descuentos?|herramientas?|Espa[ñn]a|IVA|IRPF|desarrollo|disponibles?)\b|[¿¡ñ]/i;
 const ENGLISH = /\b(the|and|your|with|calculator|margin)\b/i;
 // Palabras que existen en el idioma revisado y coinciden con el patrón español: se excluyen solo en ese idioma.
@@ -79,7 +83,8 @@ for (const r of table) {
 
   // Idioma de los textos
   const text = visibleText(html);
-  const textEs = SPANISH_OK[r.locale] ? text.replace(SPANISH_OK[r.locale], ' ') : text;
+  const textNoNames = PROPER_NAMES.reduce((t, re) => t.replace(re, ' '), text);
+  const textEs = SPANISH_OK[r.locale] ? textNoNames.replace(SPANISH_OK[r.locale], ' ') : textNoNames;
   if (r.locale !== 'es') ok(!SPANISH.test(textEs), `${r.path}: restos de español → «${textEs.match(SPANISH)?.[0]}» …${textEs.slice(Math.max(0, textEs.search(SPANISH) - 30), textEs.search(SPANISH) + 40)}`);
   if (!['es', 'en'].includes(r.locale)) {
     const textEn = ENGLISH_OK[r.locale] ? text.replace(ENGLISH_OK[r.locale], ' ') : text;

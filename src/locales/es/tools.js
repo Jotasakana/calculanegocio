@@ -5,6 +5,7 @@
 export const slugs = {
   tools: 'herramientas',
   methodology: 'metodologia',
+  pages: { contact: 'contacto', legal: 'aviso-legal', privacy: 'politica-de-privacidad', cookies: 'politica-de-cookies', terms: 'condiciones-de-uso' },
   categories: { 'margenes-y-precios': 'margenes-y-precios', facturacion: 'facturacion', crecimiento: 'rentabilidad-y-crecimiento' },
   toolPages: {
     margen: 'calculadora-margen-comercial',

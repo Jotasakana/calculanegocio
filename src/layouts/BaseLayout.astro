@@ -4,6 +4,7 @@ import { SITE } from '../data/site.js';
 import { headModel } from '../i18n/seo.js';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ConsentSlot from '../components/ConsentSlot.astro';
 
 // Props: ctx (contexto del idioma, ver src/lib/context.js), pageKey (clave en la tabla de rutas; null fuera de ella),
 // path (solo si pageKey es null), title, description, ogType, jsonLd, robots.
@@ -15,6 +16,7 @@ const { ui } = ctx;
 <html lang={head.lang} dir={head.dir}>
   <head>
     <meta charset="utf-8" />
+    <ConsentSlot />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />

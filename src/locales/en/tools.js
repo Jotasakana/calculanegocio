@@ -9,6 +9,7 @@
 export const slugs = {
   tools: 'calculators',
   methodology: 'methodology',
+  pages: { contact: 'contact', legal: 'legal-notice', privacy: 'privacy-policy', cookies: 'cookie-policy', terms: 'terms-of-use' },
   categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing-and-tax', crecimiento: 'profitability-and-growth' },
   toolPages: {
     margen: 'profit-margin-calculator',
