@@ -359,7 +359,7 @@ a.card:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var
   .iconbtn.search-link span{display:none}
   .iconbtn.search-link{padding-inline:11px}
 }
-@media(max-width:1400px){
+@media(max-width:1600px){
   .mobile-toggle{display:inline-flex}
   .links{display:none;position:absolute;inset-inline:0;inset-block-start:100%;background:#fff;flex-direction:column;padding:10px 16px 16px;border-block-end:1px solid var(--line);box-shadow:0 18px 30px rgba(12,27,46,.14);gap:2px}
   .links.open{display:flex}
@@ -412,6 +412,9 @@ a.card:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var
   .langswitch ul{min-inline-size:min(220px,calc(100vw - 32px))}
 }
 @media(max-width:380px){
+  .badge{white-space:normal;overflow-wrap:anywhere;max-inline-size:100%}
+  .badges{min-inline-size:0;max-inline-size:100%}
+
   .footer-grid{grid-template-columns:1fr}
   .logo{font-size:17px;gap:8px}
   .logomark{inline-size:30px;block-size:30px}
