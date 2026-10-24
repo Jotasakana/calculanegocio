@@ -61,7 +61,7 @@ check('es sigue publicado con la indexación activada', isPublished('es', 'home'
   check('indexación activada: solo se publica es', publishedLocales(strict).join(), 'es');
   check('indexación activada: sin hreflang (una sola versión)', JSON.stringify(alternatesFor('tool:margen', strict)), '[]');
   check('indexación activada: sin hreflang en el sitemap', sitemapXml('https://calculanegocio.com', strict).includes('xhtml:link'), false);
-  check('indexación activada: 9 URLs, todas en /es/', routeTable(strict).map((r) => r.path.split('/')[1]).filter((v, i, a) => a.indexOf(v) === i).join() + '/' + routeTable(strict).length, 'es/9');
+  check('indexación activada: 14 URLs, todas en /es/', routeTable(strict).map((r) => r.path.split('/')[1]).filter((v, i, a) => a.indexOf(v) === i).join() + '/' + routeTable(strict).length, 'es/14');
   check('indexación activada: el selector solo lista es (no se pinta con un único idioma)', buildContext('es', strict).versions('home').map((v) => v.code).join(), 'es');
 }
 
@@ -106,7 +106,7 @@ for (const key of ALL_KEYS) {
   check('sitemap: una URL por página', (xml.match(/<loc>/g) || []).length, table.length);
   check('sitemap: 7 alternativas por página (6 idiomas + x-default)', (xml.match(/xhtml:link/g) || []).length, table.length * 7);
   check('sitemap: incluye pt-BR, de, fr y hi', ['pt-BR', 'de', 'fr', 'hi'].every((h) => xml.includes(`hreflang="${h}"`)), true);
-  check('sitemap: 54 URLs (6 idiomas x 9 páginas)', table.length, 54);
+  check('sitemap: 84 URLs (6 idiomas x 14 páginas)', table.length, 84);
   for (const l of LANGS) {
     const h = headModel({ locale: l, key: 'tool:margen', siteUrl: 'https://calculanegocio.com', indexable: false });
     check(`${l}: canonical propio`, h.canonical, 'https://calculanegocio.com' + pathFor(l, 'tool:margen'));
@@ -130,7 +130,7 @@ for (const key of ALL_KEYS) {
   check('idiomas genéricos: el catálogo no muestra la insignia de país', others.every((c) => c.catalog.items.every((i) => !i.fiscal)), true);
   check('es: el catálogo conserva la insignia «España»', es.catalog.items.filter((i) => i.fiscal).map((i) => i.id).sort().join(), 'equivalencia,irpf,iva,precio');
   check('idiomas genéricos: sin IRPF ni recargo de equivalencia (solo España)', others.every((c) => !c.catalog.items.some((i) => ['irpf', 'equivalencia'].includes(i.id))), true);
-  check('idiomas genéricos: 16 en el catálogo, 4 disponibles', others.map((c) => `${c.catalog.counts.total}/${c.catalog.counts.available}`).join(), TRANSLATED.map(() => '16/4').join());
+  check('idiomas genéricos: 16 en el catálogo, 8 disponibles', others.map((c) => `${c.catalog.counts.total}/${c.catalog.counts.available}`).join(), TRANSLATED.map(() => '16/8').join());
   check('catálogo: las 12 calculadoras no españolas restantes y 4 disponibles (sin enlaces a páginas inexistentes)', others.every((c) => c.catalog.items.filter((i) => i.status === 'planned').every((i) => !i.href)), true);
 }
 

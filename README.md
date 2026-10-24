@@ -1,9 +1,10 @@
 # CalculaNegocio (Astro · HTML estático)
 
-Calculadoras gratuitas para autónomos y pequeños negocios. Versión **v0.9** (Fase 3B): **español, inglés, portugués de Brasil, alemán, francés e hindi** con selector de idioma en la cabecera, sobre la arquitectura
+Calculadoras gratuitas para autónomos y pequeños negocios. Versión **v0.10** (Fase 4: ocho calculadoras): **español, inglés, portugués de Brasil, alemán, francés e hindi** con selector de idioma en la cabecera, sobre la arquitectura
 internacional de la Fase 2A (fórmulas, textos, configuración regional y componentes separados). Inglés, portugués, alemán, francés e hindi están
 *sin revisión nativa*: solo se publican mientras el sitio esté en modo desarrollo (ver `CAMBIOS-FASE3A.md` y `CAMBIOS-FASE3B.md`).
 **Modo desarrollo**: `noindex` en todas las páginas y `robots.txt` con `Disallow: /`. No publicar ni activar AdSense sin autorización.
+Fase 4 (recargo, descuentos, punto de equilibrio y ROI): [`CAMBIOS-FASE4.md`](CAMBIOS-FASE4.md).
 Detalles de la arquitectura: [`docs/INTERNACIONALIZACION.md`](docs/INTERNACIONALIZACION.md) · cambios: [`CAMBIOS-v0.6.md`](CAMBIOS-v0.6.md).
 
 ## Comandos
@@ -29,12 +30,12 @@ Se generan desde la tabla de rutas (`src/i18n/routes.js`): `/<idioma>/<slug>/`. 
 | URL | Contenido |
 |---|---|
 | `/` | Redirección temporal (302) a `/es/` (sin detección de idioma) |
-| `/en/…`, `/pt-br/…`, `/de/…`, `/fr/…`, `/hi/…` | Mismas 9 páginas en inglés, portugués de Brasil, alemán, francés e hindi (slugs traducidos) |
+| `/en/…`, `/pt-br/…`, `/de/…`, `/fr/…`, `/hi/…` | Mismas 14 páginas en inglés, portugués de Brasil, alemán, francés e hindi (slugs traducidos) |
 | `/es/` | Portada (Home v0.3) |
 | `/es/herramientas/` | Catálogo con filtros y búsqueda |
 | `/es/metodologia/` | Criterios, redondeo, privacidad y límites |
-| `/es/margenes-y-precios/`, `/es/facturacion/` | Categorías |
-| `/es/calculadora-margen-comercial/`, `/es/calculadora-precio-de-venta/`, `/es/margen-bruto-y-margen-neto/`, `/es/calculadora-base-imponible/` | Calculadoras |
+| `/es/margenes-y-precios/`, `/es/facturacion/`, `/es/rentabilidad-y-crecimiento/` | Categorías |
+| `/es/calculadora-margen-comercial/`, `/es/calculadora-precio-de-venta/`, `/es/margen-bruto-y-margen-neto/`, `/es/calculadora-base-imponible/`, `/es/calculadora-recargo-sobre-coste/`, `/es/calculadora-descuentos-y-precio-final/`, `/es/calculadora-punto-de-equilibrio/`, `/es/calculadora-roi/` | Calculadoras (8) |
 | `/robots.txt`, `/sitemap.xml` (con hreflang cuando proceda), `404.html` | Generados en build |
 
 ## Estructura

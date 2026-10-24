@@ -1,0 +1,83 @@
+<p>Cette calculatrice vous indique combien d’unités vous devez vendre pour couvrir tous vos coûts, et quel chiffre d’affaires cela représente. Saisissez les charges fixes de la période, le prix de vente par unité et le coût variable par unité, et vous obtenez la marge sur coût variable de chaque unité, le nombre d’unités nécessaires pour atteindre le seuil de rentabilité et le chiffre d’affaires correspondant. En option, vous pouvez indiquer combien d’unités vous comptez vendre et voir le résultat prévu.</p>
+<h3>Comment utiliser la calculatrice</h3>
+<p>Saisissez quatre chiffres, trois obligatoires et un facultatif :</p>
+<ul>
+<li><strong>Charges fixes de la période.</strong> Les coûts que vous payez même si vous vendez peu ou rien : loyer, assurances, abonnements, salaires fixes. Ils doivent couvrir la même période que les ventes que vous analysez, par exemple un mois.</li>
+<li><strong>Prix de vente par unité.</strong> Ce que vous facturez pour chaque unité, avant taxe.</li>
+<li><strong>Coût variable par unité.</strong> Ce que coûte la production ou la vente de chaque unité : matières premières, expédition, commission commerciale.</li>
+<li><strong>Unités que vous comptez vendre (facultatif).</strong> Si vous le remplissez, vous verrez le bénéfice ou la perte à ce volume. Si vous le laissez vide, il n’est pas calculé.</li>
+</ul>
+<h3>Qu’est-ce que le seuil de rentabilité</h3>
+<p>Le seuil de rentabilité est le volume de ventes pour lequel les recettes égalent les coûts totaux : ni bénéfice ni perte. En dessous, l’activité perd de l’argent ; au-dessus, chaque unité supplémentaire rapporte du bénéfice. Il se calcule avec la marge sur coût variable, c’est-à-dire ce qui reste de chaque vente après avoir payé le coût variable de cette unité.</p>
+<p>Sa limite est qu’il suppose un seul produit, au prix et au coût variable constants. Dans une entreprise avec plusieurs produits, ou des prix qui changent avec le volume, c’est une approximation.</p>
+<h3>Formules du seuil de rentabilité</h3>
+<p>La marge sur coût variable par unité est la différence entre le prix et le coût variable :</p>
+<p><strong>Marge sur coût variable = Prix de vente − Coût variable</strong></p>
+<p>Les unités nécessaires s’obtiennent en répartissant les charges fixes sur cette marge :</p>
+<p><strong>Unités = Charges fixes ÷ Marge sur coût variable</strong></p>
+<p>Comme on ne peut pas diviser les unités, le résultat est toujours arrondi au supérieur. Le chiffre d’affaires correspondant se calcule avec les unités arrondies :</p>
+<p><strong>Chiffre d’affaires = Unités arrondies × Prix de vente</strong></p>
+<p>Et le résultat pour n’importe quel volume est :</p>
+<p><strong>Résultat = Unités × Marge sur coût variable − Charges fixes</strong></p>
+<p>Exemple de contrôle : des charges fixes de 2 000, un prix de 50 et un coût variable de 30. La marge sur coût variable est 20 et les unités 2 000 ÷ 20 = 100. Le chiffre d’affaires au seuil est 100 × 50 = 5 000. Avec 150 unités, le résultat serait 150 × 20 − 2 000 = 1 000 de bénéfice.</p>
+<h3>Quand le résultat n’est pas un nombre entier</h3>
+<p>Avec des charges fixes de 3 500, un prix de 12,50 et un coût variable de 4,50, la marge sur coût variable est 8 et le calcul donne 437,5 unités. Avec 437 unités, il reste une perte : 437 × 8 = 3 496, ce qui ne couvre pas 3 500. Il faut en vendre 438 et le chiffre d’affaires est 438 × 12,50 = 5 475.</p>
+<table>
+<thead>
+<tr>
+  <th>Élément</th>
+  <th>Calcul</th>
+  <th>Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Marge sur coût variable</td>
+  <td>12,50 − 4,50</td>
+  <td>8</td>
+</tr>
+<tr>
+  <td>Unités avant arrondi</td>
+  <td>3 500 ÷ 8</td>
+  <td>437,5</td>
+</tr>
+<tr>
+  <td>Unités nécessaires</td>
+  <td>arrondi au supérieur</td>
+  <td>438</td>
+</tr>
+<tr>
+  <td>Chiffre d’affaires</td>
+  <td>438 × 12,50</td>
+  <td>5 475</td>
+</tr>
+</tbody>
+</table>
+<h3>Erreurs fréquentes avec le seuil de rentabilité</h3>
+<h4>Mélanger les périodes</h4>
+<p>Si les charges fixes sont annuelles et que le prix et les unités sont mensuels, le résultat n’a pas de sens. Utilisez des charges fixes de la même période que les ventes que vous voulez analyser.</p>
+<h4>Classer des coûts variables parmi les fixes, ou l’inverse</h4>
+<p>Une commission commerciale ou le coût des matières premières est variable. Un loyer ou une police d’assurance est fixe. Si vous placez un coût dans le mauvais groupe, le seuil change. Si un coût est mixte, séparez sa part fixe et sa part variable.</p>
+<h4>Utiliser le taux de marge au lieu de la marge sur coût variable en montant</h4>
+<p>La marge sur coût variable par unité se mesure en montant. Si vous divisez les charges fixes par un pourcentage, vous obtenez un chiffre d’affaires et non des unités. La calculatrice affiche aussi le taux de marge sur coût variable, c’est-à-dire le pourcentage du prix qui reste après le coût variable, au cas où vous préféreriez calculer directement le chiffre d’affaires.</p>
+<h4>Oublier que le prix doit dépasser le coût variable</h4>
+<p>Si le prix est égal ou inférieur au coût variable, chaque unité vendue ne rapporte rien ou fait perdre de l’argent. Aucun volume ne couvre les charges fixes, et la calculatrice vous avertit au lieu d’afficher un chiffre impossible.</p>
+<h4>Arrondir à l’inférieur</h4>
+<p>Avec 437,5 unités, en vendre 437 ne suffit pas. Les unités indivisibles s’arrondissent toujours au supérieur.</p>
+<h3>Un exemple complet, pas à pas</h3>
+<p>Une boulangerie a 1 800 de charges fixes par mois. Chaque gâteau se vend 24 et coûte 9 en ingrédients et emballage.</p>
+<ol>
+<li><strong>Marge sur coût variable :</strong> 24 − 9 = 15 par gâteau.</li>
+<li><strong>Unités :</strong> 1 800 ÷ 15 = 120 gâteaux par mois.</li>
+<li><strong>Chiffre d’affaires :</strong> 120 × 24 = 2 880 par mois.</li>
+<li><strong>Avec 100 gâteaux :</strong> 100 × 15 − 1 800 = −300, une perte.</li>
+<li><strong>Avec 150 gâteaux :</strong> 150 × 15 − 1 800 = 450 de bénéfice.</li>
+</ol>
+<p>Si le prix passe à 27, la marge sur coût variable devient 18 et le seuil tombe à 100 gâteaux. Avec la calculatrice de marge commerciale, vous voyez comment le taux de marge évolue quand vous changez le prix.</p>
+<h3>Comment lire le résultat</h3>
+<ul>
+<li><strong>Comparez-le à votre capacité réelle.</strong> Si le seuil exige plus d’unités que vous ne pouvez en produire ou en vendre, il faut changer le prix, réduire les coûts ou repenser l’activité.</li>
+<li><strong>Testez des scénarios.</strong> De petites variations du prix ou du coût variable déplacent beaucoup les unités nécessaires, car la marge sur coût variable est le diviseur.</li>
+<li><strong>Rappelez-vous ce qu’il ne dit pas.</strong> Le seuil couvre les coûts ; ce n’est pas un objectif de bénéfice. Pour voir quel bénéfice laisse un chiffre d’affaires donné, utilisez la calculatrice de marge brute et nette.</li>
+<li><strong>Révisez souvent les coûts.</strong> Un nouveau loyer ou un changement de fournisseur modifie le résultat.</li>
+</ul>

@@ -197,7 +197,7 @@ check('ningún borrador publica páginas', Object.keys(LOCALES).filter((c) => LO
 // ---------------------------------------------------------------------------
 const mkEn = (status, extra = {}) => ({
   ...es, code: 'en',
-  slugs: { tools: 'tools', methodology: 'methodology', categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing' }, toolPages: { margen: 'profit-margin-calculator', precio: 'selling-price-calculator', rentabilidad: 'gross-and-net-margin', iva: 'vat-calculator' } },
+  slugs: { tools: 'tools', methodology: 'methodology', categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing', crecimiento: 'growth' }, toolPages: { margen: 'profit-margin-calculator', precio: 'selling-price-calculator', rentabilidad: 'gross-and-net-margin', iva: 'vat-calculator', recargo: 'markup-calculator', descuento: 'discount-calculator', equilibrio: 'break-even-calculator', roi: 'roi-calculator' } },
   review: { default: { status }, pages: extra },
 });
 // Mundo sintético SOLO con es + un `en` de prueba; el mercado genérico real (en, pt-br) se vacía para conservar la semántica original.
@@ -213,7 +213,7 @@ check('página en borrador dentro de un idioma revisado no se publica', isPublis
 check('…y tampoco su hreflang', JSON.stringify(alternatesFor('tool:margen', wEn)), '[]');
 const wOk = world('reviewed');
 const tEn = routeTable(wOk).filter((r) => r.locale === 'en');
-check('inglés revisado: solo universales (margen, rentabilidad)', tEn.filter((r) => r.key.startsWith('tool:')).map((r) => r.key).join(), 'tool:margen,tool:rentabilidad');
+check('inglés revisado: solo universales (margen, rentabilidad, recargo, descuento, equilibrio, roi)', tEn.filter((r) => r.key.startsWith('tool:')).map((r) => r.key).join(), 'tool:margen,tool:rentabilidad,tool:recargo,tool:descuento,tool:equilibrio,tool:roi');
 check('calculadoras fiscales no se traducen sin mercado', isPublished('en', 'tool:iva', wOk), 'false');
 check('categoría sin calculadoras disponibles no se publica', isPublished('en', 'category:facturacion', wOk), 'false');
 check('URLs traducidas', pathFor('en', 'tool:margen', wOk), '/en/profit-margin-calculator/');

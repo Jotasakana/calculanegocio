@@ -1,0 +1,83 @@
+<p>Esta calculadora diz quantas unidades você precisa vender para cobrir todos os seus custos e que faturamento isso representa. Digite os custos fixos do período, o preço de venda por unidade e o custo variável por unidade, e você obtém a margem de contribuição de cada unidade, as unidades necessárias para chegar ao ponto de equilíbrio e o faturamento correspondente. Opcionalmente, pode digitar quantas unidades espera vender e ver o resultado previsto.</p>
+<h3>Como usar a calculadora</h3>
+<p>Digite quatro dados, três obrigatórios e um opcional:</p>
+<ul>
+<li><strong>Custos fixos do período.</strong> Os custos que você paga mesmo vendendo pouco ou nada: aluguel, seguros, mensalidades, salários fixos. Devem corresponder ao mesmo período das vendas que você quer analisar, por exemplo um mês.</li>
+<li><strong>Preço de venda por unidade.</strong> O que você cobra por cada unidade, sem imposto.</li>
+<li><strong>Custo variável por unidade.</strong> O que custa produzir ou vender cada unidade: matéria-prima, frete, comissão por venda.</li>
+<li><strong>Unidades que você espera vender (opcional).</strong> Se preencher, verá o lucro ou o prejuízo com esse volume. Se deixar vazio, não é calculado.</li>
+</ul>
+<h3>O que é o ponto de equilíbrio</h3>
+<p>O ponto de equilíbrio é o volume de vendas em que a receita iguala os custos totais: não há lucro nem prejuízo. Abaixo desse volume o negócio perde dinheiro; acima, cada unidade adicional traz lucro. Ele é calculado com a margem de contribuição, que é o que sobra de cada venda depois de pagar os custos variáveis daquela unidade.</p>
+<p>Seu limite é que supõe um único produto, com preço e custo variável constantes. Em um negócio com vários produtos, ou com preços que mudam conforme o volume, é uma aproximação.</p>
+<h3>Fórmulas do ponto de equilíbrio</h3>
+<p>A margem de contribuição por unidade é a diferença entre o preço e o custo variável:</p>
+<p><strong>Margem de contribuição = Preço de venda − Custo variável</strong></p>
+<p>As unidades necessárias saem de dividir os custos fixos por essa margem:</p>
+<p><strong>Unidades = Custos fixos ÷ Margem de contribuição</strong></p>
+<p>Como as unidades não podem ser divididas, o resultado é sempre arredondado para cima. O faturamento correspondente é calculado com as unidades já arredondadas:</p>
+<p><strong>Faturamento = Unidades arredondadas × Preço de venda</strong></p>
+<p>E o resultado com qualquer volume é:</p>
+<p><strong>Resultado = Unidades × Margem de contribuição − Custos fixos</strong></p>
+<p>Exemplo de controle: custos fixos de R$ 2.000, preço de R$ 50 e custo variável de R$ 30. A margem de contribuição é R$ 20 e as unidades são 2.000 ÷ 20 = 100. O faturamento no ponto de equilíbrio é 100 × 50 = R$ 5.000. Com 150 unidades, o resultado seria 150 × 20 − 2.000 = R$ 1.000 de lucro.</p>
+<h3>Quando o resultado não fecha redondo</h3>
+<p>Com custos fixos de R$ 3.500, preço de R$ 12,50 e custo variável de R$ 4,50, a margem de contribuição é R$ 8 e o cálculo dá 437,5 unidades. Com 437 unidades ainda há prejuízo: 437 × 8 = R$ 3.496, que não cobre os R$ 3.500. É preciso vender 438 e o faturamento é 438 × 12,50 = R$ 5.475.</p>
+<table>
+<thead>
+<tr>
+  <th>Item</th>
+  <th>Cálculo</th>
+  <th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Margem de contribuição</td>
+  <td>12,50 − 4,50</td>
+  <td>R$ 8</td>
+</tr>
+<tr>
+  <td>Unidades sem arredondar</td>
+  <td>3.500 ÷ 8</td>
+  <td>437,5</td>
+</tr>
+<tr>
+  <td>Unidades necessárias</td>
+  <td>arredondamento para cima</td>
+  <td>438</td>
+</tr>
+<tr>
+  <td>Faturamento</td>
+  <td>438 × 12,50</td>
+  <td>R$ 5.475</td>
+</tr>
+</tbody>
+</table>
+<h3>Erros comuns ao calcular o ponto de equilíbrio</h3>
+<h4>Misturar períodos</h4>
+<p>Se os custos fixos são anuais e o preço e as unidades são mensais, o resultado não faz sentido. Use custos fixos do mesmo período das vendas que quer analisar.</p>
+<h4>Pôr custos variáveis entre os fixos, ou o contrário</h4>
+<p>Uma comissão por venda ou o custo da matéria-prima são variáveis. O aluguel ou um seguro são fixos. Se você coloca um custo no grupo errado, o ponto de equilíbrio muda. Se um custo for misto, separe a parte fixa e a parte variável.</p>
+<h4>Usar a margem sobre as vendas em vez da margem de contribuição em reais</h4>
+<p>A margem de contribuição por unidade é medida em valor. Se você dividir os custos fixos por um percentual, obtém o faturamento, não as unidades. A calculadora mostra também o índice de contribuição, que é o percentual do preço que sobra depois do custo variável, caso você prefira calcular o faturamento diretamente.</p>
+<h4>Esquecer que o preço deve superar o custo variável</h4>
+<p>Se o preço for igual ou menor que o custo variável, cada unidade vendida deixa zero ou dá prejuízo. Nenhum volume cobre os custos fixos, e a calculadora avisa em vez de dar um número impossível.</p>
+<h4>Arredondar para baixo</h4>
+<p>Com 437,5 unidades, vender 437 não basta. As unidades indivisíveis são sempre arredondadas para cima.</p>
+<h3>Um exemplo completo, passo a passo</h3>
+<p>Uma confeitaria tem R$ 1.800 por mês de custos fixos. Cada bolo é vendido por R$ 24 e custa R$ 9 em ingredientes e embalagens.</p>
+<ol>
+<li><strong>Margem de contribuição:</strong> 24 − 9 = R$ 15 por bolo.</li>
+<li><strong>Unidades:</strong> 1.800 ÷ 15 = 120 bolos por mês.</li>
+<li><strong>Faturamento:</strong> 120 × 24 = R$ 2.880 por mês.</li>
+<li><strong>Com 100 bolos:</strong> 100 × 15 − 1.800 = −R$ 300, um prejuízo.</li>
+<li><strong>Com 150 bolos:</strong> 150 × 15 − 1.800 = R$ 450 de lucro.</li>
+</ol>
+<p>Se o preço sobe para R$ 27, a margem de contribuição passa a R$ 18 e o ponto de equilíbrio cai para 100 bolos. Com a calculadora de margem comercial você vê como a margem muda ao alterar o preço.</p>
+<h3>Como interpretar o resultado</h3>
+<ul>
+<li><strong>Compare com a sua capacidade real.</strong> Se o ponto de equilíbrio exige mais unidades do que você consegue produzir ou vender, é preciso mudar o preço, reduzir custos ou repensar o negócio.</li>
+<li><strong>Teste cenários.</strong> Pequenas mudanças no preço ou no custo variável mexem muito nas unidades necessárias, porque a margem de contribuição é o divisor.</li>
+<li><strong>Lembre o que ele não inclui.</strong> O ponto de equilíbrio cobre custos, não é uma meta de lucro. Para ver quanto lucro uma receita deixa, use a calculadora de margem bruta e margem líquida.</li>
+<li><strong>Revise os custos com frequência.</strong> Um aluguel novo ou a troca de fornecedor altera o resultado.</li>
+</ul>

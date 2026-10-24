@@ -6,7 +6,7 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Calculatrices pour indépendants et petites entreprises',
-    devLabel: 'DÉMO PRIVÉE · v0.9 · traduction en attente de relecture native',
+    devLabel: 'DÉMO PRIVÉE · v0.10 · traduction en attente de relecture native',
   },
   a11y: {
     skip: 'Aller au contenu',
@@ -61,7 +61,7 @@ export const ui = {
   },
   home: {
     metaTitle: 'CalculaNegocio · Calculatrices pour indépendants et petites entreprises',
-    metaDescription: 'Calculatrices gratuites de marges, de prix, de rentabilité et de taxe pour indépendants et petites entreprises, avec formules expliquées et exemples détaillés.',
+    metaDescription: 'Calculatrices gratuites de marge, prix, remises, seuil de rentabilité, ROI et taxes pour indépendants et petites entreprises, avec formules et exemples chiffrés.',
     eyebrow: 'CALCULATRICES POUR INDÉPENDANTS ET PETITES ENTREPRISES',
     titleA: 'Fixez le prix de votre travail',
     titleB: 'avec des chiffres bien clairs.',
@@ -126,7 +126,7 @@ export const ui = {
     faqKicker: 'QUESTIONS FRÉQUENTES',
     faqTitle: 'Ce que l’on demande le plus',
     faq: [
-      ['Les calculs incluent-ils la taxe ?', 'Cela dépend de l’outil. La marge et la rentabilité travaillent avec des montants hors taxe. La calculatrice de prix de vente ajoute la taxe à la fin et affiche le prix hors taxe et taxe comprise. La calculatrice de montant HT sert à ajouter ou retirer la taxe.'],
+      ['Les calculs incluent-ils la taxe ?', 'Cela dépend de l’outil. La marge et la rentabilité travaillent avec des montants hors taxe. La calculatrice de prix de vente ajoute la taxe à la fin et affiche le prix hors taxe et taxe comprise. La calculatrice de montant HT sert à ajouter ou retirer la taxe. La majoration, les remises, le seuil de rentabilité et le ROI travaillent avec le chiffre saisi et n’ajoutent aucune taxe.'],
       ['Mes données sont-elles enregistrées ?', 'Non. Le calcul se fait dans votre navigateur et les chiffres que vous saisissez ne sont envoyés à aucun serveur.'],
       ['Puis-je utiliser les calculatrices dans mon pays ?', 'Les calculatrices de marge et de rentabilité relèvent de l’arithmétique pure et vous laissent choisir la devise. Celles du prix de vente avec taxe et du montant HT appliquent simplement le pourcentage que vous saisissez : elles ne connaissent ni les taux ni les règles d’aucun pays.'],
       ['Remplacent-elles un conseiller ?', 'Non. Ce sont des outils de calcul et d’orientation. Pour vos obligations fiscales ou juridiques, consultez les sources officielles ou un professionnel.'],
@@ -137,10 +137,10 @@ export const ui = {
   },
   toolsHub: {
     metaTitle: 'Calculatrices gratuites pour indépendants | CalculaNegocio',
-    metaDescription: 'Le catalogue CalculaNegocio : calculatrices disponibles (marge commerciale, prix de vente, marge brute et nette, montant HT) et celles en développement.',
+    metaDescription: 'Le catalogue de CalculaNegocio : calculatrices disponibles (marge, majoration, remises, prix de vente, seuil de rentabilité, ROI, montant HT) et à venir.',
     kicker: 'CATALOGUE DE CALCULATRICES',
     title: 'Calculatrices pour indépendants et petites entreprises',
-    lead: 'Des outils pour calculer marges, prix, rentabilité et la taxe de vos factures. Chacun explique sa formule et propose des exemples détaillés.',
+    lead: 'Des outils pour calculer marges, prix, remises, seuil de rentabilité, ROI et la taxe de vos factures. Chacun explique sa formule et propose des exemples chiffrés.',
     searchLabel: 'Rechercher parmi les calculatrices',
     searchPlaceholder: 'Rechercher une calculatrice…',
     noResults: 'Aucune calculatrice ne correspond à votre recherche.',
@@ -150,10 +150,12 @@ export const ui = {
     metaTitles: {
       'margenes-y-precios': 'Marges et prix : calculatrices | CalculaNegocio',
       facturacion: 'Facturation : montant HT et taxe | CalculaNegocio',
+      crecimiento: 'Rentabilité et croissance : seuil et ROI | CalculaNegocio',
     },
     metaDescriptions: {
-      'margenes-y-precios': 'Calculatrices de marge commerciale, de prix de vente et de marge brute et nette pour savoir combien vous gagnez et à quel prix vendre.',
+      'margenes-y-precios': 'Calculatrices de marge, majoration, remises, prix de vente et marge brute et nette, pour savoir combien vous gagnez et à quel prix vendre.',
       facturacion: 'Outils de facturation : calculez le montant HT, ajoutez ou retirez la taxe et détaillez une facture à plusieurs lignes avec le taux que vous saisissez.',
+      crecimiento: 'Calculez le seuil de rentabilité de votre activité et le ROI d’un investissement, avec formules claires et exemples chiffrés.',
     },
   },
   methodology: {

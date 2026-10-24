@@ -1,0 +1,83 @@
+<p>Esta calculadora te dice cuántas unidades tienes que vender para cubrir todos tus costes, y qué facturación supone. Introduce los costes fijos del período, el precio de venta por unidad y el coste variable por unidad, y obtendrás el margen de contribución de cada unidad, las unidades necesarias para alcanzar el punto de equilibrio y la facturación correspondiente. Opcionalmente, puedes escribir cuántas unidades esperas vender y ver el resultado previsto.</p>
+<h3>Cómo usar la calculadora</h3>
+<p>Escribe cuatro datos, tres obligatorios y uno opcional:</p>
+<ul>
+<li><strong>Costes fijos del período.</strong> Los costes que pagas aunque vendas poco o nada: alquiler, seguros, cuotas, sueldos fijos. Deben corresponder al mismo período que las ventas que quieres analizar, por ejemplo un mes.</li>
+<li><strong>Precio de venta por unidad.</strong> Lo que cobras por cada unidad, sin impuestos.</li>
+<li><strong>Coste variable por unidad.</strong> Lo que cuesta producir o vender cada unidad: materia prima, envío, comisión por venta.</li>
+<li><strong>Unidades que esperas vender (opcional).</strong> Si lo rellenas, verás el beneficio o la pérdida con ese volumen. Si lo dejas vacío, no se calcula.</li>
+</ul>
+<h3>Qué es el punto de equilibrio</h3>
+<p>El punto de equilibrio es el volumen de ventas en el que los ingresos igualan a los costes totales: no hay beneficio ni pérdida. Por debajo de ese volumen el negocio pierde dinero; por encima, cada unidad adicional aporta beneficio. Se calcula con el margen de contribución, que es lo que queda de cada venta después de pagar los costes variables de esa unidad.</p>
+<p>Su límite es que supone un único producto, con un precio y un coste variable constantes. En un negocio con varios productos, o con precios que cambian con el volumen, es una aproximación.</p>
+<h3>Fórmulas del punto de equilibrio</h3>
+<p>El margen de contribución por unidad es la diferencia entre el precio y el coste variable:</p>
+<p><strong>Margen de contribución = Precio de venta − Coste variable</strong></p>
+<p>Las unidades necesarias salen de repartir los costes fijos entre ese margen:</p>
+<p><strong>Unidades = Costes fijos ÷ Margen de contribución</strong></p>
+<p>Como las unidades no se pueden dividir, el resultado se redondea siempre hacia arriba. La facturación correspondiente se calcula con las unidades ya redondeadas:</p>
+<p><strong>Facturación = Unidades redondeadas × Precio de venta</strong></p>
+<p>Y el resultado con un volumen cualquiera es:</p>
+<p><strong>Resultado = Unidades × Margen de contribución − Costes fijos</strong></p>
+<p>Ejemplo de control: costes fijos de 2.000 €, precio de 50 € y coste variable de 30 €. El margen de contribución es 20 € y las unidades son 2.000 ÷ 20 = 100. La facturación en el punto de equilibrio es 100 × 50 = 5.000 €. Con 150 unidades, el resultado sería 150 × 20 − 2.000 = 1.000 € de beneficio.</p>
+<h3>Cuando el resultado no sale redondo</h3>
+<p>Con costes fijos de 3.500 €, un precio de 12,50 € y un coste variable de 4,50 €, el margen de contribución es 8 € y el cálculo da 437,5 unidades. Con 437 unidades todavía hay pérdida: 437 × 8 = 3.496 €, que no cubre los 3.500 €. Hay que vender 438 y la facturación es 438 × 12,50 = 5.475 €.</p>
+<table>
+<thead>
+<tr>
+  <th>Concepto</th>
+  <th>Cálculo</th>
+  <th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Margen de contribución</td>
+  <td>12,50 − 4,50</td>
+  <td>8 €</td>
+</tr>
+<tr>
+  <td>Unidades sin redondear</td>
+  <td>3.500 ÷ 8</td>
+  <td>437,5</td>
+</tr>
+<tr>
+  <td>Unidades necesarias</td>
+  <td>redondeo hacia arriba</td>
+  <td>438</td>
+</tr>
+<tr>
+  <td>Facturación</td>
+  <td>438 × 12,50</td>
+  <td>5.475 €</td>
+</tr>
+</tbody>
+</table>
+<h3>Errores frecuentes al calcular el punto de equilibrio</h3>
+<h4>Mezclar períodos</h4>
+<p>Si los costes fijos son anuales y el precio y las unidades son mensuales, el resultado no tiene sentido. Usa costes fijos del mismo período que las ventas que quieres analizar.</p>
+<h4>Meter costes variables entre los fijos, o al revés</h4>
+<p>Una comisión por venta o el coste de materia prima son variables. El alquiler o un seguro son fijos. Si colocas un coste en el grupo equivocado, el punto de equilibrio cambia. Si un coste es mixto, reparte su parte fija y su parte variable.</p>
+<h4>Usar el margen sobre ventas en lugar del margen de contribución en euros</h4>
+<p>El margen de contribución por unidad se mide en importe. Si divides los costes fijos entre un porcentaje, obtienes la facturación, no las unidades. La calculadora muestra también el ratio de contribución, que es el porcentaje del precio que queda tras el coste variable, por si prefieres calcular la facturación directamente.</p>
+<h4>Olvidar que el precio debe superar el coste variable</h4>
+<p>Si el precio es igual o inferior al coste variable, cada unidad vendida deja cero o pierde dinero. Ningún volumen cubre los costes fijos, y la calculadora avisa de ello en lugar de dar una cifra imposible.</p>
+<h4>Redondear hacia abajo</h4>
+<p>Con 437,5 unidades, vender 437 no basta. Las unidades indivisibles se redondean siempre hacia arriba.</p>
+<h3>Un ejemplo completo, paso a paso</h3>
+<p>Una pastelería tiene 1.800 € al mes de costes fijos. Cada tarta se vende a 24 € y cuesta 9 € en ingredientes y envases.</p>
+<ol>
+<li><strong>Margen de contribución:</strong> 24 − 9 = 15 € por tarta.</li>
+<li><strong>Unidades:</strong> 1.800 ÷ 15 = 120 tartas al mes.</li>
+<li><strong>Facturación:</strong> 120 × 24 = 2.880 € al mes.</li>
+<li><strong>Con 100 tartas:</strong> 100 × 15 − 1.800 = −300 €, una pérdida.</li>
+<li><strong>Con 150 tartas:</strong> 150 × 15 − 1.800 = 450 € de beneficio.</li>
+</ol>
+<p>Si sube el precio a 27 €, el margen de contribución pasa a 18 € y el punto de equilibrio baja a 100 tartas. Con la calculadora de margen comercial puedes ver cómo cambia el margen al modificar el precio.</p>
+<h3>Cómo interpretar el resultado</h3>
+<ul>
+<li><strong>Compara con tu capacidad real.</strong> Si el punto de equilibrio exige más unidades de las que puedes producir o vender, hay que cambiar el precio, bajar costes o replantear el negocio.</li>
+<li><strong>Prueba escenarios.</strong> Pequeños cambios en el precio o en el coste variable mueven mucho las unidades necesarias, porque el margen de contribución es el divisor.</li>
+<li><strong>Recuerda lo que no incluye.</strong> El punto de equilibrio cubre costes, no es un objetivo de ganancia. Para ver cuánto beneficio dejan unos ingresos, usa la calculadora de margen bruto y margen neto.</li>
+<li><strong>Revisa los costes con frecuencia.</strong> Un alquiler nuevo o un cambio de proveedor modifican el resultado.</li>
+</ul>

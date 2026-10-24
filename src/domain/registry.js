@@ -8,14 +8,19 @@
 // Tipos de campo (`kind`):
 //   money  importe (≥ 0)            pct   porcentaje 0-100     rate  porcentaje sin tope (recargo)
 //   qty    cantidad (≥ 0)           select  valor de una lista cerrada (`options`)
+//
+// Campo OPCIONAL (`optional: true`, ver `fo`): si la persona lo deja vacío, la fórmula recibe `null` en vez de un error
+// de número inválido (p. ej. el segundo descuento o las unidades esperadas). Un cero escrito sigue siendo un cero.
 
 const f = (key, kind, def, options) => ({ key, kind, def, ...(options ? { options } : {}) });
+const fo = (key, kind, def) => ({ ...f(key, kind, def), optional: true });
 
-export const CATEGORY_IDS = ['margenes-y-precios', 'facturacion'];
+export const CATEGORY_IDS = ['margenes-y-precios', 'facturacion', 'crecimiento'];
 
 export const CATEGORY_REGISTRY = {
-  'margenes-y-precios': { id: 'margenes-y-precios', tools: ['margen', 'precio', 'rentabilidad'] },
+  'margenes-y-precios': { id: 'margenes-y-precios', tools: ['margen', 'precio', 'recargo', 'descuento', 'rentabilidad'] },
   facturacion: { id: 'facturacion', tools: ['iva'] },
+  crecimiento: { id: 'crecimiento', tools: ['equilibrio', 'roi'] },
 };
 
 export const TOOL_REGISTRY = {
@@ -25,7 +30,7 @@ export const TOOL_REGISTRY = {
     category: 'margenes-y-precios',
     symbol: '%',
     article: 'margen',
-    related: ['precio', 'rentabilidad'],
+    related: ['recargo', 'precio', 'rentabilidad'],
     modes: [
       [f('cost', 'money', 60), f('price', 'money', 100), f('quantity', 'qty', 1)],
       [f('cost', 'money', 80), f('margin', 'pct', 25), f('quantity', 'qty', 1)],
@@ -43,7 +48,7 @@ export const TOOL_REGISTRY = {
     category: 'margenes-y-precios',
     symbol: '€',
     article: 'precio',
-    related: ['margen', 'iva', 'rentabilidad'],
+    related: ['margen', 'recargo', 'descuento', 'iva'],
     modes: [
       [f('cost', 'money', 40), f('extra', 'money', 0), f('margin', 'pct', 35), f('commission', 'pct', 0), f('discount', 'pct', 0), f('vat', 'pct', 21)],
       [f('cost', 'money', 25), f('extra', 'money', 3), f('markup', 'rate', 50), f('commission', 'pct', 0), f('discount', 'pct', 0), f('vat', 'pct', 21)],
@@ -56,10 +61,52 @@ export const TOOL_REGISTRY = {
     category: 'margenes-y-precios',
     symbol: '↗',
     article: 'rentabilidad',
-    related: ['margen', 'precio'],
+    related: ['margen', 'precio', 'equilibrio'],
     modes: [
       [f('sales', 'money', 100000), f('returns', 'money', 0), f('cogs', 'money', 60000), f('operating', 'money', 25000), f('finance', 'money', 1000), f('tax', 'money', 0)],
     ],
+  },
+  recargo: {
+    id: 'recargo',
+    scope: 'universal',
+    bounded: true, // aplica los límites del modelo (MODEL_LIMITS en formulas.js)
+    category: 'margenes-y-precios',
+    symbol: '+%',
+    article: 'recargo',
+    related: ['margen', 'precio', 'descuento'],
+    modes: [[f('cost', 'money', 100), f('markup', 'rate', 25)]],
+  },
+  descuento: {
+    id: 'descuento',
+    scope: 'universal',
+    bounded: true, // aplica los límites del modelo (MODEL_LIMITS en formulas.js)
+    category: 'margenes-y-precios',
+    symbol: '-%',
+    article: 'descuento',
+    related: ['precio', 'margen', 'recargo'],
+    // El segundo descuento es opcional: vacío o 0 = un solo descuento.
+    modes: [[f('price', 'money', 100), f('first', 'pct', 20), fo('second', 'pct', 10)]],
+  },
+  equilibrio: {
+    id: 'equilibrio',
+    scope: 'universal',
+    bounded: true, // aplica los límites del modelo (MODEL_LIMITS en formulas.js)
+    category: 'crecimiento',
+    symbol: '=',
+    article: 'equilibrio',
+    related: ['margen', 'rentabilidad', 'roi', 'precio'],
+    // Las unidades esperadas son opcionales: vacío = no se calcula el resultado esperado.
+    modes: [[f('fixed', 'money', 2000), f('price', 'money', 50), f('variable', 'money', 30), fo('units', 'qty', 150)]],
+  },
+  roi: {
+    id: 'roi',
+    scope: 'universal',
+    bounded: true, // aplica los límites del modelo (MODEL_LIMITS en formulas.js)
+    category: 'crecimiento',
+    symbol: '%',
+    article: 'roi',
+    related: ['rentabilidad', 'equilibrio', 'margen'],
+    modes: [[f('investment', 'money', 1000), f('total', 'money', 1300)]],
   },
   iva: {
     id: 'iva',

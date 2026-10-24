@@ -1,0 +1,83 @@
+<p>Cette calculatrice vous donne le prix final après une ou deux remises successives. Saisissez le prix initial et les pourcentages, et vous obtenez le prix final, l’économie totale et la remise effective, c’est-à-dire le pourcentage réel que vous avez retiré au total. Les remises se multiplient, elles ne s’additionnent pas, et c’est là que la plupart des gens se trompent.</p>
+<h3>Comment utiliser la calculatrice</h3>
+<p>Saisissez trois chiffres :</p>
+<ul>
+<li><strong>Prix initial.</strong> Le prix avant toute réduction.</li>
+<li><strong>Remise.</strong> Le premier pourcentage de réduction, de 0 à 100 %.</li>
+<li><strong>Seconde remise (facultatif).</strong> Un second pourcentage qui s’applique au prix déjà réduit. Si vous le laissez vide ou saisissez 0, seule la première s’applique.</li>
+</ul>
+<p>La remise s’applique au chiffre saisi, avec ou sans taxe. Les résultats sont arrondis à deux décimales à l’affichage, mais les calculs internes ne sont pas arrondis.</p>
+<h3>Comment s’appliquent des remises successives</h3>
+<p>Chaque remise agit sur le prix qu’a laissé la précédente. Les pourcentages se multiplient donc, et la seconde remise retire moins que la première, car elle part d’un prix plus bas.</p>
+<p><strong>Prix final = Prix initial × (1 − remise 1) × (1 − remise 2)</strong></p>
+<p>L’économie totale est la différence entre le prix initial et le prix final :</p>
+<p><strong>Économie = Prix initial − Prix final</strong></p>
+<p>Et la remise effective, qui ne dépend que des pourcentages, est :</p>
+<p><strong>Remise effective (%) = 100 − (100 − remise 1) × (100 − remise 2) ÷ 100</strong></p>
+<p>Exemple de contrôle : un article à 100 avec une remise de 20 % puis une autre de 10 %. La première le ramène à 80 ; la seconde retire 10 % de 80, soit 8, et le prix final est 72. L’économie totale est 28 et la remise effective 28 %, pas 30 %.</p>
+<h3>Pourquoi on n’additionne pas les pourcentages</h3>
+<p>Additionner 20 % et 10 % donnerait 30 % et un prix de 70, mais la seconde remise ne s’applique pas aux 100 d’origine ; elle s’applique aux 80 restants. L’écart augmente avec les pourcentages élevés :</p>
+<table>
+<thead>
+<tr>
+  <th>Remises</th>
+  <th>Somme (erronée)</th>
+  <th>Remise effective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>10 % et 10 %</td>
+  <td>20 %</td>
+  <td>19 %</td>
+</tr>
+<tr>
+  <td>20 % et 10 %</td>
+  <td>30 %</td>
+  <td>28 %</td>
+</tr>
+<tr>
+  <td>30 % et 20 %</td>
+  <td>50 %</td>
+  <td>44 %</td>
+</tr>
+<tr>
+  <td>50 % et 20 %</td>
+  <td>70 %</td>
+  <td>60 %</td>
+</tr>
+<tr>
+  <td>50 % et 50 %</td>
+  <td>100 %</td>
+  <td>75 %</td>
+</tr>
+</tbody>
+</table>
+<p>Deux remises de 50 % n’offrent pas le produit : la première le ramène à la moitié et la seconde retire la moitié de cette moitié, de sorte que l’on paie 25 % du prix initial. Quand on additionne les pourcentages, le prix calculé tombe sous le prix réel et l’acheteur s’attend à une réduction qui n’existe pas.</p>
+<h3>Erreurs fréquentes avec les remises</h3>
+<h4>Additionner les pourcentages</h4>
+<p>C’est l’erreur la plus courante. Avec 20 % et 10 % sur 100, l’addition donne 70 alors que le bon prix est 72. La calculatrice affiche le prix que l’on obtiendrait en additionnant, pour que vous voyiez la différence.</p>
+<h4>Appliquer la seconde remise au prix initial</h4>
+<p>C’est une variante de la même erreur : calculer 10 % de 100 (10) au lieu de 10 % de 80 (8). La seconde remise se calcule toujours sur le prix laissé par la première.</p>
+<h4>Croire que l’ordre compte</h4>
+<p>Ce n’est pas le cas. Appliquer d’abord 10 % puis 20 % laisse aussi 72. Le montant retiré à chaque étape change, pas le résultat final.</p>
+<h4>Penser qu’augmenter puis baisser du même pourcentage ramène au prix initial</h4>
+<p>Si un prix de 100 monte de 20 %, il passe à 120 ; s’il baisse ensuite de 20 %, il finit à 96. Pour annuler une remise de 20 %, il faut augmenter le prix de 25 % : 80 × 1,25 = 100.</p>
+<h4>Oublier l’effet sur la marge</h4>
+<p>Une remise baisse le prix, pas le coût. Si un produit à 100 coûte 60 (un taux de marque de 40 %), une remise de 20 % le vend 80 et le taux de marque tombe à 25 %. Avant de baisser un prix, vérifiez-le avec la calculatrice de marge commerciale.</p>
+<h3>Un exemple complet, pas à pas</h3>
+<p>Un commerce baisse de 15 % un article à 80 et, pour un week-end, accorde en plus 5 % aux clients qui paient avec la carte de fidélité.</p>
+<ol>
+<li><strong>Première remise :</strong> 80 × 0,15 = 12, ce qui ramène le prix à 68.</li>
+<li><strong>Seconde remise :</strong> 68 × 0,05 = 3,40, ce qui ramène le prix à 64,60.</li>
+<li><strong>Économie totale :</strong> 80 − 64,60 = 15,40.</li>
+<li><strong>Remise effective :</strong> 15,40 ÷ 80 = 19,25 %. Additionner 15 % et 5 % aurait donné 20 % et 64.</li>
+</ol>
+<p>Si l’article a coûté 50 au commerce, le taux de marque sur le prix de 64,60 est de 22,60 %. Avec la calculatrice de majoration sur coût, vous voyez quelle majoration représente ce prix de 64,60 pour un coût de 50.</p>
+<h3>Comment lire le résultat</h3>
+<ul>
+<li><strong>Regardez la remise effective.</strong> C’est celle que le client paie ou économise réellement, et elle est presque toujours inférieure à la somme des pourcentages.</li>
+<li><strong>Comparez le prix à votre coût.</strong> Une remise qui fait passer le prix sous le coût revient à vendre à perte.</li>
+<li><strong>Communiquez la remise réelle.</strong> Si vous annoncez « jusqu’à 70 % » en additionnant 50 % et 20 %, la remise effective est en réalité de 60 %.</li>
+<li><strong>Décidez si le prix inclut la taxe.</strong> Le pourcentage est le même avec ou sans taxe, mais le montant économisé change.</li>
+</ul>

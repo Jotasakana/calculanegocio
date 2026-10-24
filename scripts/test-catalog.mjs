@@ -48,7 +48,7 @@ check('planned: pathFor falla (no hay slug)', planned.every((i) => throws(() => 
 check('available: toda ruta existe en la tabla', available.every((i) => urls.has(i.path)), true);
 check('buscador: solo contiene páginas publicadas', es.searchIndex.every((s) => urls.has(s.url)), true);
 check('buscador: no incluye las calculadoras en desarrollo', planned.every((p) => !es.searchIndex.some((s) => s.title === p.title)), true);
-check('URLs españolas conservadas', [...urls].filter((u) => u.startsWith('/es/') && /calculadora|margen|facturacion/.test(u)).sort().join(' '), '/es/calculadora-base-imponible/ /es/calculadora-margen-comercial/ /es/calculadora-precio-de-venta/ /es/facturacion/ /es/margen-bruto-y-margen-neto/ /es/margenes-y-precios/');
+check('URLs españolas conservadas', [...urls].filter((u) => u.startsWith('/es/') && /calculadora|margen|facturacion/.test(u)).sort().join(' '), '/es/calculadora-base-imponible/ /es/calculadora-descuentos-y-precio-final/ /es/calculadora-margen-comercial/ /es/calculadora-precio-de-venta/ /es/calculadora-punto-de-equilibrio/ /es/calculadora-recargo-sobre-coste/ /es/calculadora-roi/ /es/facturacion/ /es/margen-bruto-y-margen-neto/ /es/margenes-y-precios/');
 
 // 4. Estado derivado del registro y mercados (mundo sintético)
 const synth = (extra = {}) => {
@@ -64,7 +64,7 @@ const at = (k) => '/p/' + k.replace(':', '-') + '/';
   const xx = buildCatalog(w, 'xx', yes, at);
   const fiscalPlanned = CATALOG.filter((e) => e.scope === 'fiscal' && !TOOL_REGISTRY[e.id]).map((e) => e.id);
   check('mercado: las fiscales pendientes no salen fuera de su mercado', fiscalPlanned.every((id) => !xx.items.some((i) => i.id === id)), true);
-  check('mercado: las universales pendientes sí salen', xx.items.some((i) => i.id === 'recargo' && i.status === STATUS.planned), true);
+  check('mercado: las universales pendientes sí salen', xx.items.some((i) => i.id === 'variacion' && i.status === STATUS.planned), true);
   w.markets.es = { ...w.markets.es, locales: ['es', 'xx'] };
   const xx2 = buildCatalog(w, 'xx', yes, at);
   check('mercado: dentro de su mercado salen las fiscales pendientes', fiscalPlanned.every((id) => xx2.items.some((i) => i.id === id)), true);
@@ -72,23 +72,23 @@ const at = (k) => '/p/' + k.replace(':', '-') + '/';
 {
   // Promocionar una calculadora = añadirla al registro: pasa a «disponible» sin tocar el catálogo
   const w = synth();
-  w.tools.recargo = { ...structuredClone(w.tools.margen), id: 'recargo', category: 'margenes-y-precios', scope: 'universal' };
-  w.content.es.tools.recargo = { ...structuredClone(w.content.es.tools.margen), menuTitle: 'Recargo', title: 'Recargo', tileText: 'x', tileCta: 'Ir', search: 'recargo' };
+  w.tools.variacion = { ...structuredClone(w.tools.margen), id: 'variacion', category: 'margenes-y-precios', scope: 'universal' };
+  w.content.es.tools.variacion = { ...structuredClone(w.content.es.tools.margen), menuTitle: 'Variación', title: 'Variación', tileText: 'x', tileCta: 'Ir', search: 'variacion' };
   const c = buildCatalog(w, 'es', yes, at);
-  const item = c.items.find((i) => i.id === 'recargo');
+  const item = c.items.find((i) => i.id === 'variacion');
   check('registro: una calculadora nueva pasa a disponible', item.status, STATUS.available);
-  check('registro: y obtiene su ruta', item.path, at('tool:recargo'));
+  check('registro: y obtiene su ruta', item.path, at('tool:variacion'));
   check('registro: los contadores se actualizan', `${c.counts.available}/${c.counts.planned}`, `${es.catalog.counts.available + 1}/${es.catalog.counts.planned - 1}`);
 }
 {
   // Un idioma sin texto para una calculadora pendiente no la muestra (no se promete algo sin traducir)
   const w = synth();
-  delete w.content.xx.catalog.planned.roi;
+  delete w.content.xx.catalog.planned.roas;
   const c = buildCatalog(w, 'xx', yes, at);
-  check('idioma sin texto: la pendiente no se muestra', c.items.some((i) => i.id === 'roi'), false);
+  check('idioma sin texto: la pendiente no se muestra', c.items.some((i) => i.id === 'roas'), false);
   // y la validación avisa
   const problems = validateLocale('xx', w, { readFragment: () => '' }).join('\n');
-  check('validación: avisa del texto que falta', /roi/.test(problems), true);
+  check('validación: avisa del texto que falta', /roas/.test(problems), true);
 }
 
 // 5. Ayudantes

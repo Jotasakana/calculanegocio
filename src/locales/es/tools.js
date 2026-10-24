@@ -5,12 +5,16 @@
 export const slugs = {
   tools: 'herramientas',
   methodology: 'metodologia',
-  categories: { 'margenes-y-precios': 'margenes-y-precios', facturacion: 'facturacion' },
+  categories: { 'margenes-y-precios': 'margenes-y-precios', facturacion: 'facturacion', crecimiento: 'rentabilidad-y-crecimiento' },
   toolPages: {
     margen: 'calculadora-margen-comercial',
     precio: 'calculadora-precio-de-venta',
     rentabilidad: 'margen-bruto-y-margen-neto',
     iva: 'calculadora-base-imponible',
+    recargo: 'calculadora-recargo-sobre-coste',
+    descuento: 'calculadora-descuentos-y-precio-final',
+    equilibrio: 'calculadora-punto-de-equilibrio',
+    roi: 'calculadora-roi',
   },
 };
 
@@ -18,9 +22,9 @@ export const categories = {
   'margenes-y-precios': {
     title: 'Márgenes y precios',
     kicker: 'CATEGORÍA',
-    short: 'Cálculo del margen, el recargo, el precio de venta y la rentabilidad',
+    short: 'Margen, recargo, descuentos, precio de venta y rentabilidad',
     description:
-      'Calculadoras para fijar precios, entender la diferencia entre margen y recargo y analizar la rentabilidad de tu negocio.',
+      'Calculadoras para fijar precios, entender la diferencia entre margen y recargo, aplicar descuentos y analizar la rentabilidad de tu negocio.',
   },
   facturacion: {
     title: 'Facturación',
@@ -28,6 +32,14 @@ export const categories = {
     short: 'Base imponible y desglose del IVA',
     description:
       'Herramientas para trabajar con la base imponible y el IVA de tus facturas: añadir o quitar IVA y desglosar varias líneas.',
+  },
+
+  crecimiento: {
+    title: 'Rentabilidad y crecimiento',
+    kicker: 'CATEGORÍA',
+    short: 'Variación, punto de equilibrio, ROI y publicidad',
+    description:
+      'Calculadoras para saber cuántas unidades necesitas vender para cubrir tus costes fijos y qué retorno te deja una inversión.',
   },
 };
 
@@ -148,6 +160,112 @@ export const tools = {
       { qty1: 'Cantidad línea 1', unit1: 'Precio unitario línea 1', disc1: 'Descuento línea 1', vat1: 'IVA línea 1', qty2: 'Cantidad línea 2', unit2: 'Precio unitario línea 2', vat2: 'IVA línea 2', qty3: 'Cantidad línea 3', unit3: 'Precio unitario línea 3', vat3: 'IVA línea 3' },
     ],
   },
+  recargo: {
+    title: 'Calculadora de recargo sobre coste',
+    menuTitle: 'Recargo sobre coste',
+    metaTitle: 'Calculadora de recargo sobre coste y margen',
+    metaDescription:
+      'Calcula el precio de venta sin impuestos al aplicar un recargo sobre el coste y compáralo con el margen sobre ventas. Con ejemplos resueltos. Gratis.',
+    kicker: 'MÁRGENES Y PRECIOS',
+    desc: 'Aplica un recargo a tu coste y comprueba qué margen sobre ventas representa, para no confundir un porcentaje con el otro.',
+    tileText: 'Pasa del coste al precio con un recargo y compáralo con el margen.',
+    tileCta: 'Calcular recargo',
+    search: 'recargo sobre coste markup precio de venta margen beneficio porcentaje',
+    formulas: [
+      ['Beneficio bruto por unidad', 'Coste × recargo'],
+      ['Precio de venta sin impuestos', 'Coste × (1 + recargo)'],
+      ['Margen sobre ventas equivalente', 'Beneficio ÷ precio de venta × 100 = recargo ÷ (1 + recargo)'],
+      ['Recargo necesario para un margen', 'Margen ÷ (1 − margen)'],
+    ],
+    faq: [
+      ['¿Qué diferencia hay entre recargo y margen?', 'El recargo se calcula sobre el coste y el margen sobre el precio de venta. Con un coste de 100 € y un recargo del 25 %, el precio es 125 €, el beneficio es 25 € y el margen es del 20 %.'],
+      ['¿Cómo paso de recargo a margen, y al revés?', 'Margen = recargo ÷ (1 + recargo) y recargo = margen ÷ (1 − margen). Un recargo del 25 % equivale a un margen del 20 %; para conseguir un margen del 25 % hace falta un recargo del 33,33 %.'],
+      ['¿Por qué un recargo del 100 % no da un margen del 100 %?', 'Porque duplicar el coste deja un beneficio igual al coste, que es la mitad del precio: un margen del 50 %. El recargo puede superar el 100 %; el margen sobre ventas nunca llega a él.'],
+      ['¿El precio que calcula incluye IVA?', 'No. Es el precio de venta antes de impuestos. Si después necesitas añadir IVA, usa la calculadora de precio de venta o la de base imponible.'],
+      ['¿El beneficio calculado es lo que me queda?', 'No. Es el beneficio bruto por unidad, antes de gastos generales, comisiones e impuestos.'],
+    ],
+    modes: ['Aplicar un recargo'],
+    fields: [{ cost: 'Coste del producto', markup: 'Recargo sobre coste' }],
+  },
+  descuento: {
+    title: 'Calculadora de descuentos y precio final',
+    menuTitle: 'Descuentos y precio final',
+    metaTitle: 'Calculadora de descuentos sucesivos y precio final',
+    metaDescription:
+      'Calcula el precio final tras uno o dos descuentos sucesivos, el ahorro total y el descuento efectivo. Con fórmulas y ejemplos resueltos. Gratis.',
+    kicker: 'MÁRGENES Y PRECIOS',
+    desc: 'Aplica uno o dos descuentos sucesivos y obtén el precio final, el ahorro y el descuento efectivo, sin sumar porcentajes por error.',
+    tileText: 'Calcula el precio final, el ahorro y el descuento real de una o dos rebajas.',
+    tileCta: 'Calcular descuento',
+    search: 'descuento rebaja precio final oferta ahorro porcentaje sucesivo',
+    formulas: [
+      ['Precio final', 'Precio inicial × (1 − descuento 1) × (1 − descuento 2)'],
+      ['Ahorro total', 'Precio inicial − precio final'],
+      ['Descuento efectivo', '100 − (100 − descuento 1) × (100 − descuento 2) ÷ 100'],
+    ],
+    faq: [
+      ['¿Por qué dos descuentos del 20 % y del 10 % no suman un 30 %?', 'Porque el segundo se aplica sobre el precio ya rebajado. Con 100 €: el 20 % deja 80 €, el 10 % de 80 € son 8 € y el precio final es 72 €. El ahorro total es 28 €, un descuento efectivo del 28 %.'],
+      ['¿Importa el orden de los descuentos?', 'No. Multiplicar es conmutativo: aplicar primero el 10 % y después el 20 % da el mismo precio final. Lo que cambia es la rebaja en euros de cada paso, no el total.'],
+      ['¿Cómo calculo el descuento efectivo?', 'Con 100 − (100 − d1) × (100 − d2) ÷ 100. Con un 20 % y un 10 %: 100 − 80 × 90 ÷ 100 = 28 %. Solo depende de los porcentajes, no del precio.'],
+      ['¿Puedo usar un solo descuento?', 'Sí. Deja vacío el segundo descuento o escribe 0 y la calculadora aplicará solo el primero.'],
+      ['¿Introduzco el precio con IVA o sin IVA?', 'El que quieras rebajar: el porcentaje se aplica sobre la cifra que escribas. El resultado conserva la misma base, con o sin IVA.'],
+    ],
+    modes: ['Descuentos sucesivos'],
+    fields: [{ price: 'Precio inicial', first: 'Descuento', second: 'Segundo descuento (opcional)' }],
+  },
+  equilibrio: {
+    title: 'Calculadora de punto de equilibrio',
+    menuTitle: 'Punto de equilibrio',
+    metaTitle: 'Calculadora de punto de equilibrio: unidades y ventas',
+    metaDescription:
+      'Calcula cuántas unidades debes vender para cubrir tus costes fijos, la facturación necesaria y el margen de contribución. Con ejemplos resueltos. Gratis.',
+    kicker: 'RENTABILIDAD Y CRECIMIENTO',
+    desc: 'Descubre cuántas unidades tienes que vender para cubrir tus costes fijos y qué facturación supone, a partir del margen de contribución de cada unidad.',
+    tileText: 'Calcula cuántas unidades necesitas vender para empezar a ganar dinero.',
+    tileCta: 'Calcular equilibrio',
+    search: 'punto de equilibrio umbral de rentabilidad costes fijos costes variables margen de contribución break even',
+    formulas: [
+      ['Margen de contribución por unidad', 'Precio de venta − coste variable'],
+      ['Unidades en el punto de equilibrio', 'Costes fijos ÷ margen de contribución (redondeado hacia arriba)'],
+      ['Facturación en el punto de equilibrio', 'Unidades redondeadas × precio de venta'],
+      ['Resultado con un volumen dado', 'Unidades × margen de contribución − costes fijos'],
+    ],
+    faq: [
+      ['¿Qué es el punto de equilibrio?', 'Es el nivel de ventas en el que los ingresos igualan a los costes totales: ni hay beneficio ni hay pérdida. A partir de la unidad siguiente, cada venta aporta beneficio.'],
+      ['¿Qué es el margen de contribución?', 'Es lo que queda de cada venta tras pagar los costes variables de esa unidad. Con un precio de 50 € y un coste variable de 30 €, cada unidad aporta 20 € para cubrir los costes fijos.'],
+      ['¿Por qué se redondea hacia arriba?', 'Porque no se venden fracciones de unidad. Si el cálculo da 437,5 unidades, con 437 todavía hay pérdida y hace falta vender 438.'],
+      ['¿Qué pasa si el precio es igual o inferior al coste variable?', 'Que cada unidad vendida deja cero o pierde dinero, así que ningún volumen cubre los costes fijos. La calculadora lo avisa en lugar de mostrar una cifra imposible.'],
+      ['¿Qué es un coste fijo y qué es un coste variable?', 'Los fijos no cambian con las unidades vendidas en el período (alquiler, seguros, cuotas, sueldos fijos). Los variables sí dependen de ellas (materia prima, envío, comisiones por venta). Si un coste es mixto, reparte su parte fija y su parte variable.'],
+    ],
+    modes: ['Punto de equilibrio'],
+    fields: [{ fixed: 'Costes fijos del período', price: 'Precio de venta por unidad', variable: 'Coste variable por unidad', units: 'Unidades que esperas vender (opcional)' }],
+  },
+  roi: {
+    title: 'Calculadora de ROI',
+    menuTitle: 'ROI de una inversión',
+    metaTitle: 'Calculadora de ROI: retorno de una inversión',
+    metaDescription:
+      'Calcula el beneficio neto y el ROI porcentual de una inversión a partir de lo invertido y del retorno total. Con ejemplos resueltos y sus límites. Gratis.',
+    kicker: 'RENTABILIDAD Y CRECIMIENTO',
+    desc: 'Calcula el beneficio o la pérdida neta y el ROI porcentual de una inversión a partir de lo que invertiste y de lo que has recuperado en total.',
+    tileText: 'Mide cuánto has ganado o perdido respecto a lo que invertiste.',
+    tileCta: 'Calcular ROI',
+    search: 'roi retorno de la inversión rentabilidad beneficio neto inversión porcentaje',
+    formulas: [
+      ['Beneficio o pérdida neta', 'Retorno total − inversión inicial'],
+      ['ROI', '(Retorno total − inversión inicial) ÷ inversión inicial × 100'],
+      ['Retorno por unidad invertida', 'Retorno total ÷ inversión inicial'],
+    ],
+    faq: [
+      ['¿Qué debo escribir en «Retorno total obtenido»?', 'Todo lo que has recuperado, incluida la inversión. Si invertiste 1.000 € y hoy tienes 1.300 €, el retorno total es 1.300 €, no 300 €. La calculadora resta la inversión por ti.'],
+      ['¿ROI y ROAS son lo mismo?', 'No. El ROAS divide los ingresos de una campaña entre su gasto en publicidad; el ROI usa el beneficio neto sobre lo invertido. Con 500 € de publicidad que generan 2.000 € de ventas el ROAS es 4, pero si los productos vendidos costaron 1.200 €, el beneficio es de 300 € y el ROI de esos 500 € es del 60 %.'],
+      ['¿El ROI es una rentabilidad anual?', 'No: no tiene en cuenta el tiempo. Un 30 % obtenido en tres años equivale a un 9,14 % anual compuesto, y un 30 % obtenido en un año es muy distinto. Esta calculadora no anualiza el resultado.'],
+      ['¿Qué significa un ROI negativo?', 'Que has recuperado menos de lo invertido. Si inviertes 5.000 € y recuperas 4.000 €, pierdes 1.000 € y el ROI es del −20 %. Un ROI del −100 % significa que no has recuperado nada.'],
+      ['¿Qué pasa si la inversión inicial es cero?', 'El ROI no se puede calcular, porque habría que dividir entre cero. La calculadora te pide una inversión mayor que cero.'],
+    ],
+    modes: ['Retorno de una inversión'],
+    fields: [{ investment: 'Inversión inicial', total: 'Retorno total obtenido (con la inversión)' }],
+  },
 };
 
 /** Etiquetas de los valores de los campos de lista cerrada. */
@@ -159,4 +277,8 @@ export const autolinkPhrases = [
   ['calculadora de precio de venta', 'precio'],
   ['calculadora de margen bruto y margen neto', 'rentabilidad'],
   ['calculadora de base imponible', 'iva'],
+  ['calculadora de recargo sobre coste', 'recargo'],
+  ['calculadora de descuentos y precio final', 'descuento'],
+  ['calculadora de punto de equilibrio', 'equilibrio'],
+  ['calculadora de ROI', 'roi'],
 ];
