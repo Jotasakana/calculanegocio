@@ -10,7 +10,7 @@ import { REAL_WORLD, publishedLocales } from '../src/i18n/publish.js';
 const root = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, '..', 'dist'));
 if (!fs.existsSync(root)) { console.error(`No existe ${root}. Ejecuta antes: npm run build`); process.exit(1); }
 const site = (process.env.SITE_URL || 'https://calculanegocio.com').replace(/\/$/, '');
-const indexed = process.env.SITE_INDEXABLE === 'true';
+const indexed = process.env.SITE_INDEXABLE !== 'false';
 const problems = [];
 const bad = (m) => problems.push(m);
 let checks = 0;
@@ -45,7 +45,7 @@ for (const r of table) {
   ok(new RegExp(`<html\\b[^>]*\\blang="${loc.hreflang}"`, 'i').test(html), `${r.path}: lang debería ser ${loc.hreflang}`);
   ok(html.includes(`<link rel="canonical" href="${site}${r.path}"`), `${r.path}: canonical propio incorrecto`);
   const robots = html.match(/<meta\b[^>]*name="robots"[^>]*>/i)?.[0] ?? '';
-  ok(indexed ? !/noindex/i.test(robots) : /noindex,nofollow/i.test(robots), `${r.path}: robots inesperado (${robots})`);
+  ok(indexed ? (r.locale === 'es' ? !/noindex/i.test(robots) : /noindex,follow/i.test(robots)) : /noindex,follow/i.test(robots), `${r.path}: robots inesperado (${robots})`);
   ok(/<meta\b[^>]*property="og:locale"[^>]*content="[a-z]{2}_[A-Z]{2}"/i.test(html) || /content="[a-z]{2}_[A-Z]{2}"[^>]*property="og:locale"/i.test(html), `${r.path}: falta og:locale`);
 
   // hreflang: exactamente las versiones equivalentes, recíprocas y absolutas
