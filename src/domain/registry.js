@@ -38,6 +38,8 @@ export const TOOL_REGISTRY = {
     // margen y la comisión es universal y está en src/domain/formulas.js; una versión sin IVA podría ser universal.
     scope: 'fiscal',
     market: 'es',
+    // Fuera de su mercado se ofrece una versión GENÉRICA: aplica el porcentaje que escribe la persona (ver MARKET_GENERIC).
+    genericRate: true,
     category: 'margenes-y-precios',
     symbol: '€',
     article: 'precio',
@@ -64,6 +66,7 @@ export const TOOL_REGISTRY = {
     // Los tipos de IVA, su aplicación y el redondeo de facturas son normativa de cada país: fiscal.
     scope: 'fiscal',
     market: 'es',
+    genericRate: true,
     category: 'facturacion',
     symbol: '≡',
     article: 'iva',

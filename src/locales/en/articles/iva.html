@@ -1,0 +1,117 @@
+<p>This calculator handles three common situations. You have a total including tax and want to know the base, you have a base and want to add tax to it, or you have an invoice with several lines and different tax rates and need the breakdown. You can add or remove tax on any amount and see the base, the tax and the total.</p>
+<p>The calculator applies the percentage you type, whether you call it VAT, sales tax, GST or something else. It does not know the rates or rules of any country: the initial values are only editable illustrations.</p>
+<h3>How to use the calculator</h3>
+<p>There are three modes:</p>
+<ul>
+<li><strong>Add tax:</strong> enter the tax base and the tax rate. You get the tax amount and the total.</li>
+<li><strong>Remove tax:</strong> enter the total including tax and the rate. You get the base and the tax amount.</li>
+<li><strong>Several lines:</strong> for each line, enter the quantity, the unit price before tax, an optional discount and the tax rate. You get a breakdown by rate.</li>
+</ul>
+<p>The tax rate is editable. The examples use 10% and 5% as illustrative figures. The rate that applies to each transaction depends on its nature and on the rules of your country, which you can check on your tax authority’s website.</p>
+<h3>What is the tax base</h3>
+<p>The tax base is the amount on which tax is calculated. On an invoice it corresponds to the amount of the transaction <strong>before tax</strong>, once the discounts shown on the invoice have been applied. The tax amount is the result of applying the rate to that base, and the total is the sum of the two.</p>
+<h3>Formulas</h3>
+<h4>Adding tax to a base</h4>
+<p><strong>Tax = Base × rate</strong></p>
+<h4>Removing tax from a total (finding the base)</h4>
+<p><strong>Base = Total ÷ (1 + rate)</strong></p>
+<p>The tax is then calculated as the difference, so that base and tax always add up exactly to the total.</p>
+<h3>Example 1: adding tax to a base</h3>
+<p>A base of 1,250.00 and a rate of 10%:</p>
+<ul>
+<li>Tax: 1,250 × 0.10 = <strong>125.00</strong></li>
+<li>Total: <strong>1,375.00</strong></li>
+</ul>
+<h3>Example 2: finding the base from the total</h3>
+<p>A total of 605.00 including tax, at a 10% rate:</p>
+<ul>
+<li>Base: 605 ÷ 1.10 = <strong>550.00</strong></li>
+<li>Tax: 605 − 550 = <strong>55.00</strong></li>
+</ul>
+<h3>Example 3: an invoice with several lines</h3>
+<table>
+<thead>
+<tr>
+  <th>Line</th>
+  <th>Calculation</th>
+  <th>Discount</th>
+  <th style="text-align:right">Line base</th>
+  <th style="text-align:right">Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>3 × 120.00 = 360.00</td>
+  <td>10%</td>
+  <td style="text-align:right">324.00</td>
+  <td style="text-align:right">10%</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>1 × 450.00</td>
+  <td>—</td>
+  <td style="text-align:right">450.00</td>
+  <td style="text-align:right">10%</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>12 × 8.50 = 102.00</td>
+  <td>—</td>
+  <td style="text-align:right">102.00</td>
+  <td style="text-align:right">5%</td>
+</tr>
+</tbody>
+</table>
+<p>The calculator groups by rate:</p>
+<table>
+<thead>
+<tr>
+  <th>Rate</th>
+  <th style="text-align:right">Base</th>
+  <th style="text-align:right">Tax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>5%</td>
+  <td style="text-align:right">102.00</td>
+  <td style="text-align:right">5.10</td>
+</tr>
+<tr>
+  <td>10%</td>
+  <td style="text-align:right">324.00 + 450.00 = 774.00</td>
+  <td style="text-align:right">77.40</td>
+</tr>
+<tr>
+  <td><strong>Total</strong></td>
+  <td style="text-align:right"><strong>876.00</strong></td>
+  <td style="text-align:right"><strong>82.50</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Invoice total: 876.00 + 82.50 = 958.50.</strong></p>
+<h3>How rounding works</h3>
+<p>The calculator works in the smallest currency unit: it rounds the base and the tax to two decimals (halves are rounded up), so that base + tax always equals the total shown. With several lines, it rounds the base of each line and calculates the tax on the total base of each rate. It shows this criterion on screen.</p>
+<p>A case where rounding matters: a total of 100.00 with a 10% tax rate. The base is 100 ÷ 1.10 = 90.9090…, shown as 90.91. The tax is calculated as the difference, 100.00 − 90.91 = 9.09, so 90.91 + 9.09 add up to exactly 100.00.</p>
+<p>If you calculate line by line and round each one, a difference of a cent or so can appear compared with the calculation by rate. Apply the same criterion throughout your invoicing.</p>
+<h3>The discount reduces the base</h3>
+<p>A discount shown on a line reduces the base on which tax is calculated. On line 1 of example 3:</p>
+<ul>
+<li>Correct calculation: base of 324.00 → tax of 32.40.</li>
+<li>Wrong calculation: tax on 360.00 (before the discount) → 36.00. That is 3.60 too much.</li>
+</ul>
+<h3>Common mistakes</h3>
+<h4>Subtracting the percentage instead of dividing</h4>
+<p>With a total of 605, subtracting 10% gives 544.50. That is wrong, because the 10% applies to the base, not to the total. The correct base is 605 ÷ 1.10 = 550. Calculating 10% of the total is also wrong: it gives 60.50, when the real tax is 55.00.</p>
+<h4>Calculating the tax before the discount</h4>
+<p>Applying the rate to the undiscounted amount produces more tax than is due (see the previous section).</p>
+<h4>Mixing tax rates in a single base</h4>
+<p>If an invoice has lines with different rates, each rate is calculated separately.</p>
+<h4>Treating tax as income or profit</h4>
+<p>Tax is added to the price and is not part of the business’s margin or profit. A price of 100 before tax and 110 with tax has a margin that is calculated on 100. To see the effect on a specific price, use the selling price calculator, and for the effect on the margin, the profit margin calculator.</p>
+<h4>Confusing tax added to a price with tax withheld from a payment</h4>
+<p>They are different concepts. Tax added to a price is a percentage on top of the base. Where tax is withheld from a payment, that is a separate amount that is handled on its own. This calculator only works with a tax percentage added to a base.</p>
+<h3>Scope of the tool</h3>
+<p>The calculator performs arithmetic with the data and rates you enter. It does not decide which tax rate applies to a transaction, it does not apply the rules of any country, and it does not replace professional advice.</p>
+<p><strong>Official sources:</strong> consult the official information of your country’s tax authority for the applicable rates and the rules on how the tax base is determined. More on how we review the content in <a href="{{methodology}}">Methodology</a>.</p>

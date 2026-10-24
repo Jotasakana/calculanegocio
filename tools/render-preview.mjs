@@ -204,6 +204,13 @@ for (const rt of routeTable()) {
 }
 write('/404.html', notFound({ props: {} }).s);
 write('/', index({ props: {} }).s);
+// robots.txt y sitemap.xml (en Astro salen de src/pages/*.ts): mismas funciones que el proyecto
+{
+  const { sitemapXml } = await mod('src/i18n/sitemap.js');
+  const { SITE } = await mod('src/data/site.js');
+  fs.writeFileSync(path.join(outDir, 'sitemap.xml'), sitemapXml(SITE.url));
+  fs.writeFileSync(path.join(outDir, 'robots.txt'), SITE.indexable ? `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
+}
 fs.cpSync(path.join(root, 'public'), outDir, { recursive: true });
 // Los módulos del navegador (src/scripts → ../lib/present.js …) se sirven tal cual desde /src
 fs.cpSync(path.join(root, 'src'), path.join(outDir, 'src'), { recursive: true });

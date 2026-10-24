@@ -84,14 +84,18 @@ function audit() {
 const browser = await chromium.launch();
 let n = 0;
 try {
-  for (const url of urls) for (const w of [390, 1280]) {
+  for (const url of urls) for (const w of [320, 390, 1280]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 900 } });
     const page = await ctx.newPage();
     await page.goto(base + url, { waitUntil: 'networkidle' });
-    const r = await page.evaluate(audit);
-    n++;
-    for (const e of r.errors) errors.push(`${url} · ${w}px: ${e}`);
-    for (const e of r.warnings) warnings.push(`${url} · ${w}px: ${e}`);
+    // Página normal y con el selector de idioma desplegado (nombres, contraste y tamaño de sus enlaces).
+    for (const [state, open] of [['', false], [' · selector abierto', true]]) {
+      if (open) { if (!(await page.$('[data-langswitch]'))) continue; await page.evaluate(() => { document.querySelector('[data-langswitch]').open = true; }); }
+      const r = await page.evaluate(audit);
+      n++;
+      for (const e of r.errors) errors.push(`${url} · ${w}px${state}: ${e}`);
+      for (const e of r.warnings) warnings.push(`${url} · ${w}px${state}: ${e}`);
+    }
     await ctx.close();
   }
 } finally { await browser.close(); server.close(); }

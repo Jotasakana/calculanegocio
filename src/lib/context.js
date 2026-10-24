@@ -2,7 +2,7 @@
 // publicadas, calculador con su moneda por defecto). Función pura y probada en scripts/test-pages.mjs;
 // las plantillas .astro solo pintan lo que devuelve.
 
-import { REAL_WORLD, isPublished, publishedLocales } from '../i18n/publish.js';
+import { REAL_WORLD, isPublished, publishedLocales, marketFor } from '../i18n/publish.js';
 import { pathFor } from '../i18n/routes.js';
 import { createCalculator } from './present.js';
 import { currencyOptions } from '../i18n/currencies.js';
@@ -25,16 +25,23 @@ export function buildContext(localeCode, world = REAL_WORLD) {
   const toolView = (id) => {
     const reg = world.tools[id];
     const txt = content.tools[id];
+    // Mercado que habilita la calculadora en este idioma (null en las universales). El genérico no es un país.
+    const market = marketFor(localeCode, id, world);
+    const generic = market?.kind === 'generic';
     return {
       id, key: 'tool:' + id, path: path('tool:' + id), scope: reg.scope, category: reg.category, symbol: reg.symbol,
       article: reg.article, related: reg.related.filter((r) => published('tool:' + r)), ...txt,
       // `modes`/`fields` del texto son etiquetas; las especificaciones de los campos (tipo, valor inicial) son neutrales.
       specs: reg.modes, modeLabels: txt.modes, labels: txt.fields,
-      // Las calculadoras fiscales tienen moneda fija (la de su mercado); las universales permiten elegirla.
-      currency: reg.scope === 'fiscal' ? world.markets[reg.market].currency : null,
-      currencyFixed: reg.scope === 'fiscal',
-      // Calculadora fiscal de un mercado que aún no está verificado con fuentes oficiales: se avisa en la ficha.
-      fiscalPending: reg.scope === 'fiscal' && !world.markets[reg.market]?.verified,
+      // Las calculadoras de un país tienen moneda fija (la de su mercado); las universales y las genéricas permiten elegirla.
+      currency: market && !generic ? market.currency : null,
+      currencyFixed: Boolean(market) && !generic,
+      // Ligada a la normativa de un país (insignia «España»). La versión genérica no lo está.
+      countryBound: reg.scope === 'fiscal' && !generic,
+      // Versión genérica: aplica el porcentaje que escribe la persona, sin normas de ningún país.
+      generic,
+      // Calculadora de un país que aún no está verificado con fuentes oficiales: se avisa en la ficha.
+      fiscalPending: Boolean(market) && !generic && !market.verified,
     };
   };
   const tools = Object.keys(world.tools).filter((id) => published('tool:' + id)).map(toolView);
@@ -49,11 +56,16 @@ export function buildContext(localeCode, world = REAL_WORLD) {
   const catalog = buildCatalog(world, localeCode, published, path);
   const featuredTools = FEATURED_TOOLS.filter((id) => toolById[id]).map((id) => toolById[id]);
 
-  /** Versiones publicadas de una página en todos los idiomas (para el selector de idioma). */
+  /**
+   * Opciones del selector de idioma: TODOS los idiomas publicados. Cada una lleva a la página equivalente si existe en
+   * ese idioma (`equivalent: true`) y, si no, a su portada: nunca a una URL inexistente. Fuera de la tabla de rutas
+   * (404) todas llevan a la portada. Solo hay selector si hay más de un idioma publicado.
+   */
   const versions = (pageKey) =>
-    pageKey
-      ? publishedLocales(world).filter((l) => isPublished(l, pageKey, world)).map((l) => ({ code: l, name: world.locales[l].name, hreflang: world.locales[l].hreflang, href: pathFor(l, pageKey, world), current: l === localeCode }))
-      : [];
+    publishedLocales(world).map((l) => {
+      const equivalent = Boolean(pageKey) && isPublished(l, pageKey, world);
+      return { code: l, name: world.locales[l].name, hreflang: world.locales[l].hreflang, href: pathFor(l, equivalent ? pageKey : 'home', world), current: l === localeCode, equivalent };
+    });
 
   return {
     locale: localeCode,

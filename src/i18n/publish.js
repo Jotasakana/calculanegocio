@@ -11,7 +11,14 @@ import { MARKETS } from '../markets/es.js';
 import { TOOL_REGISTRY, CATEGORY_REGISTRY } from '../domain/registry.js';
 import { CATALOG, CATALOG_CATEGORIES } from '../domain/catalog.js';
 
+// Estados editoriales:
+//   source / reviewed  -> se publican siempre.
+//   unreviewed         -> traducción hecha pero SIN revisión nativa registrada: solo se publica en el modo de
+//                         desarrollo (SITE_INDEXABLE distinto de "true"). Al activar la indexación desaparece sola
+//                         hasta que una persona la revise y se registre como 'reviewed'. Nunca se simula una revisión.
 export const PUBLISHABLE = new Set(['source', 'reviewed']);
+const UNREVIEWED_OK = process.env.SITE_INDEXABLE !== 'true';
+export const isPublishableStatus = (status, world) => PUBLISHABLE.has(status) || (status === 'unreviewed' && (world?.allowUnreviewed ?? UNREVIEWED_OK));
 
 export const REAL_WORLD = { locales: LOCALES, content: CONTENT, markets: MARKETS, tools: TOOL_REGISTRY, categories: CATEGORY_REGISTRY, catalog: CATALOG, catalogCategories: CATALOG_CATEGORIES };
 
@@ -20,18 +27,31 @@ export function reviewOf(localeCode, pageKey, world = REAL_WORLD) {
   return r?.pages?.[pageKey] ?? r?.default ?? { status: 'draft' };
 }
 
-/** ¿Está disponible la calculadora en ese idioma? (las fiscales solo en los idiomas de su mercado). */
+/**
+ * Mercado que habilita una calculadora fiscal en un idioma: el suyo (p. ej. España) o, si la calculadora lo admite
+ * (`genericRate`), el mercado genérico de porcentajes. null = no disponible en ese idioma. Las universales no necesitan mercado.
+ */
+export function marketFor(localeCode, toolId, world = REAL_WORLD) {
+  const tool = world.tools[toolId];
+  if (!tool || tool.scope === 'universal') return null;
+  const own = world.markets[tool.market];
+  if (own?.locales.includes(localeCode)) return own;
+  if (tool.genericRate) return Object.values(world.markets).find((m) => m.kind === 'generic' && m.locales.includes(localeCode)) ?? null;
+  return null;
+}
+
+/** ¿Está disponible la calculadora en ese idioma? (las fiscales solo en los idiomas de su mercado o del genérico). */
 export function toolAvailable(localeCode, toolId, world = REAL_WORLD) {
   const tool = world.tools[toolId];
   if (!tool) return false;
   if (tool.scope === 'universal') return true;
-  return world.markets[tool.market]?.locales.includes(localeCode) ?? false;
+  return marketFor(localeCode, toolId, world) !== null;
 }
 
 /** pageKey: 'home' | 'tools' | 'methodology' | 'category:<id>' | 'tool:<id>' */
 export function isPublished(localeCode, pageKey, world = REAL_WORLD) {
   if (world.locales[localeCode]?.status !== 'enabled' || !world.content[localeCode]) return false;
-  if (!PUBLISHABLE.has(reviewOf(localeCode, pageKey, world).status)) return false;
+  if (!isPublishableStatus(reviewOf(localeCode, pageKey, world).status, world)) return false;
   if (pageKey.startsWith('tool:')) return toolAvailable(localeCode, pageKey.slice(5), world);
   if (pageKey.startsWith('category:')) {
     const cat = world.categories[pageKey.slice(9)];

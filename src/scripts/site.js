@@ -19,6 +19,19 @@ if (toggle && nav) {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
 }
 
+// Selector de idioma: se cierra con Escape, al pulsar fuera o al abrir el menú móvil (sin él también funciona: es un <details>).
+const langBoxes = [...document.querySelectorAll('[data-langswitch]')];
+if (langBoxes.length) {
+  const closeAll = (except) => { for (const d of langBoxes) if (d !== except) d.open = false; };
+  document.addEventListener('click', (e) => closeAll(e.target.closest('[data-langswitch]')));
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const open = langBoxes.find((d) => d.open);
+    if (open) { open.open = false; open.querySelector('summary')?.focus(); }
+  });
+  toggle?.addEventListener('click', () => closeAll());
+}
+
 // Buscador de la portada
 const input = document.getElementById('mainSearch');
 const out = document.getElementById('searchResults');

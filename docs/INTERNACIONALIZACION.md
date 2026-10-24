@@ -1,7 +1,8 @@
 # Arquitectura internacional de CalculaNegocio
 
-Estado: **Fase 2A** (rama `fase2a-i18n-arquitectura`). Solo está publicado el español; el resto de idiomas están
-registrados pero **no generan ninguna página**.
+Estado: **Fase 3A**. Publicados: `es` (fuente), `en` y `pt-br` (estado `unreviewed`, solo en modo desarrollo). El resto de idiomas
+están registrados pero **no generan ninguna página**. Novedades de la 3A: estado `unreviewed`, mercado `generic` y selector de idioma
+(ver `CAMBIOS-FASE3A.md`).
 
 ## Principio: tres capas que no se mezclan
 
