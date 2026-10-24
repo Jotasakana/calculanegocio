@@ -4,7 +4,7 @@
 import { calculate } from '../domain/formulas.js';
 import { TOOL_REGISTRY } from '../domain/registry.js';
 import { getLocale } from '../i18n/locales.js';
-import { makeFormatter, parseDecimal, decimalSeparator, currencyExponent, toInputString } from '../i18n/numbers.js';
+import { makeFormatter, parseDecimal, decimalSeparator, usesIndianGrouping, currencyExponent, toInputString } from '../i18n/numbers.js';
 
 /** Traductor: t('clave', { marcador: 'valor' }, cantidad?) con plurales según las reglas del idioma. */
 export function makeTranslator(localeCode, messages) {
@@ -49,7 +49,8 @@ export function createCalculator(content, currency) {
   const f = makeFormatter(localeCode, currency);
   const t = makeTranslator(localeCode, content.messages);
   const dec = decimalSeparator(localeCode);
-  const parse = (s) => parseDecimal(s, dec);
+  const indian = usesIndianGrouping(localeCode);
+  const parse = (s) => parseDecimal(s, dec, { indian });
   const exponent = currencyExponent(currency);
 
   // Acepta tanto el valor neutro ('yes') como la etiqueta visible del idioma ('Sí').

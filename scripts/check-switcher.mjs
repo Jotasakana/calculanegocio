@@ -52,13 +52,13 @@ try {
       ok((await page.locator('[data-langswitch] ul').isVisible()) === false, `${locale} ${w}px: el desplegable debería empezar cerrado`);
       // Visible: el texto es el nombre del idioma (ordenador) o su abreviatura (móvil estrecho)
       const shown = (await sum.innerText()).trim();
-      ok(w > 480 ? shown.includes({ es: 'Español', en: 'English', 'pt-br': 'Português' }[locale]) : /^(ES|EN|PT)$/.test(shown), `${locale} ${w}px: texto visible del selector inesperado («${shown}»)`);
+      ok(w > 480 ? shown.includes({ es: 'Español', en: 'English', 'pt-br': 'Português', de: 'Deutsch', fr: 'Français', hi: 'हिन्दी' }[locale]) : /^(ES|EN|PT|DE|FR|HI)$/.test(shown), `${locale} ${w}px: texto visible del selector inesperado («${shown}»)`);
       await sum.click();
       ok(await page.locator('[data-langswitch] ul').isVisible(), `${locale} ${w}px: el desplegable no se abre`);
       const ub = await page.locator('[data-langswitch] ul').boundingBox();
       ok(ub && ub.x >= -1 && ub.x + ub.width <= w + 1, `${locale} ${w}px: el desplegable se sale de la pantalla (${JSON.stringify(ub)})`);
       const names = await page.locator('[data-langswitch] li a span').allInnerTexts();
-      ok(names.join() === 'Español,English,Português (Brasil)', `${locale} ${w}px: opciones del desplegable (${names})`);
+      ok(names.join() === 'Español,English,Português (Brasil),Deutsch,Français,हिन्दी', `${locale} ${w}px: opciones del desplegable (${names})`);
       ok((await page.locator('[data-langswitch] a[aria-current]').getAttribute('data-lang-code')) === locale, `${locale} ${w}px: idioma actual mal marcado`);
       // Cierre: Escape devuelve el foco al botón; clic fuera lo cierra; abrir el menú móvil también
       await page.keyboard.press('Escape');
@@ -71,6 +71,26 @@ try {
       ok(noHscroll, `${locale} ${w}px: desplazamiento horizontal con el selector`);
       await c.close();
     }
+  }
+
+  // 1b. Pantallas bajas (móvil horizontal, 320 px de alto): el desplegable de seis idiomas cabe en la ventana o se desplaza dentro de ella
+  for (const [w, h] of [[320, 568], [568, 320], [375, 480]]) {
+    const locale = locales.at(-1);
+    const c = await browser.newContext({ viewport: { width: w, height: h } });
+    const page = await c.newPage();
+    await page.goto(base + pathFor(locale, 'home'), { waitUntil: 'networkidle' });
+    await page.locator('[data-langswitch] summary').click();
+    const ub = await page.locator('[data-langswitch] ul').boundingBox();
+    ok(ub && ub.y >= 0 && ub.y + ub.height <= h + 1 && ub.x >= -1 && ub.x + ub.width <= w + 1, `${w}x${h}: el desplegable no cabe en la ventana (${JSON.stringify(ub)})`);
+    const reach = await page.locator('[data-langswitch] ul').evaluate((ul) => ul.scrollHeight >= ul.clientHeight);
+    ok(reach, `${w}x${h}: el desplegable no es desplazable`);
+    // Se puede llegar a la última opción
+    await page.locator(`[data-langswitch] a[data-lang-code="${locales[0]}"]`).scrollIntoViewIfNeeded();
+    await page.locator(`[data-langswitch] a[data-lang-code="${locales.at(-1)}"]`).scrollIntoViewIfNeeded();
+    const last = await page.locator(`[data-langswitch] a[data-lang-code="${locales.at(-1)}"]`).boundingBox();
+    ok(last && last.y >= 0 && last.y + last.height <= h + 1, `${w}x${h}: la última opción no es alcanzable (${JSON.stringify(last)})`);
+    ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${w}x${h}: desplazamiento horizontal`);
+    await c.close();
   }
 
   // 2. Funciona con el teclado
@@ -113,8 +133,10 @@ try {
     const prefix = '/' + ctx.loc.prefix + '/';
     ok(hrefs.every((h) => h === '/favicon.svg' || h.startsWith(prefix) || h.startsWith('/_astro/') || h.startsWith('/src/')), `${locale}: la portada enlaza fuera de su idioma: ${hrefs.filter((h) => !h.startsWith(prefix)).join(' ')}`);
     // Recorrido: portada → calculadora (menú) → categoría (migas) → inicio (logotipo)
-    await page.locator('#mobileToggle').click();
-    await page.locator(`header nav a[href="${ctx.toolById.margen.path}"], header nav a[href="${ctx.path('tools')}"]`).click();
+    // El menú horizontal pasa a menú compacto según el ancho: solo se pulsa el botón y los enlaces si están visibles.
+    const toggle = page.locator('#mobileToggle');
+    if (await toggle.isVisible()) await toggle.click();
+    await page.locator(`header nav a[href="${ctx.path('tools')}"]`).click();
     ok(new URL(page.url()).pathname.startsWith(prefix), `${locale}: el menú cambió de idioma`);
     await page.goto(base + ctx.toolById.precio.path, { waitUntil: 'load' });
     await page.click('.logo');

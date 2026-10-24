@@ -2,6 +2,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { routeTable } from '../src/i18n/routes.js';
+import { publishedLocales } from '../src/i18n/publish.js';
+import { LOCALES } from '../src/i18n/locales.js';
 
 const root = path.resolve('dist');
 if (!fs.existsSync(root)) { console.error('No existe dist/. Ejecuta npm run build primero.'); process.exit(1); }
@@ -32,7 +34,7 @@ for (const r of routes) {
 for (const [p, html] of pages) {
   for (const match of html.matchAll(/\bhref=["'](\/[\w\-/]*)(#[\w-]+)?["']/g)) {
     const href = match[1];
-    if (!href.startsWith('/es/') && !href.startsWith('/en/') && !href.startsWith('/pt-')) continue;
+    if (!publishedLocales().some((l) => href.startsWith('/' + LOCALES[l].prefix + '/'))) continue;
     const target = href.endsWith('/') ? href : href + '/';
     if (!expected.has(target)) fail(`${p}: enlace interno roto ${href}`);
     if (match[2] && ids.has(target) && !ids.get(target).has(match[2].slice(1))) fail(`${p}: ancla rota ${href}${match[2]}`);

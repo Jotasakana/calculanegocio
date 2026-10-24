@@ -1,0 +1,117 @@
+<p>Cette calculatrice traite trois situations courantes. Vous avez un total taxe comprise et voulez connaître le montant HT, vous avez un montant HT et voulez y ajouter la taxe, ou vous avez une facture à plusieurs lignes avec des taux différents et il vous faut le détail. Vous pouvez ajouter ou retirer la taxe de n’importe quel montant et voir la base, la taxe et le total.</p>
+<p>La calculatrice applique le pourcentage que vous saisissez, que vous l’appeliez TVA, taxe sur les ventes ou autrement. Elle ne connaît ni les taux ni les règles d’aucun pays : les valeurs initiales ne sont que des illustrations modifiables.</p>
+<h3>Comment utiliser la calculatrice</h3>
+<p>Il y a trois modes :</p>
+<ul>
+<li><strong>Ajouter la taxe :</strong> saisissez le montant HT et le taux de taxe. Vous obtenez la taxe et le total.</li>
+<li><strong>Retirer la taxe :</strong> saisissez le total taxe comprise et le taux. Vous obtenez le montant HT et la taxe.</li>
+<li><strong>Plusieurs lignes :</strong> pour chaque ligne, saisissez la quantité, le prix unitaire hors taxe, une remise facultative et le taux de taxe. Vous obtenez un détail par taux.</li>
+</ul>
+<p>Le taux de taxe est modifiable. Les exemples utilisent 10 % et 5 % à titre d’illustration. Le taux qui s’applique à chaque opération dépend de sa nature et des règles de votre pays, que vous pouvez consulter sur le site de votre administration fiscale.</p>
+<h3>Qu’est-ce que le montant HT</h3>
+<p>Le montant HT (hors taxe) est la base sur laquelle la taxe est calculée. Sur une facture, il correspond au montant de l’opération <strong>avant taxe</strong>, une fois appliquées les remises figurant sur la facture. La taxe est le résultat de l’application du taux à cette base, et le total est la somme des deux.</p>
+<h3>Formules</h3>
+<h4>Ajouter la taxe à un montant HT</h4>
+<p><strong>Taxe = Montant HT × taux</strong></p>
+<h4>Retirer la taxe d’un total (retrouver le montant HT)</h4>
+<p><strong>Montant HT = Total ÷ (1 + taux)</strong></p>
+<p>La taxe est ensuite calculée par différence, de sorte que montant HT et taxe totalisent toujours exactement le total.</p>
+<h3>Exemple 1 : ajouter la taxe à un montant HT</h3>
+<p>Un montant HT de 1 250,00 et un taux de 10 % :</p>
+<ul>
+<li>Taxe : 1 250 × 0,10 = <strong>125,00</strong></li>
+<li>Total : <strong>1 375,00</strong></li>
+</ul>
+<h3>Exemple 2 : retrouver le montant HT à partir du total</h3>
+<p>Un total de 605,00 taxe comprise, au taux de 10 % :</p>
+<ul>
+<li>Montant HT : 605 ÷ 1,10 = <strong>550,00</strong></li>
+<li>Taxe : 605 − 550 = <strong>55,00</strong></li>
+</ul>
+<h3>Exemple 3 : une facture à plusieurs lignes</h3>
+<table>
+<thead>
+<tr>
+  <th>Ligne</th>
+  <th>Calcul</th>
+  <th>Remise</th>
+  <th style="text-align:right">Base de la ligne</th>
+  <th style="text-align:right">Taux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>3 × 120,00 = 360,00</td>
+  <td>10 %</td>
+  <td style="text-align:right">324,00</td>
+  <td style="text-align:right">10 %</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>1 × 450,00</td>
+  <td>—</td>
+  <td style="text-align:right">450,00</td>
+  <td style="text-align:right">10 %</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>12 × 8,50 = 102,00</td>
+  <td>—</td>
+  <td style="text-align:right">102,00</td>
+  <td style="text-align:right">5 %</td>
+</tr>
+</tbody>
+</table>
+<p>La calculatrice regroupe par taux :</p>
+<table>
+<thead>
+<tr>
+  <th>Taux</th>
+  <th style="text-align:right">Base</th>
+  <th style="text-align:right">Taxe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>5 %</td>
+  <td style="text-align:right">102,00</td>
+  <td style="text-align:right">5,10</td>
+</tr>
+<tr>
+  <td>10 %</td>
+  <td style="text-align:right">324,00 + 450,00 = 774,00</td>
+  <td style="text-align:right">77,40</td>
+</tr>
+<tr>
+  <td><strong>Total</strong></td>
+  <td style="text-align:right"><strong>876,00</strong></td>
+  <td style="text-align:right"><strong>82,50</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total de la facture : 876,00 + 82,50 = 958,50.</strong></p>
+<h3>Comment fonctionnent les arrondis</h3>
+<p>La calculatrice travaille dans la plus petite unité de la devise : elle arrondit le montant HT et la taxe à deux décimales (les demis sont arrondis vers le haut), de sorte que montant HT + taxe est toujours égal au total affiché. Avec plusieurs lignes, elle arrondit la base de chaque ligne et calcule la taxe sur la base totale de chaque taux. Elle affiche ce critère à l’écran.</p>
+<p>Un cas où l’arrondi compte : un total de 100,00 avec un taux de taxe de 10 %. Le montant HT est 100 ÷ 1,10 = 90,9090…, affiché 90,91. La taxe est calculée par différence, 100,00 − 90,91 = 9,09, et 90,91 + 9,09 font exactement 100,00.</p>
+<p>Si vous calculez ligne par ligne en arrondissant chacune, un écart d’un centime environ peut apparaître par rapport au calcul par taux. Appliquez le même critère dans toute votre facturation.</p>
+<h3>La remise réduit la base</h3>
+<p>Une remise indiquée sur une ligne réduit la base sur laquelle la taxe est calculée. Sur la ligne 1 de l’exemple 3 :</p>
+<ul>
+<li>Calcul correct : base de 324,00 → taxe de 32,40.</li>
+<li>Calcul erroné : taxe sur 360,00 (avant remise) → 36,00. Soit 3,60 de trop.</li>
+</ul>
+<h3>Erreurs courantes</h3>
+<h4>Soustraire le pourcentage au lieu de diviser</h4>
+<p>Avec un total de 605, soustraire 10 % donne 544,50. C’est faux, car les 10 % s’appliquent à la base, pas au total. Le montant HT correct est 605 ÷ 1,10 = 550. Calculer 10 % du total est faux aussi : cela donne 60,50, alors que la taxe réelle est de 55,00.</p>
+<h4>Calculer la taxe avant la remise</h4>
+<p>Appliquer le taux au montant sans remise produit plus de taxe que nécessaire (voir la section précédente).</p>
+<h4>Mélanger des taux différents dans une même base</h4>
+<p>Si une facture comporte des lignes à des taux différents, chaque taux se calcule séparément.</p>
+<h4>Traiter la taxe comme un revenu ou un bénéfice</h4>
+<p>La taxe s’ajoute au prix et ne fait partie ni de la marge ni du bénéfice de l’entreprise. Un prix de 100 hors taxe et de 110 taxe comprise a une marge calculée sur 100. Pour voir l’effet sur un prix précis, utilisez la calculatrice de prix de vente, et pour l’effet sur la marge, la calculatrice de marge commerciale.</p>
+<h4>Confondre taxe ajoutée à un prix et taxe retenue sur un paiement</h4>
+<p>Ce sont des notions différentes. La taxe ajoutée à un prix est un pourcentage en plus de la base. Lorsqu’une taxe est retenue sur un paiement, c’est un montant distinct, traité à part. Cette calculatrice ne traite qu’un pourcentage de taxe ajouté à une base.</p>
+<h3>Portée de l’outil</h3>
+<p>La calculatrice effectue de l’arithmétique avec les données et les taux que vous saisissez. Elle ne décide pas quel taux de taxe s’applique à une opération, n’applique les règles d’aucun pays et ne remplace pas un conseil professionnel.</p>
+<p><strong>Sources officielles :</strong> consultez les informations officielles de l’administration fiscale de votre pays pour les taux applicables et les règles de détermination de la base. Pour en savoir plus sur notre relecture des contenus, voir la <a href="{{methodology}}">Méthodologie</a>.</p>

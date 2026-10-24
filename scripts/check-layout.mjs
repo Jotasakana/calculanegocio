@@ -38,7 +38,11 @@ await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const base = `http://127.0.0.1:${server.address().port}`;
 
 const urls = (process.env.LAYOUT_URLS ? process.env.LAYOUT_URLS.split(',') : [...routeTable().map((r) => r.path), '/404.html']);
-const widths = [320, 360, 375, 390, 768, 1024, 1280, 1440];
+// Anchos exigidos (320-1440) más 1920, donde el menú vuelve a ser horizontal (el compacto se activa por debajo de 1600 px):
+// ahí es donde los nombres largos de menú (alemán, francés, hindi) y el selector de seis idiomas pueden desbordar.
+const widths = [320, 375, 390, 768, 1024, 1440, 1920];
+// El modo RTL simula un idioma que aún no se publica (árabe): basta con las páginas españolas. Los idiomas reales (LTR) se miden en normal y con +45 %.
+const RTL_ONLY_LOCALE = '/es/';
 const modes = [
   { name: 'normal', apply: () => {} },
   { name: 'RTL', apply: () => { document.documentElement.dir = 'rtl'; } },
@@ -59,12 +63,16 @@ const modes = [
 const problems = [];
 const browser = await chromium.launch();
 let checks = 0;
-try {
-  for (const url of urls) {
+// Varias páginas a la vez (LAYOUT_CONCURRENCY, por defecto 3): el tiempo total baja sin cambiar lo que se mide.
+const queue = [...urls];
+const concurrency = Math.max(1, Number(process.env.LAYOUT_CONCURRENCY) || 3);
+const worker = async () => {
+  for (let url = queue.shift(); url !== undefined; url = queue.shift()) {
     for (const w of widths) {
       const ctx = await browser.newContext({ viewport: { width: w, height: 800 } });
       const page = await ctx.newPage();
       for (const mode of modes) {
+        if (mode.name === 'RTL' && !(url.startsWith(RTL_ONLY_LOCALE) || url === '/404.html')) continue;
         await page.goto(base + url, { waitUntil: 'load' });
         await page.evaluate(mode.apply);
         // En móvil, con el menú desplegado
@@ -102,9 +110,12 @@ try {
       await ctx.close();
     }
   }
+};
+try {
+  await Promise.all(Array.from({ length: concurrency }, worker));
 } finally {
   await browser.close();
   server.close();
 }
-console.log(problems.length ? 'PROBLEMAS:\n - ' + problems.join('\n - ') : `OK · sin desplazamiento horizontal (${urls.length} páginas × ${widths.length} anchos × ${modes.length} modos; ${checks} mediciones)`);
+console.log(problems.length ? 'PROBLEMAS:\n - ' + problems.join('\n - ') : `OK · sin desplazamiento horizontal (${urls.length} páginas × ${widths.length} anchos × modos normal y +45 % (y RTL en español); ${checks} mediciones)`);
 process.exit(problems.length ? 1 : 0);

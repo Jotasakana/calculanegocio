@@ -24,7 +24,7 @@ export const MARKET_GENERIC = {
   id: 'generic',
   kind: 'generic',
   country: null,
-  locales: ['en', 'pt-br'],
+  locales: ['en', 'pt-br', 'de', 'fr', 'hi'],
   currency: null,
   verified: false,
   sources: [],

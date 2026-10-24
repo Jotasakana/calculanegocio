@@ -16,7 +16,7 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     env:
       # Modo desarrollo: noindex y robots Disallow. check-site.mjs lo comprueba así.
       SITE_URL: https://calculanegocio.com

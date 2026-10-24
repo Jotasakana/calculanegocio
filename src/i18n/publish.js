@@ -60,5 +60,12 @@ export function isPublished(localeCode, pageKey, world = REAL_WORLD) {
   return true;
 }
 
+// Un idioma cuenta como publicado solo si tiene al menos UNA página publicada. Con la indexación activada (SITE_INDEXABLE=true)
+// los idiomas 'unreviewed' no generan ninguna página: no deben aparecer en el selector, en hreflang ni en el sitemap
+// (antes de la Fase 3B el selector habría enlazado entonces a páginas inexistentes).
+const hasPublishedPage = (code, world) =>
+  ['home', 'tools', 'methodology', ...Object.keys(world.categories).map((id) => 'category:' + id), ...Object.keys(world.tools).map((id) => 'tool:' + id)]
+    .some((key) => isPublished(code, key, world));
+
 export const publishedLocales = (world = REAL_WORLD) =>
-  Object.values(world.locales).filter((l) => l.status === 'enabled' && world.content[l.code]).map((l) => l.code);
+  Object.values(world.locales).filter((l) => l.status === 'enabled' && world.content[l.code] && hasPublishedPage(l.code, world)).map((l) => l.code);

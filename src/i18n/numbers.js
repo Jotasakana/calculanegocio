@@ -29,6 +29,16 @@ export function decimalSeparator(localeCode) {
   return decimalCache.get(localeCode);
 }
 
+/** ¿El idioma agrupa los miles a la manera india (12,34,567)? Se deduce de Intl (hi-IN, en-IN...). */
+const indianCache = new Map();
+export function usesIndianGrouping(localeCode) {
+  if (!indianCache.has(localeCode)) {
+    const sample = new Intl.NumberFormat(getLocale(localeCode).intl, { useGrouping: 'always' }).format(1234567);
+    indianCache.set(localeCode, /^\d{2},\d{2},\d{3}$/.test(normalizeDigits(sample)));
+  }
+  return indianCache.get(localeCode);
+}
+
 /**
  * Interpreta un número escrito por una persona, según el idioma de la página.
  *
@@ -44,9 +54,11 @@ export function decimalSeparator(localeCode) {
  *  - Se admite un decimal inicial o final mientras se escribe (",5", "5,").
  *  - Vacío, texto, notación científica y cualquier otro formato -> NaN.
  *
+ *  - Con `indian: true` (hi-IN) también se admite la agrupación india: "12,34,567.50" (último grupo de tres cifras y el resto de dos).
+ *
  * Espacios (también los de no ruptura y estrechos de fr), %, € y otros símbolos de moneda comunes se ignoran.
  */
-export function parseDecimal(s, decimal = ',') {
+export function parseDecimal(s, decimal = ',', { indian = false } = {}) {
   const other = decimal === ',' ? '.' : ',';
   const raw = normalizeDigits(String(s ?? ''))
     .trim()
@@ -56,7 +68,10 @@ export function parseDecimal(s, decimal = ',') {
   const x = raw.replace(/^[+-]/, '');
   if (!/\d/.test(x)) return NaN;
 
-  const grouped = (g) => g.length >= 2 && /^[1-9]\d{0,2}$/.test(g[0]) && g.slice(1).every((v) => /^\d{3}$/.test(v));
+  const groupedWestern = (g) => g.length >= 2 && /^[1-9]\d{0,2}$/.test(g[0]) && g.slice(1).every((v) => /^\d{3}$/.test(v));
+  // Agrupación india: 12,34,567 (el último grupo de tres cifras; los anteriores, de dos; el primero de una o dos).
+  const groupedIndian = (g) => g.length >= 3 && /^[1-9]\d?$/.test(g[0]) && g.slice(1, -1).every((v) => /^\d{2}$/.test(v)) && /^\d{3}$/.test(g[g.length - 1]);
+  const grouped = (g) => groupedWestern(g) || (indian && groupedIndian(g));
 
   const hasDec = x.includes(decimal);
   const hasOther = x.includes(other);
