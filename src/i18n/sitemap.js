@@ -8,9 +8,10 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 
 export function sitemapXml(siteUrl, world = REAL_WORLD) {
   const site = siteUrl.replace(/\/+$/, '');
-  const routes = routeTable(world).filter((r) => !SITE.indexable || PUBLISHABLE.has(reviewOf(r.locale, r.key, world).status));
+  const seoLaunch = SITE.indexable && world === REAL_WORLD;
+  const routes = routeTable(world).filter((r) => !seoLaunch || PUBLISHABLE.has(reviewOf(r.locale, r.key, world).status));
   const urls = routes.map((r) => {
-    const alts = (SITE.indexable ? [] : alternatesFor(r.key, world))
+    const alts = (seoLaunch ? [] : alternatesFor(r.key, world))
       .map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${esc(site + a.path)}"/>`)
       .join('\n');
     return `  <url>\n    <loc>${esc(site + r.path)}</loc>${alts ? '\n' + alts : ''}\n  </url>`;
