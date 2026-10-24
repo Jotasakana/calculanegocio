@@ -280,8 +280,8 @@ check('h3 -> h2.sec y h4 -> h3.sub', renderFragment('<h3>A</h3><h4>B</h4>', ctxF
 }
 {
   const xml = sitemapXml('https://calculanegocio.com/');
-  check('sitemap: una URL por página publicada', (xml.match(/<loc>/g) || []).length, table.length);
-  check('sitemap real: hreflang entre los seis idiomas', ['en', 'pt-BR', 'de', 'fr', 'hi'].every((h) => xml.includes(`hreflang="${h}"`)), 'true');
+  check('sitemap: solo español al lanzar', (xml.match(/<loc>/g) || []).length, 19);
+  check('sitemap real: sin hreflang hacia traducciones no revisadas', !['en', 'pt-BR', 'de', 'fr', 'hi'].some((h) => xml.includes(`hreflang="${h}"`)), 'true');
   const onlyEs = { ...REAL_WORLD, locales: Object.fromEntries(Object.entries(LOCALES).map(([c, l]) => [c, c === 'es' ? l : { ...l, status: 'draft' }])) };
   check('sitemap: sin hreflang con un solo idioma', sitemapXml('https://x.test', onlyEs).includes('xhtml:link'), 'false');
   check('sitemap: no incluye "/" (redirige)', xml.includes('<loc>https://calculanegocio.com/</loc>'), 'false');
@@ -292,7 +292,7 @@ check('h3 -> h2.sec y h4 -> h3.sub', renderFragment('<h3>A</h3><h4>B</h4>', ctxF
 {
   const h = headModel({ locale: 'es', key: 'tool:margen', siteUrl: 'https://calculanegocio.com', indexable: false });
   check('head: canonical', h.canonical, 'https://calculanegocio.com/es/calculadora-margen-comercial/');
-  check('head: modo desarrollo = noindex', h.robots, 'noindex,nofollow');
+  check('head: modo desarrollo = noindex', h.robots, 'noindex,follow');
   check('head: indexable', headModel({ locale: 'es', key: 'home', siteUrl: 'https://a.b', indexable: true }).robots.startsWith('index,follow'), 'true');
   check('head: lang y dir', `${h.lang}/${h.dir}`, 'es/ltr');
   const hAr = headModel({ locale: 'ar', key: null, path: '/ar/', siteUrl: 'https://a.b', indexable: false }, { ...REAL_WORLD, locales: LOCALES });
