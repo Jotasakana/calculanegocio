@@ -103,9 +103,9 @@ for (const key of ALL_KEYS) {
   }
   check('hreflang recíproco', nonRecip, 0);
   const xml = sitemapXml('https://calculanegocio.com');
-  check('sitemap: solo páginas españolas revisadas', (xml.match(/<loc>/g) || []).length, 19);
-  check('sitemap: sin hreflang de versiones no indexables', (xml.match(/xhtml:link/g) || []).length, 0);
-  check('sitemap: excluye idiomas no revisados', ['pt-BR', 'de', 'fr', 'hi'].every((h) => !xml.includes(`hreflang="${h}"`)), true);
+  check('sitemap: 84 páginas de contenido', (xml.match(/<loc>/g) || []).length, 84);
+  check('sitemap: alternativas multilingües', (xml.match(/xhtml:link/g) || []).length, 84 * 7);
+  check('sitemap: incluye los seis idiomas', ['pt-BR', 'de', 'fr', 'hi'].every((h) => xml.includes(`hreflang="${h}"`)), true);
   check('sitemap: 114 URLs (6 idiomas x 19 páginas)', table.length, 114);
   for (const l of LANGS) {
     const h = headModel({ locale: l, key: 'tool:margen', siteUrl: 'https://calculanegocio.com', indexable: false });
