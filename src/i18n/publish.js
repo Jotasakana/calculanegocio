@@ -20,7 +20,9 @@ import { CATALOG, CATALOG_CATEGORIES } from '../domain/catalog.js';
 export const PAGE_IDS = ['contact', 'legal', 'privacy', 'cookies', 'terms'];
 
 export const PUBLISHABLE = new Set(['source', 'reviewed']);
-const UNREVIEWED_OK = process.env.SITE_INDEXABLE !== 'true';
+// Mantener idiomas sin revisión disponibles para los visitantes, independientemente de SEO.
+// La etiqueta noindex se decide por página en seo.js; ninguna revisión se simula.
+const UNREVIEWED_OK = true;
 export const isPublishableStatus = (status, world) => PUBLISHABLE.has(status) || (status === 'unreviewed' && (world?.allowUnreviewed ?? UNREVIEWED_OK));
 
 export const REAL_WORLD = { locales: LOCALES, content: CONTENT, markets: MARKETS, tools: TOOL_REGISTRY, categories: CATEGORY_REGISTRY, catalog: CATALOG, catalogCategories: CATALOG_CATEGORIES };

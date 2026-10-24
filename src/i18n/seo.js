@@ -1,7 +1,7 @@
 // Metadatos de <head> de una página: idioma, dirección, canonical, hreflang, robots y Open Graph.
 // Función pura: el layout solo imprime lo que devuelve.
 
-import { REAL_WORLD } from './publish.js';
+import { REAL_WORLD, reviewOf, PUBLISHABLE } from './publish.js';
 import { alternatesFor, pathFor } from './routes.js';
 
 /**
@@ -19,6 +19,7 @@ export function headModel({ locale, key, path, siteUrl, indexable, robots }, wor
     canonical: site + own,
     alternates: key ? alternatesFor(key, world).map((a) => ({ hreflang: a.hreflang, href: site + a.path })) : [],
     // Modo desarrollo: nunca se indexa nada hasta que se autorice la publicación (SITE_INDEXABLE=true).
-    robots: robots ?? (indexable ? 'index,follow,max-image-preview:large' : 'noindex,nofollow'),
+    robots: robots ?? (indexable && key && PUBLISHABLE.has(reviewOf(locale, key, world).status)
+      ? 'index,follow,max-image-preview:large' : 'noindex,follow'),
   };
 }

@@ -31,7 +31,6 @@ const others = PAGE_IDS.filter((id) => id !== pageId);
       <p>{p.lead}</p>
     </div>
     <article class="content">
-      {!SITE.indexable && <div class="devnote">{ui.legal.devNote}</div>}
       <div class="prose" set:html={body} />
       <p class="legal-updated">{ui.legal.updatedLabel}: <span set:html={updated} /></p>
       <div class="prose"><h2 class="sec">{ui.legal.relatedTitle}</h2>

@@ -10,7 +10,7 @@ import { REAL_WORLD, publishedLocales } from '../src/i18n/publish.js';
 const root = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, '..', 'dist'));
 if (!fs.existsSync(root)) { console.error(`No existe ${root}. Ejecuta antes: npm run build`); process.exit(1); }
 const site = (process.env.SITE_URL || 'https://calculanegocio.com').replace(/\/$/, '');
-const indexed = process.env.SITE_INDEXABLE === 'true';
+const indexed = process.env.SITE_INDEXABLE !== 'false';
 const problems = [];
 const bad = (m) => problems.push(m);
 let checks = 0;
@@ -45,7 +45,7 @@ for (const r of table) {
   ok(new RegExp(`<html\\b[^>]*\\blang="${loc.hreflang}"`, 'i').test(html), `${r.path}: lang debería ser ${loc.hreflang}`);
   ok(html.includes(`<link rel="canonical" href="${site}${r.path}"`), `${r.path}: canonical propio incorrecto`);
   const robots = html.match(/<meta\b[^>]*name="robots"[^>]*>/i)?.[0] ?? '';
-  ok(indexed ? !/noindex/i.test(robots) : /noindex,nofollow/i.test(robots), `${r.path}: robots inesperado (${robots})`);
+  ok(indexed ? (r.locale === 'es' ? !/noindex/i.test(robots) : /noindex,follow/i.test(robots)) : /noindex,follow/i.test(robots), `${r.path}: robots inesperado (${robots})`);
   ok(/<meta\b[^>]*property="og:locale"[^>]*content="[a-z]{2}_[A-Z]{2}"/i.test(html) || /content="[a-z]{2}_[A-Z]{2}"[^>]*property="og:locale"/i.test(html), `${r.path}: falta og:locale`);
 
   // hreflang: exactamente las versiones equivalentes, recíprocas y absolutas
@@ -123,9 +123,10 @@ for (const r of table) {
 // Sitemap multilingüe
 {
   const xml = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
-  ok((xml.match(/<loc>/g) || []).length === table.length, 'sitemap: número de URLs');
-  for (const r of table) ok(xml.includes(`<loc>${site}${r.path}</loc>`), `sitemap: falta ${r.path}`);
-  for (const l of locales) ok((xml.match(new RegExp(`hreflang="${REAL_WORLD.locales[l].hreflang}"`, 'g')) || []).length === table.length / locales.length * locales.length, `sitemap: hreflang ${REAL_WORLD.locales[l].hreflang} por cada URL`);
+  const indexedRoutes = indexed ? table.filter((r) => r.locale === 'es') : table;
+  ok((xml.match(/<loc>/g) || []).length === indexedRoutes.length, 'sitemap: número de URLs');
+  for (const r of indexedRoutes) ok(xml.includes(`<loc>${site}${r.path}</loc>`), `sitemap: falta ${r.path}`);
+  for (const l of locales) ok((xml.match(new RegExp(`hreflang="${REAL_WORLD.locales[l].hreflang}"`, 'g')) || []).length === (indexed ? 0 : table.length), `sitemap: hreflang ${REAL_WORLD.locales[l].hreflang} por cada URL`);
   ok(!/\/(it|nl|pl|ar|id|ja|zh|ru|uk|cs)\//.test(xml), 'sitemap: contiene idiomas no publicados');
 }
 // No se generan carpetas de idiomas no publicados

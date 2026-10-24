@@ -108,7 +108,7 @@ if (pageKeys().length !== 3 + PAGE_IDS.length + Object.keys(CATEGORY_REGISTRY).l
 // 8. Modo desarrollo y despliegue: noindex + Disallow y redirección temporal de "/"
 const robots = read(path.join(root, 'src/pages/robots.txt.ts'));
 if (!/Disallow: \//.test(robots) || !/SITE\.indexable/.test(robots)) bad('robots.txt.ts debe bloquear todo mientras SITE.indexable sea false');
-if (!/indexable:\s*process\.env\.SITE_INDEXABLE === 'true'/.test(read(path.join(root, 'src/data/site.js')))) bad('site.js: indexable debe depender de SITE_INDEXABLE === "true"');
+if (!/indexable:\s*process\.env\.SITE_INDEXABLE !== 'false'/.test(read(path.join(root, 'src/data/site.js')))) bad('site.js: la configuración indexable debe respetar SITE_INDEXABLE=false');
 const redirects = read(path.join(root, 'public/_redirects')).split('\n').filter((l) => l.trim() && !l.startsWith('#'));
 if (redirects.length !== 1 || !/^\/\s+\/es\/\s+302$/.test(redirects[0])) bad('public/_redirects debe contener solo "/ /es/ 302"');
 
