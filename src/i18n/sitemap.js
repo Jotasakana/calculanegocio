@@ -9,7 +9,7 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 export function sitemapXml(siteUrl, world = REAL_WORLD) {
   const site = siteUrl.replace(/\/+$/, '');
   const seoLaunch = SITE.indexable && world === REAL_WORLD;
-  const routes = routeTable(world);
+  const routes = routeTable(world).filter((r) => !SITE.indexable || !r.key.startsWith('page:'));
   const urls = routes.map((r) => {
     const alts = alternatesFor(r.key, world)
       .map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${esc(site + a.path)}"/>`)
