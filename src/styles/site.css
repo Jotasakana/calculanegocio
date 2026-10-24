@@ -61,7 +61,14 @@ body{overflow-wrap:break-word}
 .langswitch{position:relative}
 .langswitch summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-block-size:44px;padding-inline:14px;border:1px solid var(--line-2);background:#fff;border-radius:10px;font-weight:600;font-size:14px;white-space:nowrap}
 .langswitch summary::-webkit-details-marker{display:none}
-.langswitch summary svg{inline-size:18px;block-size:18px}
+.langswitch summary svg{inline-size:18px;block-size:18px;flex:none}
+.langswitch summary:hover,.langswitch[open] summary{border-color:var(--brand)}
+.langswitch .lang-short{display:none}
+.langswitch .caret{inline-size:7px;block-size:7px;border-inline-end:2px solid currentColor;border-block-end:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .15s;flex:none}
+.langswitch[open] .caret{transform:translateY(1px) rotate(-135deg)}
+.langswitch li a{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.langswitch li a svg{inline-size:16px;block-size:16px;color:var(--brand-d);flex:none}
+.langswitch li a[aria-current]{font-weight:700}
 .langswitch ul{position:absolute;inset-inline-end:0;inset-block-start:calc(100% + 6px);z-index:60;margin:0;padding:6px;list-style:none;background:#fff;border:1px solid var(--line-2);border-radius:12px;box-shadow:var(--shadow);min-inline-size:200px}
 .langswitch li a{display:block;padding:11px 12px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:14.5px}
 .langswitch li a:hover,.langswitch li a[aria-current]{background:var(--brand-soft)}
@@ -346,8 +353,13 @@ a.card:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var
 [dir=rtl] .field input{direction:ltr;text-align:right}
 
 /* ---------- Adaptación a pantallas ---------- */
-@media(max-width:1350px){
+@media(max-width:1560px){
+  /* Con el selector de idioma en la cabecera, el botón de la derecha cede su sitio al menú para que ningún enlace quede recortado. */
   .nav-actions .navbutton{display:none}
+  .iconbtn.search-link span{display:none}
+  .iconbtn.search-link{padding-inline:11px}
+}
+@media(max-width:1400px){
   .mobile-toggle{display:inline-flex}
   .links{display:none;position:absolute;inset-inline:0;inset-block-start:100%;background:#fff;flex-direction:column;padding:10px 16px 16px;border-block-end:1px solid var(--line);box-shadow:0 18px 30px rgba(12,27,46,.14);gap:2px}
   .links.open{display:flex}
@@ -393,6 +405,11 @@ a.card:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var
   .footer-bottom{flex-direction:column}
   .cmp{padding:22px 18px}
   .result-actions .btn,.panel-actions .btn{flex:1 1 100%}
+}
+@media(max-width:480px){
+  .langswitch .lang-full{display:none}
+  .langswitch .lang-short{display:inline}
+  .langswitch ul{min-inline-size:min(220px,calc(100vw - 32px))}
 }
 @media(max-width:380px){
   .footer-grid{grid-template-columns:1fr}

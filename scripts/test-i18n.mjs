@@ -163,11 +163,11 @@ const SPANISH_V05 = [
 const table = routeTable();
 for (const p of SPANISH_V05) check(`URL española conservada ${p}`, table.some((r) => r.path === p), 'true');
 check('portada nueva en /es/', table.some((r) => r.key === 'home' && r.path === '/es/'), 'true');
-check('solo español publicado', [...new Set(table.map((r) => r.locale))].join(), 'es');
+check('idiomas publicados: es, en y pt-br', [...new Set(table.map((r) => r.locale))].join(), 'es,en,pt-br');
 check('sin duplicados', new Set(table.map((r) => r.path)).size, table.length);
 check('formato de URL', table.every((r) => /^\/(?:[a-z0-9-]+\/)+$/.test(r.path)), 'true');
-check('sin hreflang con un solo idioma', JSON.stringify(alternatesFor('tool:margen')), '[]');
-check('idiomas habilitados', enabledLocales().map((l) => l.code).join(), 'es');
+check('hreflang recíproco real en margen', alternatesFor('tool:margen').map((a) => a.hreflang).join(), 'es,en,pt-BR,x-default');
+check('idiomas habilitados', enabledLocales().map((l) => l.code).join(), 'es,en,pt-br');
 check('ningún borrador publica páginas', Object.keys(LOCALES).filter((c) => LOCALES[c].status === 'draft' && table.some((r) => r.locale === c)).length, '0');
 
 // ---------------------------------------------------------------------------
@@ -178,11 +178,13 @@ const mkEn = (status, extra = {}) => ({
   slugs: { tools: 'tools', methodology: 'methodology', categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing' }, toolPages: { margen: 'profit-margin-calculator', precio: 'selling-price-calculator', rentabilidad: 'gross-and-net-margin', iva: 'vat-calculator' } },
   review: { default: { status }, pages: extra },
 });
-const world = (status, extra) => ({ ...REAL_WORLD, locales: { ...LOCALES, en: { ...LOCALES.en, status: 'enabled' } }, content: { es, en: mkEn(status, extra) } });
+// Mundo sintético SOLO con es + un `en` de prueba; el mercado genérico real (en, pt-br) se vacía para conservar la semántica original.
+const NO_GENERIC = { ...REAL_WORLD.markets, generic: { ...REAL_WORLD.markets.generic, locales: [] } };
+const world = (status, extra) => ({ ...REAL_WORLD, locales: { ...LOCALES, en: { ...LOCALES.en, status: 'enabled' }, 'pt-br': { ...LOCALES['pt-br'], status: 'draft' } }, content: { es, en: mkEn(status, extra) }, markets: NO_GENERIC });
 const wDraft = world('draft');
 check('traducción en borrador: no genera páginas', routeTable(wDraft).filter((r) => r.locale === 'en').length, '0');
 check('borrador: no genera hreflang', JSON.stringify(alternatesFor('tool:margen', wDraft)), '[]');
-const wLocaleDraft = { ...world('source'), locales: LOCALES };
+const wLocaleDraft = { ...world('source'), locales: { ...LOCALES, en: { ...LOCALES.en, status: 'draft' } } };
 check('idioma en borrador aunque el contenido exista: no publica', routeTable(wLocaleDraft).filter((r) => r.locale === 'en').length, '0');
 const wEn = world('reviewed', { 'tool:margen': { status: 'draft' } });
 check('página en borrador dentro de un idioma revisado no se publica', isPublished('en', 'tool:margen', wEn), 'false');
@@ -257,7 +259,9 @@ check('h3 -> h2.sec y h4 -> h3.sub', renderFragment('<h3>A</h3><h4>B</h4>', ctxF
 {
   const xml = sitemapXml('https://calculanegocio.com/');
   check('sitemap: una URL por página publicada', (xml.match(/<loc>/g) || []).length, table.length);
-  check('sitemap: sin hreflang con un solo idioma', xml.includes('xhtml:link'), 'false');
+  check('sitemap real: hreflang entre los tres idiomas', xml.includes('hreflang="en"') && xml.includes('hreflang="pt-BR"'), 'true');
+  const onlyEs = { ...REAL_WORLD, locales: { ...LOCALES, en: { ...LOCALES.en, status: 'draft' }, 'pt-br': { ...LOCALES['pt-br'], status: 'draft' } } };
+  check('sitemap: sin hreflang con un solo idioma', sitemapXml('https://x.test', onlyEs).includes('xhtml:link'), 'false');
   check('sitemap: no incluye "/" (redirige)', xml.includes('<loc>https://calculanegocio.com/</loc>'), 'false');
   const xml2 = sitemapXml('https://x.test', wOk);
   check('sitemap multilingüe: alternativas recíprocas', xml2.includes('hreflang="en" href="https://x.test/en/profit-margin-calculator/"') && xml2.includes('hreflang="x-default"'), 'true');

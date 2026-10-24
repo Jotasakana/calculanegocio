@@ -43,7 +43,7 @@ const faqLd = tool.faq?.length
     <div class="pagehead">
       <div class="badges">
         <span class="badge ok">{ui.catalog.statusAvailable}</span>
-        {tool.scope === 'fiscal' && <span class="badge">{ui.catalog.fiscalBadge}</span>}
+        {tool.countryBound && <span class="badge">{ui.catalog.fiscalBadge}</span>}
       </div>
       <span class="kicker">{tool.kicker}</span>
       <h1>{tool.title}</h1>
@@ -57,6 +57,7 @@ const faqLd = tool.faq?.length
       <div>
         <article class="content">
           {!SITE.indexable && <div class="devnote">{ui.tool.devNote}</div>}
+          {tool.generic && <div class="callout"><Icon name="info" /><p>{ui.tool.genericTax}</p></div>}
           {tool.fiscalPending && <div class="callout"><Icon name="info" /><p>{ui.tool.fiscalPending}</p></div>}
           {tool.formulas?.length > 0 && (
             <section class="formulas-block">

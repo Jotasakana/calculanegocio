@@ -148,10 +148,10 @@ export function createCalculator(content, currency) {
       return { ok: true, ...PRESENT[tool](mode, r.data), data: r.data };
     },
 
-    /** Valores iniciales (como texto, con el decimal del idioma) de una pestaña. */
+    /** Valores iniciales (como texto, con el decimal del idioma) de una pestaña. El idioma puede sustituir los del registro (`tools.<id>.defaults`, p. ej. el tipo de ejemplo de la versión genérica). */
     defaults(tool, mode) {
       const out = {};
-      for (const fld of TOOL_REGISTRY[tool].modes[mode]) out[fld.key] = fld.kind === 'select' ? fld.def : toInputString(fld.def, localeCode);
+      for (const fld of TOOL_REGISTRY[tool].modes[mode]) out[fld.key] = fld.kind === 'select' ? fld.def : toInputString(content.tools?.[tool]?.defaults?.[fld.key] ?? fld.def, localeCode);
       return out;
     },
 

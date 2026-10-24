@@ -1,0 +1,117 @@
+<p>Esta calculadora resolve três situações habituais com um imposto em percentual. Você tem um total com imposto e quer saber quanto é a base, tem uma base e quer somar o imposto, ou tem uma lista com vários itens e percentuais diferentes e precisa do detalhamento. Você pode somar ou tirar o imposto de qualquer valor e ver a base, o imposto e o total.</p>
+<p>Atenção: a ferramenta é <strong>genérica</strong>. Ela apenas aplica o percentual que você digita, somado por fora da base ou extraído de um total, e não conhece as regras de nenhum tributo. Tributos reais podem ter regras próprias, inclusive já estarem incluídos no preço (cálculo «por dentro»), e isso não é considerado aqui. Confirme com o seu contador.</p>
+<h3>Como usar a calculadora</h3>
+<p>Há três modos:</p>
+<ul>
+<li><strong>Somar imposto:</strong> você digita o valor base e o percentual. Obtém o imposto e o total.</li>
+<li><strong>Tirar imposto:</strong> você digita o total com imposto e o percentual. Obtém a base e o imposto.</li>
+<li><strong>Vários itens:</strong> para cada item, você informa quantidade, preço unitário sem imposto, desconto (opcional) e percentual. Obtém um detalhamento por percentual.</li>
+</ul>
+<p>O percentual é editável. Os valores iniciais (10% e 5%) e os dos exemplos são apenas ilustrativos. Qual percentual se aplica a cada operação depende da natureza dela e da legislação; confira nas fontes oficiais ou com o seu contador.</p>
+<h3>O que é o valor base</h3>
+<p>O valor base é o montante sobre o qual o percentual é calculado. Em um orçamento ou lista de itens, corresponde ao valor da operação <strong>sem imposto</strong>, depois de aplicados os descontos que constam nela. O imposto é o resultado de aplicar o percentual a essa base, e o total é a soma dos dois.</p>
+<h3>Fórmulas</h3>
+<h4>Somar o imposto a uma base</h4>
+<p><strong>Imposto = Base × percentual</strong></p>
+<h4>Tirar o imposto de um total (obter a base)</h4>
+<p><strong>Base = Total ÷ (1 + percentual)</strong></p>
+<p>O imposto é calculado por diferença para que base e imposto somem sempre exatamente o total.</p>
+<h3>Exemplo 1: somar o imposto a uma base</h3>
+<p>Base de R$ 1.250,00 e percentual de 10%:</p>
+<ul>
+<li>Imposto: 1.250 × 0,10 = <strong>R$ 125,00</strong></li>
+<li>Total: <strong>R$ 1.375,00</strong></li>
+</ul>
+<h3>Exemplo 2: obter a base a partir do total</h3>
+<p>Total de R$ 660,00 com imposto incluído, percentual de 10%:</p>
+<ul>
+<li>Base: 660 ÷ 1,10 = <strong>R$ 600,00</strong></li>
+<li>Imposto: 660 − 600 = <strong>R$ 60,00</strong></li>
+</ul>
+<h3>Exemplo 3: lista com vários itens</h3>
+<table>
+<thead>
+<tr>
+  <th>Item</th>
+  <th>Cálculo</th>
+  <th>Desconto</th>
+  <th style="text-align:right">Base do item</th>
+  <th style="text-align:right">Percentual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>3 × R$ 120,00 = R$ 360,00</td>
+  <td>10%</td>
+  <td style="text-align:right">R$ 324,00</td>
+  <td style="text-align:right">10%</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>1 × R$ 450,00</td>
+  <td>—</td>
+  <td style="text-align:right">R$ 450,00</td>
+  <td style="text-align:right">10%</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>12 × R$ 8,50 = R$ 102,00</td>
+  <td>—</td>
+  <td style="text-align:right">R$ 102,00</td>
+  <td style="text-align:right">5%</td>
+</tr>
+</tbody>
+</table>
+<p>A calculadora agrupa por percentual:</p>
+<table>
+<thead>
+<tr>
+  <th>Percentual</th>
+  <th style="text-align:right">Base</th>
+  <th style="text-align:right">Imposto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>10%</td>
+  <td style="text-align:right">324,00 + 450,00 = R$ 774,00</td>
+  <td style="text-align:right">R$ 77,40</td>
+</tr>
+<tr>
+  <td>5%</td>
+  <td style="text-align:right">R$ 102,00</td>
+  <td style="text-align:right">R$ 5,10</td>
+</tr>
+<tr>
+  <td><strong>Total</strong></td>
+  <td style="text-align:right"><strong>R$ 876,00</strong></td>
+  <td style="text-align:right"><strong>R$ 82,50</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total da lista: 876,00 + 82,50 = R$ 958,50.</strong></p>
+<h3>Como é feito o arredondamento</h3>
+<p>A calculadora trabalha em centavos: arredonda a base e o imposto a duas casas decimais (a metade é arredondada para cima), de modo que base + imposto coincide sempre com o total exibido. Com vários itens, arredonda a base de cada item e calcula o imposto sobre a base total de cada percentual. Esse critério é mostrado na tela.</p>
+<p>Um caso em que o arredondamento importa: um total de R$ 100,00 com 10% de imposto. A base é 100 ÷ 1,10 = 90,9090…, que aparece como R$ 90,91. O imposto é calculado por diferença, 100,00 − 90,91 = R$ 9,09, de modo que 90,91 + 9,09 somam exatamente R$ 100,00.</p>
+<p>Se você calcular item a item e arredondar em cada um, pode aparecer alguma diferença de centavos em relação ao cálculo por percentual. Convém usar o mesmo critério em todos os seus documentos.</p>
+<h3>O desconto reduz a base</h3>
+<p>O desconto de um item reduz a base sobre a qual o imposto é calculado. No item 1 do exemplo 3:</p>
+<ul>
+<li>Cálculo correto: base de R$ 324,00 → imposto de R$ 32,40.</li>
+<li>Cálculo errado: imposto sobre R$ 360,00 (antes do desconto) → R$ 36,00. São R$ 3,60 de diferença.</li>
+</ul>
+<h3>Erros comuns</h3>
+<h4>Subtrair o percentual em vez de dividir</h4>
+<p>Com um total de R$ 660, subtrair 10% dá R$ 594. Está errado, porque os 10% se aplicam à base, não ao total. A base correta é 660 ÷ 1,10 = R$ 600. Calcular 10% do total também é um erro: dá R$ 66,00, quando o imposto real é R$ 60,00.</p>
+<h4>Calcular o imposto antes do desconto</h4>
+<p>Aplicar o percentual sobre o valor sem descontar gera um imposto maior do que o correspondente (veja a seção anterior).</p>
+<h4>Misturar percentuais em uma só base</h4>
+<p>Se uma lista tem itens com percentuais diferentes, cada percentual é calculado separadamente.</p>
+<h4>Tratar o imposto como receita ou lucro</h4>
+<p>O imposto é somado ao preço e não faz parte da margem nem do lucro do negócio. Um preço de R$ 100 sem imposto e R$ 110 com imposto tem uma margem calculada sobre R$ 100. Para ver o efeito em um preço concreto, use a calculadora de preço de venda, e para o efeito na margem, a calculadora de margem comercial.</p>
+<h4>Supor que todo imposto é somado por fora</h4>
+<p>Esta ferramenta soma o percentual sobre a base (por fora) ou o extrai de um total. Alguns tributos têm cálculo diferente, por exemplo já estarem embutidos no preço, e o resultado seria outro. Antes de usar o número em um documento fiscal, confirme a regra aplicável.</p>
+<h3>Alcance da ferramenta</h3>
+<p>A calculadora faz operações aritméticas com os dados e os percentuais que você digita. Não determina qual tributo ou alíquota corresponde a uma operação nem substitui a orientação de um profissional.</p>
+<p><strong>Aviso:</strong> consulte as fontes oficiais ou o seu contador para saber as regras aplicáveis ao seu negócio. Saiba mais sobre como revisamos os conteúdos em <a href="{{methodology}}">Metodologia</a>.</p>

@@ -63,6 +63,7 @@ jobs:
           npm run test:layout
           npm run test:a11y
           npm run test:behavior
+          npm run test:switcher
 
       - name: Capturas de pantalla (320 a 1440 px)
         run: node scripts/screenshots.mjs dist screenshots

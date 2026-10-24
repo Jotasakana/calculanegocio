@@ -1,7 +1,8 @@
 # CalculaNegocio (Astro · HTML estático)
 
-Calculadoras gratuitas para autónomos y pequeños negocios. Versión **v0.6** (Fase 2A): arquitectura **internacional** —
-fórmulas, textos, configuración regional y componentes separados—, con solo el español publicado.
+Calculadoras gratuitas para autónomos y pequeños negocios. Versión **v0.8** (Fase 3A): **español, inglés y portugués de Brasil** con selector de idioma en la cabecera, sobre la arquitectura
+internacional de la Fase 2A (fórmulas, textos, configuración regional y componentes separados). Inglés y portugués están
+*sin revisión nativa*: solo se publican mientras el sitio esté en modo desarrollo (ver `CAMBIOS-FASE3A.md`).
 **Modo desarrollo**: `noindex` en todas las páginas y `robots.txt` con `Disallow: /`. No publicar ni activar AdSense sin autorización.
 Detalles de la arquitectura: [`docs/INTERNACIONALIZACION.md`](docs/INTERNACIONALIZACION.md) · cambios: [`CAMBIOS-v0.6.md`](CAMBIOS-v0.6.md).
 
@@ -15,6 +16,7 @@ npm run preview      # sirve dist/ para revisar el resultado compilado
 npm test             # fórmulas, idiomas, contenidos y código fuente (no necesita Astro)
 npm run test:dist    # comprueba dist/ (enlaces, SEO, hreflang, contenido estático) tras el build
 npm run test:layout  # Chromium: sin desplazamiento horizontal en móvil/escritorio, RTL y textos largos (requiere playwright-core)
+npm run test:switcher # Chromium: selector de idioma (abrir/cerrar, página equivalente, teclado, sin JS, sin 404)
 npm run check        # test + build + test:dist
 ```
 
@@ -26,7 +28,8 @@ Se generan desde la tabla de rutas (`src/i18n/routes.js`): `/<idioma>/<slug>/`. 
 
 | URL | Contenido |
 |---|---|
-| `/` | Redirección temporal (302) a `/es/` |
+| `/` | Redirección temporal (302) a `/es/` (sin detección de idioma) |
+| `/en/…`, `/pt-br/…` | Mismas 9 páginas en inglés y portugués de Brasil (slugs traducidos) |
 | `/es/` | Portada (Home v0.3) |
 | `/es/herramientas/` | Catálogo con filtros y búsqueda |
 | `/es/metodologia/` | Criterios, redondeo, privacidad y límites |

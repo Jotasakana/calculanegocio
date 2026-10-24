@@ -6,7 +6,7 @@ const { ctx, currentKey } = Astro.props;
 const { ui } = ctx;
 const homeHref = ctx.path('home');
 const toolsHref = ctx.path('tools');
-// Versiones de ESTA página en otros idiomas (solo las publicadas); con una sola versión no se pinta el selector.
+// Idiomas publicados, con la página equivalente o la portada; con un solo idioma publicado no se pinta el selector.
 const versions = ctx.versions(currentKey);
 ---
 <header class="hdr">

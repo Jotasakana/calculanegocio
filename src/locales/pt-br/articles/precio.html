@@ -1,0 +1,128 @@
+<p>Dar preço a um produto ou serviço é decidir quanto do que você cobra cobre o custo, quanto fica com o canal de venda, quanto é lucro e quanto é imposto. Esta calculadora separa essas quatro partes. Você informa o custo, os custos adicionais, a margem ou o markup que busca, a comissão e o desconto, se houver, e obtém o preço sem imposto, o valor do imposto, o preço com imposto e o lucro por unidade.</p>
+<p>O imposto aqui é <strong>genérico</strong>: a calculadora soma por fora o percentual que você digitar e não aplica as regras de nenhum tributo. Tributos reais podem ter regras próprias, como já estarem incluídos no preço, e isso não é considerado. Veja o aviso no fim da página.</p>
+<p>Também funciona ao contrário. Se você já tem um preço definido, a calculadora diz que margem ele realmente deixa.</p>
+<h3>Como usar a calculadora</h3>
+<ul>
+<li><strong>Custo unitário:</strong> o que cada unidade lhe custa, sem imposto.</li>
+<li><strong>Custos adicionais por unidade:</strong> frete, embalagem ou qualquer outro custo que você paga a cada venda.</li>
+<li><strong>Método:</strong> escolha entre <em>margem sobre as vendas</em> (percentual do preço que você quer que seja lucro) e <em>markup sobre o custo</em> (percentual que você soma ao custo). São medidas diferentes e a calculadora não transfere o valor de uma para a outra ao trocar de método.</li>
+<li><strong>Comissão:</strong> se você vende por um canal que cobra um percentual. É calculada sobre o preço sem imposto (veja os erros comuns).</li>
+<li><strong>Desconto previsto:</strong> se você quer anunciar um preço de tabela com desconto.</li>
+<li><strong>Imposto:</strong> o percentual que você quiser somar. O valor inicial (10%) é só um exemplo editável; coloque 0 se não quiser considerar imposto.</li>
+</ul>
+<p>Para revisar um preço já definido, use o modo «Analisar um preço»: digite o preço, indique se ele já inclui imposto e acrescente o custo e a comissão.</p>
+<h3>Do que é feito um preço</h3>
+<table>
+<thead>
+<tr>
+  <th>Parte</th>
+  <th>O que é</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Custo</td>
+  <td>O que você paga pelo produto</td>
+</tr>
+<tr>
+  <td>Custos adicionais</td>
+  <td>Frete, embalagem e similares, por unidade</td>
+</tr>
+<tr>
+  <td>Comissão</td>
+  <td>O que o canal de venda retém, se houver</td>
+</tr>
+<tr>
+  <td><strong>Lucro</strong></td>
+  <td>O que sobra depois do que veio acima</td>
+</tr>
+<tr>
+  <td><strong>= Preço sem imposto</strong></td>
+  <td>A soma das quatro partes</td>
+</tr>
+<tr>
+  <td>Imposto</td>
+  <td>É somado ao preço sem imposto. <strong>Não faz parte da margem nem do lucro</strong></td>
+</tr>
+<tr>
+  <td><strong>= Preço com imposto</strong></td>
+  <td>O valor que o cliente paga</td>
+</tr>
+</tbody>
+</table>
+<h3>Margem ou markup: defina a base antes de calcular</h3>
+<p>Com o método <strong>margem sobre as vendas</strong>, a calculadora usa:</p>
+<p><strong>Preço sem imposto = Custo total ÷ (1 − comissão − margem)</strong></p>
+<p>O custo total é o custo mais os custos adicionais. Comissão e margem são subtraídas juntas porque ambas são percentuais do mesmo preço. Por isso a soma das duas precisa ser menor que 100%. Com uma comissão de 15%, uma margem de 85% não pode ser alcançada.</p>
+<p>Com o método <strong>markup sobre o custo</strong>:</p>
+<p><strong>Preço sem imposto = Custo total × (1 + markup)</strong></p>
+<p>Em seguida é mostrada a margem real que sobra depois da comissão:</p>
+<p><strong>Margem real = (Preço − Custo total − Comissão) ÷ Preço</strong></p>
+<p>Nos dois casos:</p>
+<ul>
+<li><strong>Comissão (R$)</strong> = comissão (%) × preço sem imposto</li>
+<li><strong>Lucro unitário</strong> = preço − custo total − comissão</li>
+<li><strong>Imposto</strong> = preço sem imposto × percentual do imposto</li>
+<li><strong>Preço com imposto</strong> = preço sem imposto × (1 + percentual do imposto)</li>
+</ul>
+<p>Se você precisa se aprofundar na diferença entre as duas bases, a calculadora de margem comercial a explica com uma tabela de equivalências.</p>
+<h3>Três exemplos resolvidos</h3>
+<p>Nos exemplos, o imposto é um percentual ilustrativo de 10%, somado por fora.</p>
+<h4>Exemplo 1: margem sobre as vendas, sem extras</h4>
+<p>Um artigo custa R$ 40 e você quer uma margem de 35%.</p>
+<ul>
+<li>Preço sem imposto: 40 ÷ (1 − 0,35) = 40 ÷ 0,65 = <strong>R$ 61,54</strong></li>
+<li>Lucro: 61,54 − 40 = <strong>R$ 21,54</strong></li>
+<li>Markup equivalente: 21,54 ÷ 40 = 53,85%</li>
+<li>Imposto: 61,54 × 0,10 = <strong>R$ 6,15</strong></li>
+<li>Preço com imposto: <strong>R$ 67,69</strong></li>
+</ul>
+<p>O lucro é R$ 21,54 quer o cliente pague o imposto, quer não. Esses R$ 6,15 de imposto não são seus.</p>
+<h4>Exemplo 2: markup sobre o custo com custos adicionais</h4>
+<p>Um produto custa R$ 25, com R$ 3 de frete e embalagem por unidade. Você aplica um markup de 50%.</p>
+<ul>
+<li>Custo total: 25 + 3 = R$ 28</li>
+<li>Preço sem imposto: 28 × 1,50 = <strong>R$ 42,00</strong></li>
+<li>Lucro: 42 − 28 = <strong>R$ 14,00</strong></li>
+<li>Margem real: 14 ÷ 42 = <strong>33,33%</strong></li>
+<li>Imposto (10%): R$ 4,20 → preço com imposto: <strong>R$ 46,20</strong></li>
+</ul>
+<p>Um markup de 50% equivale a uma margem de 33,33%, não de 50%.</p>
+<h4>Exemplo 3: com comissão do canal e desconto</h4>
+<p>Um produto custa R$ 30, mais R$ 2 de custos adicionais. Você o vende em uma plataforma que cobra 15% de comissão e quer uma margem de 20%.</p>
+<ul>
+<li>Custo total: R$ 32</li>
+<li>Preço sem imposto: 32 ÷ (1 − 0,15 − 0,20) = 32 ÷ 0,65 = <strong>R$ 49,23</strong></li>
+<li>Comissão: 49,23 × 0,15 = <strong>R$ 7,38</strong></li>
+<li>Lucro: 49,23 × 0,20 = <strong>R$ 9,85</strong></li>
+<li>Conferência: 32 + 7,38 + 9,85 = R$ 49,23</li>
+<li>Imposto (10%): <strong>R$ 4,92</strong> → preço com imposto: <strong>R$ 54,15</strong></li>
+</ul>
+<p>Se você quiser anunciar este produto com 10% de desconto e continuar recebendo R$ 49,23 sem imposto, o preço de tabela precisa ser 49,23 ÷ 0,90 = <strong>R$ 54,70</strong> sem imposto, ou <strong>R$ 60,17</strong> com imposto. Não basta aumentar o preço em 10%: 49,23 × 1,10 daria R$ 54,15, e ao descontar 10% você receberia R$ 48,74, menos do que o previsto.</p>
+<h3>O imposto é somado no final</h3>
+<p>O imposto é acrescentado sobre o preço sem imposto e não altera a margem. Nos exemplos, 10% é só um número ilustrativo, e a calculadora permite mudar o percentual. Qual tributo e qual alíquota se aplicam à sua operação, e se eles ficam por fora ou incluídos no preço, depende da legislação e do seu caso: esta ferramenta não decide isso. Consulte as fontes oficiais ou o seu contador.</p>
+<h3>Analisar um preço que você já pratica</h3>
+<p>Suponha que você venda o produto do exemplo 3 por R$ 54,15 com imposto incluído.</p>
+<ol>
+<li>Preço sem imposto: 54,15 ÷ 1,10 = R$ 49,23.</li>
+<li>Comissão (15%): R$ 7,38.</li>
+<li>Lucro: 49,23 − 32 − 7,38 = R$ 9,85.</li>
+<li>Margem real: 20,00%.</li>
+</ol>
+<p>Se você baixasse o preço para R$ 45 sem imposto, a comissão seria R$ 6,75, o lucro R$ 6,25 e a margem cairia para 13,89%. Um desconto não é subtraído só da margem: ele também reduz a base sobre a qual você recebe.</p>
+<h3>Erros comuns ao definir um preço</h3>
+<h4>Confundir margem com markup</h4>
+<p>Se você quer 50% de margem e aplica 50% de markup, obtém 33,33%. Para uma margem de 50%, o markup necessário é de 100%.</p>
+<h4>Aplicar a margem sobre o preço com imposto</h4>
+<p>Com o preço do exemplo 1 com imposto (R$ 67,69) e um custo de R$ 40, a conta daria uma margem de 40,91%. Essa margem não existe: o imposto não é seu. A margem é sempre calculada sobre o preço sem imposto.</p>
+<h4>Esquecer comissões, fretes ou devoluções</h4>
+<p>Uma margem calculada só com o custo do produto superestima o lucro. Todo custo pago por unidade vendida deve entrar na conta.</p>
+<h4>Dar desconto sem recalcular</h4>
+<p>Baixar o preço em 10% não reduz o lucro em 10%: pode reduzi-lo muito mais. Calcule sempre sobre o preço pelo qual você realmente vende.</p>
+<h4>Supor que todos os canais calculam a comissão do mesmo jeito</h4>
+<p>A calculadora toma a comissão como percentual do preço sem imposto. Alguns canais podem aplicá-la sobre outra base. Leia as condições do seu canal antes de confiar no resultado.</p>
+<h4>Tratar o imposto cobrado como receita</h4>
+<p>O imposto que você cobra do cliente não é lucro do negócio. Para ver como um imposto em percentual se distribui em uma lista com vários itens, use a calculadora de base e imposto.</p>
+<h3>Do preço calculado ao preço publicado</h3>
+<p>O preço da calculadora é um piso, não uma ordem. Se você decidir arredondá-lo ou ajustá-lo ao mercado, digite o preço final no modo «Analisar um preço» e confira a margem que sobra. Depois, essa margem precisa cobrir as suas despesas gerais. Para ver como se distribui o resultado de todo um período, existe a calculadora de margem bruta e líquida.</p>
+<p><strong>Aviso:</strong> esta ferramenta faz aritmética de percentuais e não substitui orientação de um contador. Para saber como e sobre qual base cada tributo se aplica ao seu negócio, consulte as fontes oficiais ou um profissional de contabilidade. Saiba mais sobre como revisamos os conteúdos em <a href="{{methodology}}">Metodologia</a>.</p>

@@ -38,7 +38,7 @@ await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const base = `http://127.0.0.1:${server.address().port}`;
 
 const urls = (process.env.LAYOUT_URLS ? process.env.LAYOUT_URLS.split(',') : [...routeTable().map((r) => r.path), '/404.html']);
-const widths = [320, 360, 390, 768, 1024, 1280];
+const widths = [320, 360, 375, 390, 768, 1024, 1280, 1440];
 const modes = [
   { name: 'normal', apply: () => {} },
   { name: 'RTL', apply: () => { document.documentElement.dir = 'rtl'; } },
@@ -69,8 +69,12 @@ try {
         await page.evaluate(mode.apply);
         // En móvil, con el menú desplegado
         const toggle = await page.$('#mobileToggle');
-        for (const menu of toggle && (await toggle.isVisible()) ? [false, true] : [false]) {
+        // Estados: normal, menú móvil abierto y selector de idioma abierto (el desplegable también debe caber en pantalla).
+        const states = [{ name: '' }, ...(toggle && (await toggle.isVisible()) ? [{ name: ' · menú abierto', menu: true }] : []), ...((await page.$('[data-langswitch]')) ? [{ name: ' · selector de idioma abierto', lang: true }] : [])];
+        for (const st of states) {
+          const menu = st.menu;
           if (menu) await toggle.click();
+          if (st.lang) await page.evaluate(() => { document.querySelector('[data-langswitch]').open = true; });
           const r = await page.evaluate(() => {
             const vw = document.documentElement.clientWidth;
             const doc = document.documentElement.scrollWidth;
@@ -92,7 +96,7 @@ try {
             return { vw, doc, offenders: offenders.slice(0, 4) };
           });
           checks++;
-          if (r.doc > r.vw || r.offenders.length) problems.push(`${url} · ${w}px · ${mode.name}${menu ? ' · menú abierto' : ''}: desbordamiento horizontal (contenido ${r.doc}px, ventana ${r.vw}px) ${r.offenders.join('; ')}`);
+          if (r.doc > r.vw || r.offenders.length) problems.push(`${url} · ${w}px · ${mode.name}${st.name}: desbordamiento horizontal (contenido ${r.doc}px, ventana ${r.vw}px) ${r.offenders.join('; ')}`);
         }
       }
       await ctx.close();

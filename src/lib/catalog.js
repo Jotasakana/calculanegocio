@@ -8,6 +8,8 @@
 //    y (si es fiscal) pertenece al mercado de ese idioma.
 //  · Las categorías sin ninguna tarjeta en ese idioma no aparecen. Solo tienen página las que publica la tabla de rutas.
 
+import { marketFor } from '../i18n/publish.js';
+
 export const STATUS = { available: 'available', planned: 'planned' };
 
 /**
@@ -28,7 +30,7 @@ export function buildCatalog(world, localeCode, published, pathOf) {
       if (!published('tool:' + e.id)) continue;
       const txt = content.tools[e.id];
       items.push({
-        id: e.id, category: e.category, icon: e.icon, status: STATUS.available, fiscal: reg.scope === 'fiscal',
+        id: e.id, category: e.category, icon: e.icon, status: STATUS.available, fiscal: reg.scope === 'fiscal' && marketFor(localeCode, e.id, world)?.kind !== 'generic',
         title: txt.menuTitle, desc: txt.tileText, cta: txt.tileCta, search: `${txt.title} ${txt.search}`, path: pathOf('tool:' + e.id),
       });
       continue;

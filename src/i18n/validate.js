@@ -130,8 +130,9 @@ export function validateLocale(code, world, io) {
   const R = c.review ?? {};
   const entries = [['default', R.default], ...Object.entries(R.pages ?? {})];
   for (const [k, r] of entries) {
-    if (!r || !['source', 'draft', 'reviewed'].includes(r.status)) { P(`review.${k}: estado no válido`); continue; }
+    if (!r || !['source', 'draft', 'unreviewed', 'reviewed'].includes(r.status)) { P(`review.${k}: estado no válido`); continue; }
     if (r.status === 'source' && code !== DEFAULT_LOCALE) P(`review.${k}: solo el idioma de referencia (${DEFAULT_LOCALE}) puede ser "source"`);
+    if (r.status === 'unreviewed' && (r.reviewer || r.date)) P(`review.${k}: una traducción sin revisar no puede llevar revisor ni fecha`);
     if (r.status === 'reviewed') for (const f of ['reviewer', 'date', 'scope']) if (!r[f]) P(`review.${k}: una revisión exige "${f}" (no se aceptan revisiones sin registrar)`);
   }
   return problems;
@@ -162,5 +163,17 @@ export function validateWorld(world) {
     for (const id of Object.keys(world.categories)) if (!world.catalogCategories?.includes(id)) problems.push(`catálogo: la categoría ${id} del registro no está en el catálogo`);
   }
   for (const t of Object.values(world.tools)) if (t.scope === 'fiscal' && !world.markets[t.market]) problems.push(`[${t.id}] calculadora fiscal sin mercado`);
+  // Un idioma solo puede pertenecer a un mercado genérico, y este no puede tener moneda propia ni declararse verificado.
+  const generic = Object.values(world.markets).filter((m) => m.kind === 'generic');
+  const seen = new Map();
+  for (const m of generic) {
+    if (m.currency) problems.push(`[mercado ${m.id}] el mercado genérico no fija moneda`);
+    if (m.verified) problems.push(`[mercado ${m.id}] el mercado genérico no puede marcarse como verificado`);
+    for (const l of m.locales) {
+      if (seen.has(l)) problems.push(`[mercado ${m.id}] el idioma ${l} ya está en el mercado genérico ${seen.get(l)}`);
+      seen.set(l, m.id);
+      for (const o of Object.values(world.markets)) if (o.kind !== 'generic' && o.locales.includes(l)) problems.push(`[mercado ${m.id}] el idioma ${l} también pertenece al mercado de ${o.id}`);
+    }
+  }
   return problems;
 }

@@ -48,7 +48,7 @@ check('planned: pathFor falla (no hay slug)', planned.every((i) => throws(() => 
 check('available: toda ruta existe en la tabla', available.every((i) => urls.has(i.path)), true);
 check('buscador: solo contiene páginas publicadas', es.searchIndex.every((s) => urls.has(s.url)), true);
 check('buscador: no incluye las calculadoras en desarrollo', planned.every((p) => !es.searchIndex.some((s) => s.title === p.title)), true);
-check('URLs españolas conservadas', [...urls].filter((u) => /calculadora|margen|facturacion/.test(u)).sort().join(' '), '/es/calculadora-base-imponible/ /es/calculadora-margen-comercial/ /es/calculadora-precio-de-venta/ /es/facturacion/ /es/margen-bruto-y-margen-neto/ /es/margenes-y-precios/');
+check('URLs españolas conservadas', [...urls].filter((u) => u.startsWith('/es/') && /calculadora|margen|facturacion/.test(u)).sort().join(' '), '/es/calculadora-base-imponible/ /es/calculadora-margen-comercial/ /es/calculadora-precio-de-venta/ /es/facturacion/ /es/margen-bruto-y-margen-neto/ /es/margenes-y-precios/');
 
 // 4. Estado derivado del registro y mercados (mundo sintético)
 const synth = (extra = {}) => {

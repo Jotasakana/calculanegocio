@@ -1,16 +1,28 @@
 ---
-// Solo se pinta si la página existe en más de un idioma publicado. Enlaces reales (funciona sin JavaScript);
-// no hay redirección automática por el idioma del navegador.
+// Selector de idioma de la cabecera. Enlaces reales (funciona sin JavaScript); no hay redirección automática por
+// el idioma del navegador ni por IP. Lista TODOS los idiomas publicados: cada opción lleva a la página equivalente
+// o, si no existe en ese idioma, a su portada (nunca a una URL inexistente). Los nombres están en su propio idioma.
 import Icon from './Icon.astro';
 
 const { label, versions } = Astro.props;
 const current = versions.find((v) => v.current);
+const short = (v) => v.hreflang.split('-')[0].toUpperCase();
 ---
-<details class="langswitch">
-  <summary aria-label={label}><Icon name="globe" /><span>{current.name}</span></summary>
-  <ul>
+<details class="langswitch" data-langswitch>
+  <summary aria-label={`${label}: ${current.name} (${short(current)})`}>
+    <Icon name="globe" />
+    <span class="lang-full" lang={current.hreflang}>{current.name}</span>
+    <span class="lang-short" lang={current.hreflang} aria-hidden="true">{short(current)}</span>
+    <span class="caret" aria-hidden="true"></span>
+  </summary>
+  <ul aria-label={label}>
     {versions.map((v) => (
-      <li><a href={v.href} hreflang={v.hreflang} lang={v.hreflang} aria-current={v.current ? 'true' : undefined}>{v.name}</a></li>
+      <li>
+        <a href={v.href} hreflang={v.hreflang} lang={v.hreflang} aria-current={v.current ? 'true' : undefined} data-lang-code={v.code} data-equivalent={v.equivalent ? 'true' : 'false'}>
+          <span>{v.name}</span>
+          {v.current && <Icon name="check" />}
+        </a>
+      </li>
     ))}
   </ul>
 </details>

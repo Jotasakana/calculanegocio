@@ -6,7 +6,7 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Calculadoras para autónomos y pequeños negocios',
-    devLabel: 'DEMO PRIVADA · v0.7',
+    devLabel: 'DEMO PRIVADA · v0.8',
   },
   a11y: {
     skip: 'Saltar al contenido',
@@ -75,7 +75,7 @@ export const ui = {
       ['Privado por diseño', 'El cálculo ocurre en tu navegador. No pedimos cuenta ni guardamos tus importes.'],
       ['Fórmulas a la vista', 'Cada calculadora explica su fórmula, trae ejemplos resueltos e indica qué supuestos usa.'],
       ['Resultados que se entienden', 'Cifra principal, desglose y gráfico, y un botón para copiar el resultado.'],
-      ['Lista para más idiomas', 'La web está preparada para publicar nuevos idiomas cuando una persona nativa revise sus textos.'],
+      ['Disponible en varios idiomas', 'Elige tu idioma en el menú superior: la misma web, con las mismas fórmulas, en español, inglés y portugués de Brasil.'],
     ],
     catalogKicker: 'CATÁLOGO',
     catalogTitle: 'Catálogo de {total} calculadoras para tu negocio',
@@ -128,7 +128,7 @@ export const ui = {
     faq: [
       ['¿Los cálculos incluyen IVA?', 'Depende de la herramienta. Margen y rentabilidad trabajan con importes sin IVA. La de precio de venta añade el IVA al final y muestra el precio con y sin IVA. La de base imponible sirve para añadir o quitar IVA.'],
       ['¿Se guardan mis datos?', 'No. El cálculo se hace en tu navegador y las cifras que escribes no se envían a ningún servidor.'],
-      ['¿Puedo usarlas fuera de España?', 'Las calculadoras universales usan fórmulas matemáticas y permiten elegir la moneda. Las que dependen de la normativa de un país, como el IVA, solo se ofrecen en los idiomas de ese mercado.'],
+      ['¿Puedo usarlas fuera de España?', 'Las calculadoras de márgenes y rentabilidad usan fórmulas matemáticas y permiten elegir la moneda. Las de precio con IVA y base imponible siguen la práctica española; en los otros idiomas se ofrecen como versión genérica, que aplica el porcentaje que tú escribes sin asumir las normas de ningún país.'],
       ['¿Sustituyen a un asesor?', 'No. Son herramientas de cálculo y orientación. Para obligaciones fiscales o legales, contrasta con fuentes oficiales o consulta a un profesional.'],
     ],
     ctaTitle: 'Empieza por el precio',
@@ -178,6 +178,7 @@ export const ui = {
     currencyLabel: 'Moneda',
     currencyNone: 'Sin moneda',
     devNote: 'Nota de desarrollo: contenido explicativo en fase de revisión. La información fiscal requiere validación antes de publicar.',
+    genericTax: 'Esta versión aplica el porcentaje de impuesto que tú escribes. No conoce las normas fiscales de ningún país: comprueba el tipo y la forma de calcularlo con fuentes oficiales o con tu asesoría.',
     fiscalPending: 'La parte fiscal de esta calculadora está pendiente de revisión por una persona profesional. Hasta entonces, trátala como orientativa.',
     formulasKicker: 'FÓRMULAS CLAVE',
     formulasTitle: 'Cómo se calcula',

@@ -8,6 +8,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { buildContext } from '../src/lib/context.js';
 import { routeTable } from '../src/i18n/routes.js';
+import { publishedLocales } from '../src/i18n/publish.js';
 
 const root = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, '..', 'dist'));
 if (!fs.existsSync(root)) { console.error(`No existe ${root}. Ejecuta antes: npm run build`); process.exit(1); }
@@ -29,17 +30,21 @@ await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const base = `http://127.0.0.1:${server.address().port}`;
 const problems = [];
 let checks = 0;
-const ok = (cond, msg) => { checks++; if (!cond) problems.push(msg); };
+let cur = '';
+const ok = (cond, msg) => { checks++; if (!cond) problems.push(`[${cur}] ${msg}`); };
 const known = new Set(routeTable().map((r) => r.path));
-
-const locale = 'es';
-const ctx = buildContext(locale);
-const home = ctx.path('home');
-const hub = ctx.path('tools');
-const expected = ctx.catalog.counts;
 
 const browser = await chromium.launch();
 try {
+ // Cada comprobación se repite en TODOS los idiomas publicados (es, en, pt-br).
+ for (const locale of publishedLocales()) {
+  cur = locale;
+  const ctx = buildContext(locale);
+  const home = ctx.path('home');
+  const hub = ctx.path('tools');
+  const expected = ctx.catalog.counts;
+  const qTool = ctx.toolById.iva.search.split(' ')[0]; // una palabra clave de una calculadora, en el idioma de la página
+  const qMargin = ctx.toolById.margen.search.split(' ')[0];
   // 1. Enlaces de las tarjetas: todos existen; en desarrollo = sin enlace
   for (const url of [home, hub, ...ctx.categories.map((c) => c.path)]) {
     const page = await browser.newPage();
@@ -85,7 +90,7 @@ try {
     ok(clip.includes(after.trim()), `portada: lo copiado no contiene el resultado (${clip.slice(0, 50)})`);
     ok((await copyBtn.textContent()).includes(ctx.ui.tool.copied), 'portada: el botón no confirma la copia');
     // buscador de la portada
-    await page.fill('#mainSearch', 'iva');
+    await page.fill('#mainSearch', qTool);
     const hit = await page.$$eval('#searchResults a', (as) => as.map((a) => a.getAttribute('href')));
     ok(hit.length > 0 && hit.every((h) => known.has(h)), `portada: el buscador no devuelve enlaces válidos (${hit})`);
     await page.fill('#mainSearch', 'xyzxyzxyz');
@@ -102,8 +107,8 @@ try {
     await page.click('[data-filter-category=""]');
     await page.fill('[data-catalog-search]', 'xyzxyzxyz');
     ok((await count()) === 0 && (await page.isVisible('[data-catalog-empty]')), 'catálogo: no muestra el aviso de «sin resultados»');
-    await page.fill('[data-catalog-search]', 'margen');
-    ok((await count()) > 0, 'catálogo: la búsqueda «margen» no encuentra nada');
+    await page.fill('[data-catalog-search]', qMargin);
+    ok((await count()) > 0, `catálogo: la búsqueda «${qMargin}» no encuentra nada`);
     ok(errs.length === 0, `portada: errores de JavaScript: ${errs.join(' | ')}`);
     await page.close();
   }
@@ -131,6 +136,7 @@ try {
     ok(!(await page.isVisible('[data-catalog-search]')), 'sin JS: el buscador del catálogo no debería mostrarse');
     await c.close();
   }
+ }
 } finally {
   await browser.close();
   server.close();
