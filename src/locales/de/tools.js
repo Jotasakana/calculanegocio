@@ -9,6 +9,7 @@
 export const slugs = {
   tools: 'rechner',
   methodology: 'methodik',
+  pages: { contact: 'kontakt', legal: 'impressum', privacy: 'datenschutz', cookies: 'cookie-richtlinie', terms: 'nutzungsbedingungen' },
   categories: { 'margenes-y-precios': 'marge-und-preise', facturacion: 'rechnungen-und-steuer', crecimiento: 'rentabilitaet-und-wachstum' },
   toolPages: {
     margen: 'gewinnmargenrechner',

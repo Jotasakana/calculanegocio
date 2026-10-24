@@ -16,6 +16,9 @@ import { CATALOG, CATALOG_CATEGORIES } from '../domain/catalog.js';
 //   unreviewed         -> traducción hecha pero SIN revisión nativa registrada: solo se publica en el modo de
 //                         desarrollo (SITE_INDEXABLE distinto de "true"). Al activar la indexación desaparece sola
 //                         hasta que una persona la revise y se registre como 'reviewed'. Nunca se simula una revisión.
+// Páginas informativas y legales (clave 'page:<id>'). Cada idioma debe tener su slug y su fragmento pages/legal-<id>.html.
+export const PAGE_IDS = ['contact', 'legal', 'privacy', 'cookies', 'terms'];
+
 export const PUBLISHABLE = new Set(['source', 'reviewed']);
 const UNREVIEWED_OK = process.env.SITE_INDEXABLE !== 'true';
 export const isPublishableStatus = (status, world) => PUBLISHABLE.has(status) || (status === 'unreviewed' && (world?.allowUnreviewed ?? UNREVIEWED_OK));
@@ -48,7 +51,7 @@ export function toolAvailable(localeCode, toolId, world = REAL_WORLD) {
   return marketFor(localeCode, toolId, world) !== null;
 }
 
-/** pageKey: 'home' | 'tools' | 'methodology' | 'category:<id>' | 'tool:<id>' */
+/** pageKey: 'home' | 'tools' | 'methodology' | 'page:<id>' | 'category:<id>' | 'tool:<id>' */
 export function isPublished(localeCode, pageKey, world = REAL_WORLD) {
   if (world.locales[localeCode]?.status !== 'enabled' || !world.content[localeCode]) return false;
   if (!isPublishableStatus(reviewOf(localeCode, pageKey, world).status, world)) return false;
@@ -64,7 +67,7 @@ export function isPublished(localeCode, pageKey, world = REAL_WORLD) {
 // los idiomas 'unreviewed' no generan ninguna página: no deben aparecer en el selector, en hreflang ni en el sitemap
 // (antes de la Fase 3B el selector habría enlazado entonces a páginas inexistentes).
 const hasPublishedPage = (code, world) =>
-  ['home', 'tools', 'methodology', ...Object.keys(world.categories).map((id) => 'category:' + id), ...Object.keys(world.tools).map((id) => 'tool:' + id)]
+  ['home', 'tools', 'methodology', ...PAGE_IDS.map((id) => 'page:' + id), ...Object.keys(world.categories).map((id) => 'category:' + id), ...Object.keys(world.tools).map((id) => 'tool:' + id)]
     .some((key) => isPublished(code, key, world));
 
 export const publishedLocales = (world = REAL_WORLD) =>

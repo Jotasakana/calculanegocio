@@ -8,6 +8,7 @@ import ToolsHubView from '../views/ToolsHubView.astro';
 import CategoryView from '../views/CategoryView.astro';
 import MethodologyView from '../views/MethodologyView.astro';
 import ToolView from '../views/ToolView.astro';
+import LegalView from '../views/LegalView.astro';
 
 export function getStaticPaths() {
   return routeTable().map((r) => ({ params: { slug: r.path.replace(/^\/|\/$/g, '') }, props: { pageKey: r.key, locale: r.locale } }));
@@ -20,5 +21,6 @@ const [kind, id] = pageKey.split(':');
 {kind === 'home' && <HomeView ctx={ctx} />}
 {kind === 'tools' && <ToolsHubView ctx={ctx} />}
 {kind === 'methodology' && <MethodologyView ctx={ctx} />}
+{kind === 'page' && <LegalView ctx={ctx} pageId={id} />}
 {kind === 'category' && <CategoryView ctx={ctx} categoryId={id} />}
 {kind === 'tool' && <ToolView ctx={ctx} toolId={id} />}

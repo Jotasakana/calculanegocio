@@ -1,6 +1,6 @@
 // Pruebas de las Fases 3A y 3B sobre los idiomas REALES (es, en, pt-br, de, fr, hi): publicación, selector, mercado genérico,
 // hreflang recíproco, formatos y calculadoras en cada idioma. No requiere Astro.
-import { REAL_WORLD, isPublished, marketFor, publishedLocales } from '../src/i18n/publish.js';
+import { REAL_WORLD, PAGE_IDS, isPublished, marketFor, publishedLocales } from '../src/i18n/publish.js';
 import { routeTable, pathFor, alternatesFor } from '../src/i18n/routes.js';
 import { buildContext } from '../src/lib/context.js';
 import { createCalculator } from '../src/lib/present.js';
@@ -17,7 +17,7 @@ function check(name, got, want) {
 const LANGS = ['es', 'en', 'pt-br', 'de', 'fr', 'hi'];
 const TRANSLATED = LANGS.filter((l) => l !== 'es');
 const CURRENCY = { es: 'EUR', 'pt-br': 'BRL', hi: 'INR' }; // moneda por defecto del idioma (el resto: ninguna)
-const ALL_KEYS = ['home', 'tools', 'methodology', ...Object.keys(REAL_WORLD.categories).map((c) => 'category:' + c), ...Object.keys(REAL_WORLD.tools).map((t) => 'tool:' + t)];
+const ALL_KEYS = ['home', 'tools', 'methodology', ...PAGE_IDS.map((p) => 'page:' + p), ...Object.keys(REAL_WORLD.categories).map((c) => 'category:' + c), ...Object.keys(REAL_WORLD.tools).map((t) => 'tool:' + t)];
 const nb = (s) => s.replace(/[  ]/g, ' ');
 
 // 1. Publicación: los seis idiomas con las mismas 9 páginas, y nada más
@@ -61,7 +61,7 @@ check('es sigue publicado con la indexación activada', isPublished('es', 'home'
   check('indexación activada: solo se publica es', publishedLocales(strict).join(), 'es');
   check('indexación activada: sin hreflang (una sola versión)', JSON.stringify(alternatesFor('tool:margen', strict)), '[]');
   check('indexación activada: sin hreflang en el sitemap', sitemapXml('https://calculanegocio.com', strict).includes('xhtml:link'), false);
-  check('indexación activada: 14 URLs, todas en /es/', routeTable(strict).map((r) => r.path.split('/')[1]).filter((v, i, a) => a.indexOf(v) === i).join() + '/' + routeTable(strict).length, 'es/14');
+  check('indexación activada: 19 URLs, todas en /es/', routeTable(strict).map((r) => r.path.split('/')[1]).filter((v, i, a) => a.indexOf(v) === i).join() + '/' + routeTable(strict).length, 'es/19');
   check('indexación activada: el selector solo lista es (no se pinta con un único idioma)', buildContext('es', strict).versions('home').map((v) => v.code).join(), 'es');
 }
 
@@ -106,7 +106,7 @@ for (const key of ALL_KEYS) {
   check('sitemap: una URL por página', (xml.match(/<loc>/g) || []).length, table.length);
   check('sitemap: 7 alternativas por página (6 idiomas + x-default)', (xml.match(/xhtml:link/g) || []).length, table.length * 7);
   check('sitemap: incluye pt-BR, de, fr y hi', ['pt-BR', 'de', 'fr', 'hi'].every((h) => xml.includes(`hreflang="${h}"`)), true);
-  check('sitemap: 84 URLs (6 idiomas x 14 páginas)', table.length, 84);
+  check('sitemap: 114 URLs (6 idiomas x 19 páginas)', table.length, 114);
   for (const l of LANGS) {
     const h = headModel({ locale: l, key: 'tool:margen', siteUrl: 'https://calculanegocio.com', indexable: false });
     check(`${l}: canonical propio`, h.canonical, 'https://calculanegocio.com' + pathFor(l, 'tool:margen'));

@@ -9,6 +9,7 @@
 export const slugs = {
   tools: 'calculatrices',
   methodology: 'methodologie',
+  pages: { contact: 'contact', legal: 'mentions-legales', privacy: 'politique-de-confidentialite', cookies: 'politique-de-cookies', terms: 'conditions-d-utilisation' },
   categories: { 'margenes-y-precios': 'marges-et-prix', facturacion: 'facturation-et-taxes', crecimiento: 'rentabilite-et-croissance' },
   toolPages: {
     margen: 'calculatrice-marge-commerciale',

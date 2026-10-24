@@ -10,6 +10,7 @@ import { buildCatalog } from './catalog.js';
 import { FEATURED_TOOLS } from '../domain/catalog.js';
 import { fill } from './fill.js';
 import { withToc } from './toc.js';
+import { legalField } from './legal.js';
 
 export function buildContext(localeCode, world = REAL_WORLD) {
   const loc = world.locales[localeCode];
@@ -88,6 +89,7 @@ export function buildContext(localeCode, world = REAL_WORLD) {
     /** Contexto para los fragmentos HTML. */
     fragmentCtx: {
       path,
+      legal: (id) => legalField(id, { ui: content.ui, intl: loc.intl }),
       title: (kind, id) => (kind === 'tool' ? toolById[id] : categoryById[id]).title,
     },
     /** Solo lo que necesita el navegador para calcular: nada de textos de página. */
