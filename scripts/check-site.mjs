@@ -11,7 +11,7 @@ const issues = [];
 const routes = routeTable();
 const expected = new Set(routes.map(r => r.path));
 const site = (process.env.SITE_URL || 'https://calculanegocio.com').replace(/\/$/, '');
-const indexed = process.env.SITE_INDEXABLE === 'true';
+const indexed = process.env.SITE_INDEXABLE !== 'false';
 const getFile = p => path.join(root, p, 'index.html');
 const pages = new Map();
 const ids = new Map();
@@ -28,7 +28,8 @@ for (const r of routes) {
   if (!new RegExp(`<html\\b[^>]*lang=["']${r.locale}["']`, 'i').test(html)) fail(`${r.path}: lang incorrecto`);
   const robots = html.match(/<meta\b[^>]*name=["']robots["'][^>]*>/i)?.[0] || '';
   if (!indexed && !/noindex/i.test(robots)) fail(`${r.path}: falta noindex en desarrollo`);
-  if (indexed && /noindex/i.test(robots)) fail(`${r.path}: noindex con indexable=true`);
+  if (indexed && r.locale === 'es' && /noindex/i.test(robots)) fail(`${r.path}: español noindex al lanzar`);
+  if (indexed && r.locale !== 'es' && !/noindex/i.test(robots)) fail(`${r.path}: idioma no revisado indexable`);
   if ((html.match(/<h1\b/gi) || []).length !== 1) fail(`${r.path}: debe tener un solo h1`);
 }
 for (const [p, html] of pages) {
@@ -45,6 +46,7 @@ if (!fs.existsSync(robotsPath)) fail('falta robots.txt');
 else {
   const robots = fs.readFileSync(robotsPath, 'utf8');
   if (!indexed && !/Disallow:\s*\//i.test(robots)) fail('robots.txt no bloquea rastreo durante desarrollo');
+  if (indexed && !/Allow:\s*\//i.test(robots)) fail('robots.txt debe permitir el rastreo');
 }
 if (!fs.existsSync(path.join(root, 'sitemap.xml'))) fail('falta sitemap.xml');
 if (issues.length) { console.error(issues.join('\n')); console.error(`FALLO: ${issues.length} incidencias`); process.exit(1); }
