@@ -5,7 +5,7 @@ const siteUrl = (process.env.SITE_URL || 'https://calculanegocio.com').replace(/
 export const SITE = {
   url: siteUrl,
   // Modo desarrollo por defecto: noindex + robots.txt con Disallow. No activar sin autorización.
-  indexable: process.env.SITE_INDEXABLE === 'true',
+  indexable: process.env.SITE_INDEXABLE !== 'false',
 };
 
 export const absoluteUrl = (path) => siteUrl + path;
