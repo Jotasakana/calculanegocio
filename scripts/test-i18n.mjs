@@ -5,7 +5,7 @@ import path from 'node:path';
 import { createCalculator } from '../src/lib/present.js';
 import { calculate, ERROR_CODES } from '../src/domain/formulas.js';
 import { TOOL_REGISTRY } from '../src/domain/registry.js';
-import { parseDecimal, makeFormatter, toMinor, currencyExponent, normalizeDigits, decimalSeparator } from '../src/i18n/numbers.js';
+import { parseDecimal, makeFormatter, toMinor, currencyExponent, normalizeDigits, decimalSeparator, usesIndianGrouping } from '../src/i18n/numbers.js';
 import { LOCALES, enabledLocales, DEFAULT_LOCALE } from '../src/i18n/locales.js';
 import { REAL_WORLD, isPublished } from '../src/i18n/publish.js';
 import { routeTable, alternatesFor, pathFor } from '../src/i18n/routes.js';
@@ -74,6 +74,28 @@ for (const l of ['en', 'ja', 'zh', 'hi', 'ar']) {
   check(`${l} "0,125" = 0.125`, P('0,125', l), '0.125');
   check(`${l} "1,234,567.89"`, P('1,234,567.89', l), '1234567.89');
 }
+// Hindi: agrupación india (12,34,567.50), además de la occidental; en los demás idiomas la india NO se acepta
+check('hi agrupación india "12,34,567.50"', String(parseDecimal('12,34,567.50', '.', { indian: usesIndianGrouping('hi') })), '1234567.5');
+check('hi agrupación india "1,25,000"', String(parseDecimal('1,25,000', '.', { indian: true })), '125000');
+check('hi "1,250,000.5" (occidental) también', String(parseDecimal('1,250,000.5', '.', { indian: true })), '1250000.5');
+check('hi dígitos devanagari con agrupación india', String(parseDecimal('१२,३४,५६७', '.', { indian: true })), '1234567');
+check('hi grupos mal formados "1,2,000"', String(parseDecimal('1,2,000', '.', { indian: true })), 'NaN');
+check('hi grupos mal formados "12,345,67"', String(parseDecimal('12,345,67', '.', { indian: true })), 'NaN');
+check('hi rupias y espacios "₹ 1,25,000.00"', String(parseDecimal('₹ 1,25,000.00', '.', { indian: true })), '125000');
+check('en sigue sin aceptar la agrupación india', String(parseDecimal('1,25,000.5', '.', { indian: usesIndianGrouping('en') })), 'NaN');
+check('usesIndianGrouping: hi sí; en, de, fr, es, pt-br no', ['hi', 'en', 'de', 'fr', 'es', 'pt-br'].map((l) => usesIndianGrouping(l)).join(), 'true,false,false,false,false,false');
+// Francés: espacio fino insécable (U+202F) y de no ruptura (U+00A0) como separador de miles
+check('fr "1 250,5" con U+202F', String(parseDecimal('1\u202f250,5', ',')), '1250.5');
+check('fr "1 250,5" con U+00A0', String(parseDecimal('1\u00a0250,5', ',')), '1250.5');
+// Alemán: formatos de importes
+check('de importe EUR', nb(makeFormatter('de', 'EUR').money(1512.5)), '1.512,50 €');
+check('de porcentaje', nb(makeFormatter('de').percent(40)), '40,00 %');
+check('fr importe EUR', nb(makeFormatter('fr', 'EUR').money(1512.5)), '1 512,50 €');
+check('fr porcentaje', nb(makeFormatter('fr').percent(66.67)), '66,67 %');
+check('hi importe INR con agrupación india', nb(makeFormatter('hi', 'INR').money(1234567.5)), '₹12,34,567.50');
+check('hi importe 1 lakh', nb(makeFormatter('hi', 'INR').money(100000)), '₹1,00,000.00');
+check('hi porcentaje', makeFormatter('hi').percent(40), '40.00%');
+check('hi dígitos latinos en los resultados', /^[0-9.,₹]+$/.test(makeFormatter('hi', 'INR').money(1234.5)), 'true');
 check('en "1.250" = 1.25 (no miles)', P('1.250', 'en'), '1.25');
 check('es "1.250" = 1250', P('1.250', 'es'), '1250');
 check('fr espacio fino "1 234,5"', P('1 234,5', 'fr'), '1234.5');
@@ -163,11 +185,11 @@ const SPANISH_V05 = [
 const table = routeTable();
 for (const p of SPANISH_V05) check(`URL española conservada ${p}`, table.some((r) => r.path === p), 'true');
 check('portada nueva en /es/', table.some((r) => r.key === 'home' && r.path === '/es/'), 'true');
-check('idiomas publicados: es, en y pt-br', [...new Set(table.map((r) => r.locale))].join(), 'es,en,pt-br');
+check('idiomas publicados: es, en, pt-br, de, fr y hi', [...new Set(table.map((r) => r.locale))].join(), 'es,en,pt-br,de,fr,hi');
 check('sin duplicados', new Set(table.map((r) => r.path)).size, table.length);
 check('formato de URL', table.every((r) => /^\/(?:[a-z0-9-]+\/)+$/.test(r.path)), 'true');
-check('hreflang recíproco real en margen', alternatesFor('tool:margen').map((a) => a.hreflang).join(), 'es,en,pt-BR,x-default');
-check('idiomas habilitados', enabledLocales().map((l) => l.code).join(), 'es,en,pt-br');
+check('hreflang recíproco real en margen', alternatesFor('tool:margen').map((a) => a.hreflang).join(), 'es,en,pt-BR,de,fr,hi,x-default');
+check('idiomas habilitados', enabledLocales().map((l) => l.code).join(), 'es,en,pt-br,de,fr,hi');
 check('ningún borrador publica páginas', Object.keys(LOCALES).filter((c) => LOCALES[c].status === 'draft' && table.some((r) => r.locale === c)).length, '0');
 
 // ---------------------------------------------------------------------------
@@ -180,7 +202,7 @@ const mkEn = (status, extra = {}) => ({
 });
 // Mundo sintético SOLO con es + un `en` de prueba; el mercado genérico real (en, pt-br) se vacía para conservar la semántica original.
 const NO_GENERIC = { ...REAL_WORLD.markets, generic: { ...REAL_WORLD.markets.generic, locales: [] } };
-const world = (status, extra) => ({ ...REAL_WORLD, locales: { ...LOCALES, en: { ...LOCALES.en, status: 'enabled' }, 'pt-br': { ...LOCALES['pt-br'], status: 'draft' } }, content: { es, en: mkEn(status, extra) }, markets: NO_GENERIC });
+const world = (status, extra) => ({ ...REAL_WORLD, locales: { ...LOCALES, en: { ...LOCALES.en, status: 'enabled' }, 'pt-br': { ...LOCALES['pt-br'], status: 'draft' }, de: { ...LOCALES.de, status: 'draft' }, fr: { ...LOCALES.fr, status: 'draft' }, hi: { ...LOCALES.hi, status: 'draft' } }, content: { es, en: mkEn(status, extra) }, markets: NO_GENERIC });
 const wDraft = world('draft');
 check('traducción en borrador: no genera páginas', routeTable(wDraft).filter((r) => r.locale === 'en').length, '0');
 check('borrador: no genera hreflang', JSON.stringify(alternatesFor('tool:margen', wDraft)), '[]');
@@ -259,8 +281,8 @@ check('h3 -> h2.sec y h4 -> h3.sub', renderFragment('<h3>A</h3><h4>B</h4>', ctxF
 {
   const xml = sitemapXml('https://calculanegocio.com/');
   check('sitemap: una URL por página publicada', (xml.match(/<loc>/g) || []).length, table.length);
-  check('sitemap real: hreflang entre los tres idiomas', xml.includes('hreflang="en"') && xml.includes('hreflang="pt-BR"'), 'true');
-  const onlyEs = { ...REAL_WORLD, locales: { ...LOCALES, en: { ...LOCALES.en, status: 'draft' }, 'pt-br': { ...LOCALES['pt-br'], status: 'draft' } } };
+  check('sitemap real: hreflang entre los seis idiomas', ['en', 'pt-BR', 'de', 'fr', 'hi'].every((h) => xml.includes(`hreflang="${h}"`)), 'true');
+  const onlyEs = { ...REAL_WORLD, locales: Object.fromEntries(Object.entries(LOCALES).map(([c, l]) => [c, c === 'es' ? l : { ...l, status: 'draft' }])) };
   check('sitemap: sin hreflang con un solo idioma', sitemapXml('https://x.test', onlyEs).includes('xhtml:link'), 'false');
   check('sitemap: no incluye "/" (redirige)', xml.includes('<loc>https://calculanegocio.com/</loc>'), 'false');
   const xml2 = sitemapXml('https://x.test', wOk);

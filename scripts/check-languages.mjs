@@ -27,10 +27,13 @@ const visibleText = (html) => {
   const body = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<details[^>]*data-langswitch[\s\S]*?<\/details>/gi, ' ');
   const attrs = [...body.matchAll(/\b(?:aria-label|placeholder|title|alt|content)="([^"]+)"/gi)].map((m) => m[1]);
   const text = body.replace(/<[^>]+>/g, ' ');
-  return (text + ' ' + attrs.join(' ')).replace(/&[a-z]+;|&#\d+;/gi, ' ').replace(/CalculaNegocio/g, ' ').replace(/\s+/g, ' ');
+  return (text + ' ' + attrs.join(' ')).replace(/&[a-z]+;|&#\d+;/gi, ' ').replace(/https?:\/\/\S+/g, ' ').replace(/CalculaNegocio/g, ' ').replace(/\s+/g, ' ');
 };
 const SPANISH = /\b(margen|recargo|coste|costes|precio|aut[oó]nomos?|descuentos?|herramientas?|Espa[ñn]a|IVA|IRPF|desarrollo|disponibles?)\b|[¿¡ñ]/i;
 const ENGLISH = /\b(the|and|your|with|calculator|margin)\b/i;
+// Palabras que existen en el idioma revisado y coinciden con el patrón español: se excluyen solo en ese idioma.
+const SPANISH_OK = { de: /\bMargen\b/g, fr: /\bdisponibles?\b/gi };
+const ENGLISH_OK = { 'pt-br': /\bmargem\b/gi };
 
 for (const r of table) {
   const html = read(r.path);
@@ -76,8 +79,18 @@ for (const r of table) {
 
   // Idioma de los textos
   const text = visibleText(html);
-  if (r.locale !== 'es') ok(!SPANISH.test(text), `${r.path}: restos de español → «${text.match(SPANISH)?.[0]}» …${text.slice(Math.max(0, text.search(SPANISH) - 30), text.search(SPANISH) + 40)}`);
-  if (r.locale === 'pt-br') ok(!ENGLISH.test(text.replace(/\bmargem\b/gi, '')), `${r.path}: restos de inglés → «${text.match(ENGLISH)?.[0]}»`);
+  const textEs = SPANISH_OK[r.locale] ? text.replace(SPANISH_OK[r.locale], ' ') : text;
+  if (r.locale !== 'es') ok(!SPANISH.test(textEs), `${r.path}: restos de español → «${textEs.match(SPANISH)?.[0]}» …${textEs.slice(Math.max(0, textEs.search(SPANISH) - 30), textEs.search(SPANISH) + 40)}`);
+  if (!['es', 'en'].includes(r.locale)) {
+    const textEn = ENGLISH_OK[r.locale] ? text.replace(ENGLISH_OK[r.locale], ' ') : text;
+    ok(!ENGLISH.test(textEn), `${r.path}: restos de inglés → «${textEn.match(ENGLISH)?.[0]}» …${textEn.slice(Math.max(0, textEn.search(ENGLISH) - 30), textEn.search(ENGLISH) + 40)}`);
+  }
+  // Hindi: el texto debe ser devanagari (no una copia del inglés) y sin caracteres de otras escrituras
+  if (r.locale === 'hi') {
+    const dev = (text.match(/[\u0900-\u097F]/g) || []).length, lat = (text.match(/[A-Za-z]/g) || []).length;
+    ok(dev > 200 && dev > lat, `${r.path}: poco devanagari (${dev} devanagari / ${lat} latinas)`);
+    ok(!/[\u0600-\u06FF\u3040-\u30FF\u4E00-\u9FFF]/.test(text), `${r.path}: caracteres de otra escritura`);
+  }
   if (r.locale === 'es') ok(!/\b(the|and|your|with)\b/i.test(text), `${r.path}: restos de inglés en español`);
   // La calculadora lleva el JSON de idioma correcto
   for (const m of html.matchAll(/data-calc-i18n[^>]*>(\{[\s\S]*?\})<\/script>/g)) ok(JSON.parse(m[1].replace(/&quot;/g, '"')).code === r.locale, `${r.path}: JSON de calculadora de otro idioma`);
@@ -107,11 +120,11 @@ for (const r of table) {
   const xml = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
   ok((xml.match(/<loc>/g) || []).length === table.length, 'sitemap: número de URLs');
   for (const r of table) ok(xml.includes(`<loc>${site}${r.path}</loc>`), `sitemap: falta ${r.path}`);
-  ok((xml.match(/hreflang="pt-BR"/g) || []).length === table.length / locales.length * locales.length, 'sitemap: hreflang pt-BR por cada URL');
-  ok(!/\/(fr|de|it|nl|pl|ar|hi|id|ja|zh|ru|uk|cs)\//.test(xml), 'sitemap: contiene idiomas no publicados');
+  for (const l of locales) ok((xml.match(new RegExp(`hreflang="${REAL_WORLD.locales[l].hreflang}"`, 'g')) || []).length === table.length / locales.length * locales.length, `sitemap: hreflang ${REAL_WORLD.locales[l].hreflang} por cada URL`);
+  ok(!/\/(it|nl|pl|ar|id|ja|zh|ru|uk|cs)\//.test(xml), 'sitemap: contiene idiomas no publicados');
 }
 // No se generan carpetas de idiomas no publicados
-for (const d of fs.readdirSync(root, { withFileTypes: true })) if (d.isDirectory() && /^(fr|de|it|nl|pl|ar|hi|id|ja|zh|ru|uk|cs)$/.test(d.name)) bad(`dist/${d.name}: idioma no publicado`);
+for (const d of fs.readdirSync(root, { withFileTypes: true })) if (d.isDirectory() && /^(it|nl|pl|ar|id|ja|zh|ru|uk|cs)$/.test(d.name)) bad(`dist/${d.name}: idioma no publicado`);
 
 console.log(problems.length ? 'PROBLEMAS:\n - ' + [...new Set(problems)].join('\n - ') : `OK · ${table.length} páginas en ${locales.length} idiomas: lang, selector, hreflang recíproco, canonical, enlaces y textos (${checks} comprobaciones)`);
 process.exit(problems.length ? 1 : 0);

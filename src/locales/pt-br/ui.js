@@ -6,7 +6,7 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Calculadoras para autônomos e pequenos negócios',
-    devLabel: 'DEMO PRIVADA · v0.8 · tradução pendente de revisão nativa',
+    devLabel: 'DEMO PRIVADA · v0.9 · tradução pendente de revisão nativa',
   },
   a11y: {
     skip: 'Pular para o conteúdo',
@@ -75,7 +75,7 @@ export const ui = {
       ['Privado por princípio', 'O cálculo acontece no seu navegador. Não pedimos conta nem guardamos os seus valores.'],
       ['Fórmulas à vista', 'Cada calculadora explica a sua fórmula, traz exemplos resolvidos e informa quais premissas usa.'],
       ['Resultados que fazem sentido', 'Número principal, detalhamento e gráfico, e um botão para copiar o resultado.'],
-      ['Disponível em vários idiomas', 'Escolha o idioma no menu superior: o mesmo site, com as mesmas fórmulas, em espanhol, inglês e português do Brasil.'],
+      ['Disponível em vários idiomas', 'Escolha o idioma no menu superior: o mesmo site, com as mesmas fórmulas, em espanhol, inglês, português do Brasil, alemão, francês e hindi.'],
     ],
     catalogKicker: 'CATÁLOGO',
     catalogTitle: 'Catálogo de {total} calculadoras para o seu negócio',

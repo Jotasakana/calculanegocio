@@ -1,8 +1,8 @@
 # Arquitectura internacional de CalculaNegocio
 
-Estado: **Fase 3A**. Publicados: `es` (fuente), `en` y `pt-br` (estado `unreviewed`, solo en modo desarrollo). El resto de idiomas
-están registrados pero **no generan ninguna página**. Novedades de la 3A: estado `unreviewed`, mercado `generic` y selector de idioma
-(ver `CAMBIOS-FASE3A.md`).
+Estado: **Fase 3B**. Publicados: `es` (fuente) y `en`, `pt-br`, `de`, `fr`, `hi` (estado `unreviewed`, solo en modo desarrollo). Los idiomas
+restantes están registrados pero **no generan ninguna página**. Novedades de la 3B: alemán, francés e hindi; selector con seis idiomas;
+lectura de números con agrupación india; ajustes tipográficos del devanagari (ver `CAMBIOS-FASE3B.md`).
 
 ## Principio: tres capas que no se mezclan
 
@@ -22,7 +22,7 @@ Reglas (las comprueba `npm test`):
 
 * **Idioma** (`src/i18n/locales.js`): código, `hreflang`, prefijo de URL, dirección, formato `Intl`.
 * **Moneda**: independiente. `defaultCurrency` solo se fija cuando idioma-región apunta a una moneda de forma inequívoca
-  (es → EUR, pt-BR → BRL, ja → JPY…). En inglés, francés, alemán y árabe es `null`: **no se presupone ninguna moneda** (ni USD)
+  (es → EUR, pt-BR → BRL, hi → INR, ja → JPY…). En inglés, francés, alemán y árabe es `null`: **no se presupone ninguna moneda** (ni USD)
   y la persona elige en el selector. Los importes se calculan en unidades menores según la moneda (JPY: 0 decimales).
 * **País / mercado fiscal** (`src/markets/`): reglas que dependen de la normativa. Las calculadoras con `scope: 'fiscal'`
   (hoy IVA y precio con IVA, mercado `es`) solo se publican en los idiomas de su mercado. Otros países necesitarían su
@@ -58,8 +58,8 @@ mercados "verificados", y detecta traducciones sin hacer (>15 % de textos idént
 2. Registrarlo en `src/locales/index.js`. Mientras `status` sea `draft` en `src/i18n/locales.js` no se publica nada.
 3. `npm test` debe pasar. Pedir la revisión a una persona nativa; anotar `reviewer/date/scope` en `review.js` **solo** cuando ocurra.
 4. Cambiar `status` a `enabled`. Aparecen páginas, selector de idioma, hreflang y sitemap; el español no cambia.
-5. Pendiente por idioma antes de activarlo: fuentes propias para devanagari/árabe (alojadas en el sitio), lectura de la
-   agrupación india (`12,34,567`) para hindi, y el banner de consentimiento (CMP certificado, EEE/Reino Unido) antes de AdSense.
+5. Pendiente por idioma antes de activarlo: fuentes propias para árabe (alojadas en el sitio) y el banner de consentimiento (CMP certificado, EEE/Reino Unido)
+   antes de AdSense. La agrupación india (`12,34,567`) del hindi ya se lee y se muestra (`usesIndianGrouping` en `src/i18n/numbers.js`).
 
 ## Escrituras y RTL
 
@@ -68,6 +68,16 @@ mercados "verificados", y detecta traducciones sin hacer (>15 % de textos idént
 * Lectura de números: dígitos árabe-índicos, persas, devanagari y de ancho completo se normalizan; separadores según el idioma.
 * `npm run test:layout` mide en Chromium, en 6 anchos, la página normal, con `dir="rtl"` forzado y con los textos alargados un 45 %
   (simula alemán/pseudo-idioma). No se despliega nada de esto.
+
+## Fase 3B: alemán, francés e hindi
+
+* Las tres traducciones están en `src/locales/{de,fr,hi}/` con la misma estructura que `es/`. Estado `unreviewed`: solo se publican con `SITE_INDEXABLE` ≠ `true`.
+* Impuestos: `de`, `fr` y `hi` pertenecen al **mercado genérico** (como `en` y `pt-br`): el usuario escribe el porcentaje (ejemplo 10 %), con aviso visible,
+  moneda elegible y sin insignia de país. No hay calculadora de Umsatzsteuer/MwSt, TVA ni GST ni se citan tipos o autoridades de esos países.
+* Monedas: `de` y `fr` no presuponen moneda (se elige en el selector; EUR, CHF y CAD están en la lista); `hi` usa INR por defecto.
+* Hindi: escritura devanagari de izquierda a derecha (`dir="ltr"`); cifras latinas con agrupación india (`₹12,34,567.50`); se aceptan también dígitos devanagari al escribir.
+  CSS: más altura de línea en títulos, botones y pestañas (`:lang(hi)` en `site.css`). Fuentes del sistema (Noto Sans Devanagari, Nirmala UI, Kohinoor, Devanagari Sangam MN, Mangal); no se descarga ninguna.
+* Los slugs son ASCII (alemán: ä→ae; hindi: romanizado).
 
 ## Pendiente / límites conocidos
 

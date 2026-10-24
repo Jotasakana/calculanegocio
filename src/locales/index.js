@@ -3,8 +3,11 @@
 import es from './es/index.js';
 import en from './en/index.js';
 import ptBr from './pt-br/index.js';
+import de from './de/index.js';
+import fr from './fr/index.js';
+import hi from './hi/index.js';
 
-export const CONTENT = { es, en, 'pt-br': ptBr };
+export const CONTENT = { es, en, 'pt-br': ptBr, de, fr, hi };
 
 export function getContent(code) {
   const c = CONTENT[code];

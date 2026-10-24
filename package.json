@@ -1,9 +1,9 @@
 {
   "name": "calculanegocio",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "type": "module",
-  "description": "CalculaNegocio — calculadoras gratuitas para autónomos y pequeños negocios (Astro, HTML estático; español, inglés y portugués de Brasil).",
+  "description": "CalculaNegocio — calculadoras gratuitas para autónomos y pequeños negocios (Astro, HTML estático; español, inglés, portugués de Brasil, alemán, francés e hindi).",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

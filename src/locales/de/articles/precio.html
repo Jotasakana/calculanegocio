@@ -1,0 +1,128 @@
+<p>Ein Produkt oder eine Leistung zu bepreisen heißt zu entscheiden, wie viel von dem, was Sie verlangen, die Kosten deckt, wie viel der Vertriebskanal behält, wie viel Gewinn ist und wie viel Steuer. Dieser Rechner trennt diese vier Teile. Sie geben die Kosten, eventuelle Zusatzkosten, die angestrebte Marge oder den Aufschlag, die Provision und gegebenenfalls den Rabatt ein und erhalten den Preis ohne Steuer, die Steuer, den Preis inklusive Steuer und den Gewinn pro Einheit.</p>
+<p>Er funktioniert auch umgekehrt. Wenn Sie bereits einen Preis haben, sagt Ihnen der Rechner, welche Marge er tatsächlich lässt.</p>
+<p>Der Steuersatz ist einfach der Prozentsatz, den Sie eingeben. Der Rechner kennt weder Sätze noch Vorschriften eines Landes; der Startwert ist daher nur ein veränderbares Beispiel. Geben Sie 0 ein, wenn Sie die Steuer ignorieren möchten.</p>
+<h3>So verwenden Sie den Rechner</h3>
+<ul>
+<li><strong>Stückkosten:</strong> was Sie jede Einheit kostet, ohne Steuer.</li>
+<li><strong>Zusatzkosten pro Einheit:</strong> Versand, Verpackung oder andere Kosten, die bei jedem Verkauf anfallen.</li>
+<li><strong>Methode:</strong> Wählen Sie zwischen <em>Marge auf den Umsatz</em> (der Prozentsatz des Preises, der Gewinn sein soll) und <em>Aufschlag auf die Kosten</em> (der Prozentsatz, den Sie auf die Kosten aufschlagen). Das sind verschiedene Kennzahlen, und der Rechner übernimmt beim Wechsel der Methode keinen Wert von der einen in die andere.</li>
+<li><strong>Provision:</strong> wenn Sie über einen Kanal verkaufen, der einen Prozentsatz berechnet. Sie wird auf den Preis ohne Steuer berechnet (siehe den Abschnitt über Fehler).</li>
+<li><strong>Geplanter Rabatt:</strong> wenn Sie einen Listenpreis mit Preisnachlass bewerben möchten.</li>
+<li><strong>Steuersatz:</strong> veränderbar; geben Sie 0 ein, wenn keine Steuer anfällt.</li>
+</ul>
+<p>Um einen bereits festgelegten Preis zu prüfen, nutzen Sie den Modus „Preis analysieren“: Geben Sie den Preis ein, geben Sie an, ob er Steuer enthält, und ergänzen Sie Kosten und Provision.</p>
+<h3>Woraus sich ein Preis zusammensetzt</h3>
+<table>
+<thead>
+<tr>
+  <th>Bestandteil</th>
+  <th>Was es ist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Kosten</td>
+  <td>Was Sie für das Produkt zahlen</td>
+</tr>
+<tr>
+  <td>Zusatzkosten</td>
+  <td>Versand, Verpackung und Ähnliches, pro Einheit</td>
+</tr>
+<tr>
+  <td>Provision</td>
+  <td>Was der Vertriebskanal behält, falls vorhanden</td>
+</tr>
+<tr>
+  <td><strong>Gewinn</strong></td>
+  <td>Was nach den obigen Posten übrig bleibt</td>
+</tr>
+<tr>
+  <td><strong>= Preis ohne Steuer</strong></td>
+  <td>Die Summe der vier Bestandteile</td>
+</tr>
+<tr>
+  <td>Steuer</td>
+  <td>Wird auf den Preis ohne Steuer aufgeschlagen. <strong>Sie gehört weder zur Marge noch zum Gewinn</strong></td>
+</tr>
+<tr>
+  <td><strong>= Preis inklusive Steuer</strong></td>
+  <td>Der Preis, den der Kunde zahlt</td>
+</tr>
+</tbody>
+</table>
+<h3>Marge oder Aufschlag: Bezugsgröße vor dem Rechnen festlegen</h3>
+<p>Bei der Methode <strong>Marge auf den Umsatz</strong> verwendet der Rechner:</p>
+<p><strong>Preis ohne Steuer = Gesamtkosten ÷ (1 − Provision − Marge)</strong></p>
+<p>Die Gesamtkosten sind die Kosten plus die Zusatzkosten. Provision und Marge werden gemeinsam abgezogen, weil beide Prozentsätze desselben Preises sind. Deshalb muss ihre Summe unter 100 % liegen. Bei 15 % Provision ist eine Marge von 85 % nicht erreichbar.</p>
+<p>Bei der Methode <strong>Aufschlag auf die Kosten</strong>:</p>
+<p><strong>Preis ohne Steuer = Gesamtkosten × (1 + Aufschlag)</strong></p>
+<p>Anschließend wird die tatsächliche Marge angezeigt, die nach der Provision bleibt:</p>
+<p><strong>Tatsächliche Marge = (Preis − Gesamtkosten − Provision) ÷ Preis</strong></p>
+<p>In beiden Fällen gilt:</p>
+<ul>
+<li><strong>Provision (Betrag)</strong> = Provision (%) × Preis ohne Steuer</li>
+<li><strong>Gewinn pro Einheit</strong> = Preis − Gesamtkosten − Provision</li>
+<li><strong>Steuer</strong> = Preis ohne Steuer × Steuersatz</li>
+<li><strong>Preis inklusive Steuer</strong> = Preis ohne Steuer × (1 + Steuersatz)</li>
+</ul>
+<p>Wenn Sie den Unterschied zwischen den beiden Bezugsgrößen vertiefen möchten, erklärt ihn der Gewinnmargenrechner mit einer Umrechnungstabelle.</p>
+<h3>Drei durchgerechnete Beispiele</h3>
+<p>Die Beispiele verwenden einen Steuersatz von 10 % rein zur Veranschaulichung sowie einfache Zahlen ohne Währung.</p>
+<h4>Beispiel 1: Marge auf den Umsatz, ohne Zusätze</h4>
+<p>Ein Artikel kostet 40, und Sie wollen 35 % Marge.</p>
+<ul>
+<li>Preis ohne Steuer: 40 ÷ (1 − 0,35) = 40 ÷ 0,65 = <strong>61,54</strong></li>
+<li>Gewinn: 61,54 − 40 = <strong>21,54</strong></li>
+<li>Entsprechender Aufschlag: 21,54 ÷ 40 = 53,85 %</li>
+<li>Steuer: 61,54 × 0,10 = <strong>6,15</strong></li>
+<li>Preis inklusive Steuer: <strong>67,69</strong></li>
+</ul>
+<p>Der Gewinn beträgt 21,54, ob der Kunde die Steuer zahlt oder nicht. Diese 6,15 Steuer gehören nicht Ihnen.</p>
+<h4>Beispiel 2: Aufschlag auf die Kosten mit Zusatzkosten</h4>
+<p>Ein Produkt kostet 25, dazu kommen 3 Versand und Verpackung pro Einheit. Sie wenden 50 % Aufschlag an.</p>
+<ul>
+<li>Gesamtkosten: 25 + 3 = 28</li>
+<li>Preis ohne Steuer: 28 × 1,50 = <strong>42,00</strong></li>
+<li>Gewinn: 42 − 28 = <strong>14,00</strong></li>
+<li>Tatsächliche Marge: 14 ÷ 42 = <strong>33,33 %</strong></li>
+<li>Steuer (10 %): 4,20 → Preis inklusive Steuer: <strong>46,20</strong></li>
+</ul>
+<p>Ein Aufschlag von 50 % entspricht einer Marge von 33,33 %, nicht von 50 %.</p>
+<h4>Beispiel 3: mit Kanalprovision und Rabatt</h4>
+<p>Ein Produkt kostet 30, dazu 2 Zusatzkosten. Sie verkaufen es auf einer Plattform, die 15 % Provision berechnet, und wollen 20 % Marge.</p>
+<ul>
+<li>Gesamtkosten: 32</li>
+<li>Preis ohne Steuer: 32 ÷ (1 − 0,15 − 0,20) = 32 ÷ 0,65 = <strong>49,23</strong></li>
+<li>Provision: 49,23 × 0,15 = <strong>7,38</strong></li>
+<li>Gewinn: 49,23 × 0,20 = <strong>9,85</strong></li>
+<li>Kontrolle: 32 + 7,38 + 9,85 = 49,23</li>
+<li>Steuer (10 %): <strong>4,92</strong> → Preis inklusive Steuer: <strong>54,15</strong></li>
+</ul>
+<p>Wollen Sie dieses Produkt mit 10 % Rabatt bewerben und trotzdem 49,23 ohne Steuer einnehmen, muss der Listenpreis 49,23 ÷ 0,90 = <strong>54,70</strong> ohne Steuer betragen, also <strong>60,17</strong> inklusive Steuer. Den Preis um 10 % anzuheben genügt nicht: 49,23 × 1,10 ergäbe 54,15, und nach 10 % Rabatt nähmen Sie nur 48,74 ein – weniger als geplant.</p>
+<h3>Die Steuer kommt am Ende dazu</h3>
+<p>Die Steuer wird auf den Preis ohne Steuer aufgeschlagen und verändert die Marge nicht. Die Beispiele verwenden 10 % als Anschauungswert, und im Rechner können Sie den Satz ändern. Welcher Satz gilt, hängt vom Vorgang und von den Vorschriften an Ihrem Standort ab; klären Sie das anhand der amtlichen Steuerinformationen Ihres Landes oder mit Ihrer Beratung.</p>
+<h3>Einen vorhandenen Preis analysieren</h3>
+<p>Angenommen, Sie verkaufen das Produkt aus Beispiel 3 für 54,15 inklusive Steuer.</p>
+<ol>
+<li>Preis ohne Steuer: 54,15 ÷ 1,10 = 49,23.</li>
+<li>Provision (15 %): 7,38.</li>
+<li>Gewinn: 49,23 − 32 − 7,38 = 9,84 (die Differenz von einem Cent entsteht durch das Runden des Preises auf 54,15).</li>
+<li>Tatsächliche Marge: 20,00 %.</li>
+</ol>
+<p>Senken Sie ihn auf 45 ohne Steuer, betrüge die Provision 6,75, der Gewinn 6,25 und die Marge fiele auf 13,89 %. Ein Rabatt wird nicht einfach von der Marge abgezogen; er verringert auch die Bemessungsgrundlage, auf der Sie bezahlt werden.</p>
+<h3>Häufige Fehler bei der Preisfestlegung</h3>
+<h4>Marge mit Aufschlag verwechseln</h4>
+<p>Wollen Sie 50 % Marge und wenden 50 % Aufschlag an, erhalten Sie 33,33 %. Für 50 % Marge benötigen Sie einen Aufschlag von 100 %.</p>
+<h4>Die Marge auf den Preis mit Steuer anwenden</h4>
+<p>Mit dem Preis inklusive Steuer aus Beispiel 1 (67,69) und Kosten von 40 ergäbe die Rechnung eine Marge von 40,91 %. Diese Marge gibt es nicht: Die Steuer gehört nicht Ihnen. Die Marge wird immer auf den Preis ohne Steuer berechnet.</p>
+<h4>Provisionen, Versand oder Retouren vergessen</h4>
+<p>Eine Marge, die nur mit den Produktkosten berechnet wird, überschätzt den Gewinn. Jede Kostenart, die Sie pro verkaufter Einheit zahlen, muss in die Rechnung eingehen.</p>
+<h4>Rabatt geben, ohne neu zu rechnen</h4>
+<p>Den Preis um 10 % zu senken, senkt den Gewinn nicht um 10 %: Er kann deutlich stärker sinken. Rechnen Sie immer mit dem Preis, zu dem Sie tatsächlich verkaufen.</p>
+<h4>Annehmen, dass jeder Kanal die Provision gleich berechnet</h4>
+<p>Der Rechner nimmt die Provision als Prozentsatz des Preises ohne Steuer. Manche Kanäle wenden sie auf eine andere Bezugsgröße an. Prüfen Sie die Bedingungen Ihres Kanals, bevor Sie sich auf das Ergebnis verlassen.</p>
+<h4>Die eingenommene Steuer als Einnahme behandeln</h4>
+<p>Die Steuer, die Sie vom Kunden einnehmen, ist kein Gewinn des Unternehmens. Wie sich die Steuer auf einer Rechnung mit mehreren Positionen verteilt, sehen Sie mit dem Nettobetragrechner.</p>
+<h3>Vom berechneten zum veröffentlichten Preis</h3>
+<p>Der Preis des Rechners ist eine Untergrenze, keine Vorgabe. Wenn Sie ihn runden oder an den Markt anpassen, geben Sie den endgültigen Preis im Modus „Preis analysieren“ erneut ein und prüfen Sie die verbleibende Marge. Diese Marge muss anschließend Ihre Gemeinkosten decken. Wie sich das Ergebnis eines ganzen Zeitraums aufteilt, zeigt der Rechner für Brutto- und Nettomarge.</p>
+<p><strong>Amtliche Quellen:</strong> Steuersatz und Anwendung hängen von Ihrem Land ab; ziehen Sie die amtlichen Informationen Ihrer Steuerbehörde zurate. Mehr dazu, wie wir die Inhalte prüfen, finden Sie unter <a href="{{methodology}}">Methodik</a>.</p>

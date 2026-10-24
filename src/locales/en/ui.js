@@ -6,7 +6,7 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Calculators for freelancers and small businesses',
-    devLabel: 'PRIVATE DEMO · v0.8 · translation pending native review',
+    devLabel: 'PRIVATE DEMO · v0.9 · translation pending native review',
   },
   a11y: {
     skip: 'Skip to content',
@@ -75,7 +75,7 @@ export const ui = {
       ['Private by design', 'Calculations run in your browser. We ask for no account and store none of your figures.'],
       ['Formulas in view', 'Every calculator explains its formula, includes worked examples and states the assumptions it makes.'],
       ['Results you can understand', 'A headline figure, a breakdown and a chart, plus a button to copy the result.'],
-      ['Available in several languages', 'Pick your language from the menu at the top: the same site, with the same formulas, in Spanish, English and Brazilian Portuguese.'],
+      ['Available in several languages', 'Pick your language from the menu at the top: the same site, with the same formulas, in Spanish, English, Brazilian Portuguese, German, French and Hindi.'],
     ],
     catalogKicker: 'CATALOGUE',
     catalogTitle: 'A catalogue of {total} calculators for your business',

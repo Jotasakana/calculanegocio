@@ -1,0 +1,128 @@
+<p>Fixer le prix d’un produit ou d’un service, c’est décider quelle part de ce que vous encaissez couvre le coût, quelle part garde le canal de vente, quelle part est du bénéfice et quelle part est de la taxe. Cette calculatrice sépare ces quatre éléments. Vous saisissez le coût, les coûts supplémentaires éventuels, la marge ou le taux de marge visé, la commission et la remise s’il y en a, et vous obtenez le prix hors taxe, la taxe, le prix taxe comprise et le bénéfice par unité.</p>
+<p>Elle fonctionne aussi dans l’autre sens. Si vous avez déjà un prix, la calculatrice vous indique la marge réelle qu’il laisse.</p>
+<p>Le taux de taxe est simplement le pourcentage que vous saisissez. La calculatrice ne connaît ni les taux ni les règles d’aucun pays ; la valeur initiale n’est donc qu’une illustration modifiable. Saisissez 0 si vous voulez ignorer la taxe.</p>
+<h3>Comment utiliser la calculatrice</h3>
+<ul>
+<li><strong>Coût unitaire :</strong> ce que vous coûte chaque unité, hors taxe.</li>
+<li><strong>Coûts supplémentaires par unité :</strong> expédition, emballage ou tout autre coût que vous payez à chaque vente.</li>
+<li><strong>Méthode :</strong> choisissez entre la <em>marge sur ventes</em> (le pourcentage du prix que vous voulez en bénéfice) et le <em>taux de marge sur le coût</em> (le pourcentage que vous ajoutez au coût). Ce sont des mesures différentes, et la calculatrice ne reporte aucune valeur de l’une à l’autre quand vous changez de méthode.</li>
+<li><strong>Commission :</strong> si vous vendez par un canal qui prélève un pourcentage. Elle est calculée sur le prix hors taxe (voir la section sur les erreurs).</li>
+<li><strong>Remise prévue :</strong> si vous voulez annoncer un prix catalogue avec une réduction.</li>
+<li><strong>Taux de taxe :</strong> modifiable ; saisissez 0 pour ne pas avoir de taxe.</li>
+</ul>
+<p>Pour vérifier un prix que vous avez déjà fixé, utilisez le mode « Analyser un prix » : saisissez le prix, indiquez s’il inclut la taxe, puis ajoutez le coût et la commission.</p>
+<h3>De quoi se compose un prix</h3>
+<table>
+<thead>
+<tr>
+  <th>Élément</th>
+  <th>Ce que c’est</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Coût</td>
+  <td>Ce que vous payez pour le produit</td>
+</tr>
+<tr>
+  <td>Coûts supplémentaires</td>
+  <td>Expédition, emballage et similaires, par unité</td>
+</tr>
+<tr>
+  <td>Commission</td>
+  <td>Ce que garde le canal de vente, le cas échéant</td>
+</tr>
+<tr>
+  <td><strong>Bénéfice</strong></td>
+  <td>Ce qui reste après les éléments précédents</td>
+</tr>
+<tr>
+  <td><strong>= Prix hors taxe</strong></td>
+  <td>La somme des quatre éléments</td>
+</tr>
+<tr>
+  <td>Taxe</td>
+  <td>S’ajoute au prix hors taxe. <strong>Elle ne fait partie ni de la marge ni du bénéfice</strong></td>
+</tr>
+<tr>
+  <td><strong>= Prix taxe comprise</strong></td>
+  <td>Le prix que paie le client</td>
+</tr>
+</tbody>
+</table>
+<h3>Marge ou taux de marge : choisissez la base avant de calculer</h3>
+<p>Avec la méthode de la <strong>marge sur ventes</strong> (taux de marque), la calculatrice utilise :</p>
+<p><strong>Prix hors taxe = Coût de revient total ÷ (1 − commission − marge)</strong></p>
+<p>Le coût de revient total est le coût plus les coûts supplémentaires. La commission et la marge se retranchent ensemble parce que ce sont deux pourcentages du même prix. C’est pourquoi leur somme doit rester inférieure à 100 %. Avec une commission de 15 %, une marge de 85 % est impossible à atteindre.</p>
+<p>Avec la méthode du <strong>taux de marge sur le coût</strong> :</p>
+<p><strong>Prix hors taxe = Coût de revient total × (1 + taux de marge)</strong></p>
+<p>La marge réelle qui subsiste après la commission est alors affichée :</p>
+<p><strong>Marge réelle = (Prix − Coût de revient total − Commission) ÷ Prix</strong></p>
+<p>Dans les deux cas :</p>
+<ul>
+<li><strong>Commission (montant)</strong> = commission (%) × prix hors taxe</li>
+<li><strong>Bénéfice par unité</strong> = prix − coût de revient total − commission</li>
+<li><strong>Taxe</strong> = prix hors taxe × taux de taxe</li>
+<li><strong>Prix taxe comprise</strong> = prix hors taxe × (1 + taux de taxe)</li>
+</ul>
+<p>Si vous voulez approfondir la différence entre les deux bases, la calculatrice de marge commerciale l’explique avec un tableau d’équivalences.</p>
+<h3>Trois exemples détaillés</h3>
+<p>Les exemples utilisent un taux de taxe de 10 % uniquement à titre d’illustration, et des nombres simples sans devise.</p>
+<h4>Exemple 1 : marge sur ventes, sans supplément</h4>
+<p>Un article coûte 40 et vous visez une marge de 35 %.</p>
+<ul>
+<li>Prix hors taxe : 40 ÷ (1 − 0,35) = 40 ÷ 0,65 = <strong>61,54</strong></li>
+<li>Bénéfice : 61,54 − 40 = <strong>21,54</strong></li>
+<li>Taux de marge équivalent : 21,54 ÷ 40 = 53,85 %</li>
+<li>Taxe : 61,54 × 0,10 = <strong>6,15</strong></li>
+<li>Prix taxe comprise : <strong>67,69</strong></li>
+</ul>
+<p>Le bénéfice est de 21,54 que le client paie la taxe ou non. Ces 6,15 de taxe ne sont pas à vous.</p>
+<h4>Exemple 2 : taux de marge sur le coût avec coûts supplémentaires</h4>
+<p>Un produit coûte 25, avec 3 d’expédition et d’emballage par unité. Vous appliquez un taux de marge de 50 %.</p>
+<ul>
+<li>Coût de revient total : 25 + 3 = 28</li>
+<li>Prix hors taxe : 28 × 1,50 = <strong>42,00</strong></li>
+<li>Bénéfice : 42 − 28 = <strong>14,00</strong></li>
+<li>Marge réelle : 14 ÷ 42 = <strong>33,33 %</strong></li>
+<li>Taxe (10 %) : 4,20 → prix taxe comprise : <strong>46,20</strong></li>
+</ul>
+<p>Un taux de marge de 50 % équivaut à une marge sur ventes de 33,33 %, et non de 50 %.</p>
+<h4>Exemple 3 : avec une commission de canal et une remise</h4>
+<p>Un produit coûte 30, plus 2 de coûts supplémentaires. Vous le vendez sur une plateforme qui prélève 15 % de commission et vous voulez une marge de 20 %.</p>
+<ul>
+<li>Coût de revient total : 32</li>
+<li>Prix hors taxe : 32 ÷ (1 − 0,15 − 0,20) = 32 ÷ 0,65 = <strong>49,23</strong></li>
+<li>Commission : 49,23 × 0,15 = <strong>7,38</strong></li>
+<li>Bénéfice : 49,23 × 0,20 = <strong>9,85</strong></li>
+<li>Vérification : 32 + 7,38 + 9,85 = 49,23</li>
+<li>Taxe (10 %) : <strong>4,92</strong> → prix taxe comprise : <strong>54,15</strong></li>
+</ul>
+<p>Si vous voulez annoncer ce produit avec 10 % de remise tout en encaissant 49,23 hors taxe, le prix catalogue doit être de 49,23 ÷ 0,90 = <strong>54,70</strong> hors taxe, soit <strong>60,17</strong> taxe comprise. Augmenter le prix de 10 % ne suffit pas : 49,23 × 1,10 donnerait 54,15, et après une remise de 10 % vous n’encaisseriez que 48,74, moins que prévu.</p>
+<h3>La taxe s’ajoute à la fin</h3>
+<p>La taxe s’ajoute au prix hors taxe et ne modifie pas la marge. Les exemples utilisent 10 % comme chiffre d’illustration, et la calculatrice vous permet de changer le taux. Le taux applicable dépend de l’opération et des règles du pays où vous exercez ; vérifiez-le dans les informations officielles de l’administration fiscale de votre pays ou auprès de votre conseiller.</p>
+<h3>Analyser un prix que vous avez déjà</h3>
+<p>Supposons que vous vendiez le produit de l’exemple 3 à 54,15 taxe comprise.</p>
+<ol>
+<li>Prix hors taxe : 54,15 ÷ 1,10 = 49,23.</li>
+<li>Commission (15 %) : 7,38.</li>
+<li>Bénéfice : 49,23 − 32 − 7,38 = 9,84 (l’écart d’un centime vient de l’arrondi du prix à 54,15).</li>
+<li>Marge réelle : 20,00 %.</li>
+</ol>
+<p>Si vous le baissez à 45 hors taxe, la commission serait de 6,75, le bénéfice de 6,25 et la marge tomberait à 13,89 %. Une remise ne se retranche pas simplement de la marge : elle réduit aussi la base sur laquelle vous êtes payé.</p>
+<h3>Erreurs courantes dans la fixation d’un prix</h3>
+<h4>Confondre taux de marque et taux de marge</h4>
+<p>Si vous voulez une marge de 50 % et appliquez un taux de marge de 50 %, vous obtenez 33,33 %. Pour une marge de 50 %, il faut un taux de marge de 100 %.</p>
+<h4>Appliquer la marge au prix taxe comprise</h4>
+<p>Avec le prix taxe comprise de l’exemple 1 (67,69) et un coût de 40, le calcul donnerait une marge de 40,91 %. Cette marge n’existe pas : la taxe n’est pas à vous. La marge se calcule toujours sur le prix hors taxe.</p>
+<h4>Oublier commissions, expédition ou retours</h4>
+<p>Une marge calculée avec le seul coût du produit surestime le bénéfice. Chaque coût que vous payez par unité vendue doit entrer dans le calcul.</p>
+<h4>Faire une remise sans recalculer</h4>
+<p>Baisser le prix de 10 % ne réduit pas le bénéfice de 10 % : il peut baisser bien davantage. Calculez toujours sur le prix auquel vous vendez réellement.</p>
+<h4>Croire que tous les canaux calculent la commission de la même façon</h4>
+<p>La calculatrice prend la commission comme un pourcentage du prix hors taxe. Certains canaux peuvent l’appliquer sur une autre base. Vérifiez les conditions de votre canal avant de vous fier au résultat.</p>
+<h4>Considérer la taxe encaissée comme un revenu</h4>
+<p>La taxe que vous collectez auprès du client n’est pas un bénéfice pour l’entreprise. Pour voir comment la taxe se répartit sur une facture à plusieurs lignes, utilisez la calculatrice de montant HT.</p>
+<h3>Du prix calculé au prix affiché</h3>
+<p>Le prix de la calculatrice est un plancher, pas une consigne. Si vous décidez de l’arrondir ou de l’ajuster au marché, saisissez de nouveau le prix final dans le mode « Analyser un prix » et vérifiez la marge qui reste. Cette marge doit ensuite couvrir vos frais généraux. Pour voir comment se répartit le résultat d’une période entière, il y a la calculatrice de marge brute et nette.</p>
+<p><strong>Sources officielles :</strong> le taux de taxe et la manière de l’appliquer dépendent de votre pays ; consultez les informations officielles de votre administration fiscale. Pour en savoir plus sur notre relecture des contenus, voir la <a href="{{methodology}}">Méthodologie</a>.</p>
