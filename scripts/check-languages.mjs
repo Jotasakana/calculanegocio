@@ -123,9 +123,10 @@ for (const r of table) {
 // Sitemap multilingüe
 {
   const xml = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
-  ok((xml.match(/<loc>/g) || []).length === table.length, 'sitemap: número de URLs');
-  for (const r of table) ok(xml.includes(`<loc>${site}${r.path}</loc>`), `sitemap: falta ${r.path}`);
-  for (const l of locales) ok((xml.match(new RegExp(`hreflang="${REAL_WORLD.locales[l].hreflang}"`, 'g')) || []).length === table.length / locales.length * locales.length, `sitemap: hreflang ${REAL_WORLD.locales[l].hreflang} por cada URL`);
+  const indexedRoutes = indexed ? table.filter((r) => r.locale === 'es') : table;
+  ok((xml.match(/<loc>/g) || []).length === indexedRoutes.length, 'sitemap: número de URLs');
+  for (const r of indexedRoutes) ok(xml.includes(`<loc>${site}${r.path}</loc>`), `sitemap: falta ${r.path}`);
+  for (const l of locales) ok((xml.match(new RegExp(`hreflang="${REAL_WORLD.locales[l].hreflang}"`, 'g')) || []).length === (indexed ? 0 : table.length), `sitemap: hreflang ${REAL_WORLD.locales[l].hreflang} por cada URL`);
   ok(!/\/(it|nl|pl|ar|id|ja|zh|ru|uk|cs)\//.test(xml), 'sitemap: contiene idiomas no publicados');
 }
 // No se generan carpetas de idiomas no publicados
