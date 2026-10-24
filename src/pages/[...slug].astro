@@ -1,0 +1,24 @@
+---
+// UNA sola plantilla para todas las páginas de todos los idiomas. Las URLs salen de la tabla de rutas
+// (src/i18n/routes.js): solo se genera lo que está publicado. Añadir un idioma no requiere tocar este archivo.
+import { routeTable } from '../i18n/routes.js';
+import { buildContext } from '../lib/context.js';
+import HomeView from '../views/HomeView.astro';
+import ToolsHubView from '../views/ToolsHubView.astro';
+import CategoryView from '../views/CategoryView.astro';
+import MethodologyView from '../views/MethodologyView.astro';
+import ToolView from '../views/ToolView.astro';
+
+export function getStaticPaths() {
+  return routeTable().map((r) => ({ params: { slug: r.path.replace(/^\/|\/$/g, '') }, props: { pageKey: r.key, locale: r.locale } }));
+}
+
+const { pageKey, locale } = Astro.props;
+const ctx = buildContext(locale);
+const [kind, id] = pageKey.split(':');
+---
+{kind === 'home' && <HomeView ctx={ctx} />}
+{kind === 'tools' && <ToolsHubView ctx={ctx} />}
+{kind === 'methodology' && <MethodologyView ctx={ctx} />}
+{kind === 'category' && <CategoryView ctx={ctx} categoryId={id} />}
+{kind === 'tool' && <ToolView ctx={ctx} toolId={id} />}

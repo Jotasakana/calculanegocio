@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { breadcrumbLd } from '../lib/jsonld.js';
+import { fragment } from '../locales/fragments.js';
+import { renderFragment } from '../lib/fragments.js';
+
+const { ctx, categoryId } = Astro.props;
+const { ui } = ctx;
+const cat = ctx.categoryById[categoryId];
+const crumbs = [
+  { label: ui.nav.home, href: ctx.path('home'), path: ctx.path('home') },
+  { label: cat.title, path: cat.path },
+];
+const items = ctx.catalog.items.filter((i) => i.category === cat.id);
+const body = renderFragment(fragment(ctx.locale, 'pages', `category-${cat.id}`), ctx.fragmentCtx);
+---
+<BaseLayout
+  ctx={ctx}
+  pageKey={cat.key}
+  title={ui.category.metaTitles[cat.id]}
+  description={ui.category.metaDescriptions[cat.id]}
+  jsonLd={[breadcrumbLd(crumbs)]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} label={ui.a11y.breadcrumbs} />
+    <div class="pagehead">
+      <span class="kicker">{cat.kicker}</span>
+      <h1>{cat.title}</h1>
+      <p>{cat.description}</p>
+    </div>
+    <div class="cards">
+      {items.map((item) => <ToolCard item={item} ui={ui} />)}
+    </div>
+    <article class="content">
+      <div class="prose" set:html={body} />
+    </article>
+  </div>
+</BaseLayout>

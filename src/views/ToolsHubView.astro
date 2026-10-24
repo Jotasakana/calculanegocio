@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Catalog from '../components/Catalog.astro';
+import { breadcrumbLd } from '../lib/jsonld.js';
+
+const { ctx } = Astro.props;
+const { ui } = ctx;
+const h = ui.toolsHub;
+const crumbs = [
+  { label: ui.nav.home, href: ctx.path('home'), path: ctx.path('home') },
+  { label: ui.nav.tools, path: ctx.path('tools') },
+];
+---
+<BaseLayout ctx={ctx} pageKey="tools" title={h.metaTitle} description={h.metaDescription} jsonLd={[breadcrumbLd(crumbs)]}>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} label={ui.a11y.breadcrumbs} />
+    <div class="pagehead">
+      <span class="kicker">{h.kicker}</span>
+      <h1>{h.title}</h1>
+      <p>{h.lead}</p>
+    </div>
+    <Catalog ctx={ctx} level={2} />
+  </div>
+</BaseLayout>

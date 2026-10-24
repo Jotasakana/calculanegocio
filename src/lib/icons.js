@@ -1,0 +1,33 @@
+// Iconos del catálogo: trazados SVG de 24×24 (solo línea). Son dibujos, no texto: no dependen del idioma.
+// Se pintan con src/components/Icon.astro (siempre decorativos: el nombre de la herramienta va en el texto).
+
+export const ICON_PATHS = {
+  margin: 'M19 5L5 19M7.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM16.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z',
+  price: 'M3 12V4h8l10 10-8 8L3 12zM7.5 8h.01',
+  trend: 'M3 17l6-6 4 4 8-8M15 7h6v6',
+  markup: 'M12 20V4M5 11l7-7 7 7',
+  discount: 'M12 21a9 9 0 100-18 9 9 0 000 18zM9 9h.01M15 15h.01M15 9l-6 6',
+  store: 'M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 006 0 3 3 0 006 0 3 3 0 004 0M10 20v-5h4v5',
+  receipt: 'M6 3h12v18l-3-2-3 2-3-2-3 2V3zM9 8h6M9 12h6',
+  shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3zM9 12l2 2 4-4',
+  layers: 'M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5',
+  clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+  change: 'M7 17V7M3 11l4-4 4 4M17 7v10M13 13l4 4 4-4',
+  balance: 'M12 4v16M5 8h14M5 8l-2 6a3 3 0 006 0L5 8zM19 8l-2 6a3 3 0 006 0l-2-6zM8 20h8',
+  coin: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.8 2.5 2-1 1.5-2.5 2-2.5 1-2.5 2 1 2 2.5 2 2.5-.5 2.5-1.5',
+  megaphone: 'M3 11v3a1 1 0 001 1h2l5 4V6L6 10H4a1 1 0 00-1 1zM16 9a4 4 0 010 6M19 6a8 8 0 010 12',
+  bank: 'M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18',
+  steps: 'M4 20V4M4 20h16M7 8h10M7 12h7M7 16h4',
+  box: 'M21 8l-9-5-9 5v8l9 5 9-5V8zM3 8l9 5 9-5M12 13v8',
+  wallet: 'M3 7h15a3 3 0 013 3v8a3 3 0 01-3 3H6a3 3 0 01-3-3V7zM3 7l12-3v3M16 14h.01',
+  search: 'M11 18a7 7 0 100-14 7 7 0 000 14zM20 20l-3.5-3.5',
+  check: 'M5 12l5 5L20 7',
+  copy: 'M9 9h11v11H9zM5 15V5a1 1 0 011-1h10',
+  globe: 'M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18',
+  lock: 'M6 11h12v9H6zM8 11V8a4 4 0 018 0v3',
+  formula: 'M4 5h16M4 12h10M4 19h16',
+  arrow: 'M5 12h14M13 6l6 6-6 6',
+  info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 8h.01M11 12h1v5h1',
+  menu: 'M4 7h16M4 12h16M4 17h16',
+  close: 'M6 6l12 12M18 6L6 18',
+};

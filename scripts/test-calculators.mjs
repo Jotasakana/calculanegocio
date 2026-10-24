@@ -1,15 +1,20 @@
 // Pruebas de las fórmulas con los ejemplos resueltos de las explicaciones editoriales.
-import { compute, defaultsFor, parseDecimal } from '../src/lib/calculators.js';
-import { TOOLS } from '../src/data/tools.js';
+import { createCalculator } from '../src/lib/present.js';
+import { parseDecimal } from '../src/i18n/numbers.js';
+import es from '../src/locales/es/index.js';
 
-const norm = (s) => String(s).replace(/ /g, ' ');
+const calc = createCalculator(es, 'EUR');
+const compute = (tool, mode, raw) => calc.compute(tool, mode, raw);
+const defaultsFor = (tool, mode) => calc.defaults(tool, mode);
+
+const norm = (s) => String(s).replace(/[\u00a0\u202f]/g, ' ');
 let fails = 0, total = 0;
 function check(name, got, want) {
   total++;
   if (norm(got) !== want) { fails++; console.error(`✗ ${name}\n   obtenido: ${norm(got)}\n   esperado: ${want}`); }
 }
 const run = (tool, mode, over = {}) => {
-  const base = defaultsFor(TOOLS[tool].fields[mode]);
+  const base = defaultsFor(tool, mode);
   const r = compute(tool, mode, { ...base, ...Object.fromEntries(Object.entries(over).map(([k, v]) => [k, String(v).replace('.', ',')])) });
   if (!r.ok) throw new Error(`${tool}/${mode}: ${r.error}`);
   return r;
@@ -52,7 +57,7 @@ r = run('precio', 2, { given: 59.57, included: 'Sí' });
 check('precio analizar con IVA incluido', line(r, 'Margen real'), '20,00 %');
 r = run('precio', 2, { given: 45, included: 'No' });
 check('precio analizar 45 €', line(r, 'Margen real'), '13,89 %');
-check('precio imposible', compute('precio', 0, { ...defaultsFor(TOOLS.precio.fields[0]), margin: '85', commission: '15' }).error, 'Margen y comisión suman el 100 % o más: precio imposible.');
+check('precio imposible', compute('precio', 0, { ...defaultsFor('precio', 0), margin: '85', commission: '15' }).error, 'Margen y comisión suman el 100 % o más: precio imposible.');
 
 // Rentabilidad
 r = run('rentabilidad', 0);
@@ -66,7 +71,7 @@ r = run('rentabilidad', 0, { sales: 48000, cogs: 18000, operating: 20000, financ
 check('rentab ej.2 operativo', line(r, 'Resultado operativo'), '10.000,00 € · 20,83 %');
 r = run('rentabilidad', 0, { sales: 20000, cogs: 12000, operating: 10000, finance: 0 });
 check('rentab pérdida', line(r, 'Resultado operativo'), '-2.000,00 € · -10,00 %');
-check('rentab devoluciones > ventas', compute('rentabilidad', 0, { ...defaultsFor(TOOLS.rentabilidad.fields[0]), returns: '999999' }).error, 'Las devoluciones no pueden superar las ventas.');
+check('rentab devoluciones > ventas', compute('rentabilidad', 0, { ...defaultsFor('rentabilidad', 0), returns: '999999' }).error, 'Las devoluciones no pueden superar las ventas.');
 
 // Base imponible / IVA
 r = run('iva', 0);
@@ -180,7 +185,7 @@ for (const txt of ['1.250,50', '99.999,99', '123.456,78', '1.234.567,89']) {
 }
 
 // Varias líneas: base total + cuota total = total; y la suma de las líneas mostradas coincide
-const ml = (o) => compute('iva', 2, { ...defaultsFor(TOOLS.iva.fields[2]), ...o });
+const ml = (o) => compute('iva', 2, { ...defaultsFor('iva', 2), ...o });
 let badLines = 0;
 for (const unit of ['0,01', '0,333', '1,005', '8,5', '19,99', '120', '1234,56']) {
   for (const disc of ['0', '5', '12,5', '33']) {

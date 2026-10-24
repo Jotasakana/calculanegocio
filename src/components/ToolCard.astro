@@ -1,0 +1,30 @@
+---
+// Tarjeta del catálogo (src/lib/catalog.js). Disponible = enlace a una página real; en desarrollo = bloque sin enlace.
+// El estado lo decide el registro de calculadoras: aquí no se puede crear un enlace a una herramienta inexistente.
+import Icon from './Icon.astro';
+
+const { item, ui } = Astro.props;
+const available = item.status === 'available';
+const Tag = available ? 'a' : 'div';
+---
+<Tag
+  class={available ? 'card' : 'card is-planned'}
+  href={available ? item.path : undefined}
+  data-filter-item
+  data-category={item.category}
+  data-status={item.status}
+  data-terms={item.search}
+>
+  <div class="card-top">
+    <span class="ico"><Icon name={item.icon} /></span>
+    <span class="badges">
+      {item.fiscal && <span class="badge">{ui.catalog.fiscalBadge}</span>}
+      <span class={available ? 'badge ok' : 'badge'}>{available ? ui.catalog.statusAvailable : ui.catalog.statusPlanned}</span>
+    </span>
+  </div>
+  <strong class="card-title">{item.title}</strong>
+  <p class="card-desc">{item.desc}</p>
+  {available
+    ? <span class="card-foot"><span>{item.cta}</span><Icon name="arrow" /></span>
+    : <span class="card-foot">{ui.catalog.plannedHint}</span>}
+</Tag>

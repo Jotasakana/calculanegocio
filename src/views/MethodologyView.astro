@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site.js';
+import { breadcrumbLd } from '../lib/jsonld.js';
+import { fragment } from '../locales/fragments.js';
+import { renderFragment } from '../lib/fragments.js';
+
+const { ctx } = Astro.props;
+const { ui } = ctx;
+const m = ui.methodology;
+const crumbs = [
+  { label: ui.nav.home, href: ctx.path('home'), path: ctx.path('home') },
+  { label: ui.nav.methodology, path: ctx.path('methodology') },
+];
+const body = renderFragment(fragment(ctx.locale, 'pages', 'methodology'), ctx.fragmentCtx);
+---
+<BaseLayout ctx={ctx} pageKey="methodology" title={m.metaTitle} description={m.metaDescription} jsonLd={[breadcrumbLd(crumbs)]}>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} label={ui.a11y.breadcrumbs} />
+    <div class="pagehead">
+      <span class="kicker">{m.kicker}</span>
+      <h1>{m.title}</h1>
+      <p>{m.lead}</p>
+    </div>
+    <article class="content">
+      {!SITE.indexable && <div class="devnote">{m.devNote}</div>}
+      <div class="prose" set:html={body} />
+      <div class="prose"><h2 class="sec">{m.calculators}</h2>
+      <ul class="related">
+        {ctx.tools.map((t) => <li><a href={t.path}>{t.title}</a></li>)}
+      </ul></div>
+    </article>
+  </div>
+</BaseLayout>

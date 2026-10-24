@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroCalculator from '../components/HeroCalculator.astro';
+import Catalog from '../components/Catalog.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../data/site.js';
+import { websiteLd } from '../lib/jsonld.js';
+
+const { ctx } = Astro.props;
+const { ui } = ctx;
+const h = ui.home;
+const { counts } = ctx.catalog;
+
+// Ejemplo del apartado «margen y recargo»: se CALCULA con la misma fórmula que la calculadora (nunca cifras escritas a mano).
+const calc = ctx.calculator();
+const f = calc.formatter;
+const example = calc.compute('margen', 0, calc.defaults('margen', 0));
+const d = example.data;
+const money = { cost: f.money(d.cost), price: f.money(d.price), benefit: f.money(d.benefit) };
+const pct = { margin: f.percent(d.margin), markup: f.percent(d.markup) };
+const cap = (x) => Math.max(0, Math.min(100, x));
+const margenTool = ctx.toolById.margen;
+const featureIcons = ['lock', 'formula', 'copy', 'globe'];
+---
+<BaseLayout
+  ctx={ctx}
+  pageKey="home"
+  title={h.metaTitle}
+  description={h.metaDescription}
+  jsonLd={[websiteLd({ name: ui.site.name, path: ctx.path('home'), lang: ctx.loc.hreflang })]}
+>
+  <section class="hero">
+    <div class="wrap herotop">
+      <div>
+        <div class="eyebrow">{h.eyebrow}</div>
+        <h1>{h.titleA} <em>{h.titleB}</em></h1>
+        <p class="lead">{h.lead}</p>
+        <ul class="proof">{h.proof.map((p) => <li><Icon name="check" />{p}</li>)}</ul>
+      </div>
+      <div class="herosearch" role="search">
+        <label for="mainSearch">{h.searchLabel}</label>
+        <div class="sbox">
+          <Icon name="search" />
+          <input id="mainSearch" type="search" autocomplete="off" placeholder={ui.search.placeholder} aria-label={ui.search.label} />
+        </div>
+        <div class="search-results" hidden id="searchResults"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bench-zone" id="calculadora">
+    <div class="wrap"><HeroCalculator ctx={ctx} /></div>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sectionhead"><div><h2>{h.featuresTitle}</h2></div></div>
+      <div class="features">
+        {h.features.map(([title, text], i) => (
+          <div class="feature"><Icon name={featureIcons[i]} /><h3>{title}</h3><p>{text}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section white" id="catalogo">
+    <div class="wrap">
+      <div class="sectionhead">
+        <div>
+          <span class="kicker">{h.catalogKicker}</span>
+          <h2>{ctx.fill(h.catalogTitle, { total: counts.total })}</h2>
+          <p>{ctx.fill(h.catalogLead, { available: counts.available, planned: counts.planned })}</p>
+        </div>
+        <a class="sectionlink arrow-out" href={ctx.path('tools')}>{h.catalogAll}</a>
+      </div>
+      <Catalog ctx={ctx} level={3} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="contrast">
+        <div>
+          <span class="kicker">{h.contrastKicker}</span>
+          <h2>{h.contrastTitle}</h2>
+          <p>{ctx.fill(h.contrastText, { ...money, ...pct })}</p>
+          <p>{h.contrastText2}</p>
+          {margenTool && <a class="btn btn-dark arrow-next" href={margenTool.path}>{h.contrastOpen}</a>}
+        </div>
+        <div class="cmp" role="group" aria-label={ctx.fill(h.contrastAlt, { ...money, ...pct })}>
+          <div class="cmp-row"><div><b>{h.contrastMargin}</b><small>{h.contrastMarginFormula}</small></div><div class="cmp-val" dir="auto">{pct.margin}</div></div>
+          <div class="cmp-meter" aria-hidden="true"><i style={`width:${cap(d.margin)}%`}></i></div>
+          <div class="cmp-row"><div><b>{h.contrastMarkup}</b><small>{h.contrastMarkupFormula}</small></div><div class="cmp-val amber" dir="auto">{pct.markup}</div></div>
+          <div class="cmp-meter" aria-hidden="true"><i class="amber" style={`width:${cap(d.markup)}%`}></i></div>
+          <p class="cmp-note">{ctx.fill(h.contrastNote, money)}</p>
+        </div>
+      </div>
+      <div class="mini-cards">
+        <div class="mini"><span class="tag">{h.smallFormulasTag}</span><h3>{h.smallFormulasTitle}</h3><p>{h.smallFormulasText}</p></div>
+        <div class="mini"><span class="tag">{h.smallExamplesTag}</span><h3>{h.smallExamplesTitle}</h3><p>{h.smallExamplesText}</p></div>
+        <div class="mini"><span class="tag">{h.smallErrorsTag}</span><h3>{h.smallErrorsTitle}</h3><p>{h.smallErrorsText}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="wrap">
+      <div class="sectionhead"><div><span class="kicker">{h.approachKicker}</span><h2>{h.approachTitle}</h2></div></div>
+      <div class="how-grid">
+        {h.approach.map(([title, text], i) => <div><span class="how-num">{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint" id="transparencia">
+    <div class="wrap about-grid">
+      <div>
+        <span class="kicker">{h.transparencyKicker}</span>
+        <h2>{h.transparencyTitle}</h2>
+        <p>{h.transparencyText}</p>
+        <a class="sectionlink arrow-out" href={ctx.path('methodology')}>{h.transparencyLink}</a>
+      </div>
+      <div class="about-note">
+        <strong>{h.howTitle}</strong>
+        <ul>{h.howItems.map((item) => <li>{item}</li>)}</ul>
+        {!SITE.indexable && <div class="devnote">{h.devNote}</div>}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sectionhead"><div><span class="kicker">{h.faqKicker}</span><h2>{h.faqTitle}</h2></div></div>
+      <div class="faq">
+        {h.faq.map(([q, a]) => <details class="faq-item"><summary>{q}</summary><p>{a}</p></details>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-last">
+    <div class="wrap">
+      <div class="cta-band">
+        <div><h2>{h.ctaTitle}</h2><p>{h.ctaText}</p></div>
+        <a class="btn btn-dark arrow-next" href="#calculadora">{h.ctaButton}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

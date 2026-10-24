@@ -1,0 +1,4 @@
+# Cloudflare Pages · redirecciones del sitio (formato: origen destino estado).
+# "/" -> /es/ de forma TEMPORAL (302) mientras solo esté publicado el español.
+# Quitar o cambiar esta regla cuando haya más idiomas publicados (ver docs/INTERNACIONALIZACION.md).
+/  /es/  302
