@@ -6,7 +6,7 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Calculators for freelancers and small businesses',
-    devLabel: 'PRIVATE DEMO · v0.9 · translation pending native review',
+    devLabel: 'PRIVATE DEMO · v0.10 · translation pending native review',
   },
   a11y: {
     skip: 'Skip to content',
@@ -61,7 +61,7 @@ export const ui = {
   },
   home: {
     metaTitle: 'CalculaNegocio · Calculators for freelancers and small businesses',
-    metaDescription: 'Free calculators for margins, pricing, profitability and tax for freelancers and small businesses, with clear formulas and worked examples.',
+    metaDescription: 'Free calculators for margins, pricing, discounts, break-even, ROI and tax for freelancers and small businesses, with formulas and worked examples.',
     eyebrow: 'CALCULATORS FOR FREELANCERS AND SMALL BUSINESSES',
     titleA: 'Price your work',
     titleB: 'with the numbers in plain sight.',
@@ -126,7 +126,7 @@ export const ui = {
     faqKicker: 'FREQUENTLY ASKED QUESTIONS',
     faqTitle: 'What people ask most',
     faq: [
-      ['Do the calculations include tax?', 'It depends on the tool. Margin and profitability work with amounts before tax. The selling price calculator adds tax at the end and shows the price with and without tax. The tax base calculator is for adding or removing tax.'],
+      ['Do the calculations include tax?', 'It depends on the tool. Margin and profitability work with amounts before tax. The selling price calculator adds tax at the end and shows the price with and without tax. The tax base calculator is for adding or removing tax. Markup, discounts, break-even and ROI work with the figure you type and add no tax.'],
       ['Is my data saved?', 'No. The calculation happens in your browser and the figures you type are not sent to any server.'],
       ['Can I use the calculators in my country?', 'The margin and profitability calculators are pure arithmetic and let you choose the currency. The selling price with tax and tax base calculators simply apply the percentage you type: they do not know the rates or rules of any country.'],
       ['Do they replace an adviser?', 'No. They are calculation and guidance tools. For tax or legal obligations, check official sources or consult a professional.'],
@@ -137,10 +137,10 @@ export const ui = {
   },
   toolsHub: {
     metaTitle: 'Free calculators for freelancers | CalculaNegocio',
-    metaDescription: 'The CalculaNegocio catalogue: available calculators (profit margin, selling price, gross and net margin, tax base) and those in development.',
+    metaDescription: 'The CalculaNegocio catalogue: available calculators (profit margin, markup, discounts, selling price, profitability, break-even, ROI, tax base) and those in development.',
     kicker: 'CALCULATOR CATALOGUE',
     title: 'Calculators for freelancers and small businesses',
-    lead: 'Tools to work out margins, prices, profitability and the tax on your invoices. Each one explains its formula and includes worked examples.',
+    lead: 'Tools to work out margins, prices, discounts, break-even, ROI and the tax on your invoices. Each one explains its formula and includes worked examples.',
     searchLabel: 'Search the calculators',
     searchPlaceholder: 'Search calculator…',
     noResults: 'No calculator matches your search.',
@@ -150,10 +150,12 @@ export const ui = {
     metaTitles: {
       'margenes-y-precios': 'Margins and pricing: calculators | CalculaNegocio',
       facturacion: 'Invoicing: tax base and tax amount | CalculaNegocio',
+      crecimiento: 'Profitability and growth: break-even and ROI | CalculaNegocio',
     },
     metaDescriptions: {
-      'margenes-y-precios': 'Calculators for profit margin, selling price, and gross and net margin, to understand how much you earn and what price to charge.',
+      'margenes-y-precios': 'Calculators for profit margin, markup, discounts, selling price and gross and net margin to understand how much you earn and what price to sell at.',
       facturacion: 'Invoicing tools: work out the tax base, add or remove tax and break down an invoice with several lines, using the rate you type.',
+      crecimiento: 'Work out your break-even point and the ROI of an investment, with clear formulas and worked examples.',
     },
   },
   methodology: {

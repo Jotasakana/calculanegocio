@@ -1,0 +1,83 @@
+<p>Esta calculadora dá o preço final depois de aplicar um ou dois descontos sucessivos. Digite o preço inicial e os percentuais, e você obtém o preço final, a economia total e o desconto efetivo, que é o percentual real reduzido no conjunto. Os descontos são calculados multiplicando, não somando, e é aí que mais gente erra.</p>
+<h3>Como usar a calculadora</h3>
+<p>Digite três dados:</p>
+<ul>
+<li><strong>Preço inicial.</strong> O preço antes de qualquer redução.</li>
+<li><strong>Desconto.</strong> O primeiro percentual de redução, de 0 a 100%.</li>
+<li><strong>Segundo desconto (opcional).</strong> Um segundo percentual que incide sobre o preço já reduzido. Se deixar vazio ou digitar 0, só o primeiro é aplicado.</li>
+</ul>
+<p>O desconto incide sobre o número que você digitar, com ou sem imposto. Os resultados aparecem arredondados a duas casas decimais, mas as contas internas não são arredondadas.</p>
+<h3>Como os descontos sucessivos são aplicados</h3>
+<p>Cada desconto age sobre o preço que o anterior deixou. Isso significa que os percentuais se multiplicam e que o segundo desconto reduz menos reais que o primeiro, porque parte de um preço mais baixo.</p>
+<p><strong>Preço final = Preço inicial × (1 − desconto 1) × (1 − desconto 2)</strong></p>
+<p>A economia total é a diferença entre o preço inicial e o final:</p>
+<p><strong>Economia = Preço inicial − Preço final</strong></p>
+<p>E o desconto efetivo, que depende só dos percentuais, é:</p>
+<p><strong>Desconto efetivo (%) = 100 − (100 − desconto 1) × (100 − desconto 2) ÷ 100</strong></p>
+<p>Exemplo de controle: um item de R$ 100 com um desconto de 20% e outro de 10%. O primeiro o deixa em R$ 80; o segundo reduz 10% de R$ 80, ou seja, R$ 8, e o preço final é R$ 72. A economia total é de R$ 28 e o desconto efetivo é de 28%, não de 30%.</p>
+<h3>Por que os percentuais não se somam</h3>
+<p>Somar 20% e 10% daria 30% e um preço de R$ 70, mas o segundo desconto não incide sobre os R$ 100 iniciais e sim sobre os R$ 80 que já restavam. A diferença cresce com percentuais altos:</p>
+<table>
+<thead>
+<tr>
+  <th>Descontos</th>
+  <th>Soma (incorreta)</th>
+  <th>Desconto efetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>10% e 10%</td>
+  <td>20%</td>
+  <td>19%</td>
+</tr>
+<tr>
+  <td>20% e 10%</td>
+  <td>30%</td>
+  <td>28%</td>
+</tr>
+<tr>
+  <td>30% e 20%</td>
+  <td>50%</td>
+  <td>44%</td>
+</tr>
+<tr>
+  <td>50% e 20%</td>
+  <td>70%</td>
+  <td>60%</td>
+</tr>
+<tr>
+  <td>50% e 50%</td>
+  <td>100%</td>
+  <td>75%</td>
+</tr>
+</tbody>
+</table>
+<p>Dois descontos de 50% não dão o produto de graça: o primeiro o deixa pela metade e o segundo reduz a metade dessa metade, de modo que se paga 25% do preço inicial. Quando os percentuais são somados, o preço calculado fica abaixo do real e o comprador espera uma redução que não existe.</p>
+<h3>Erros comuns com descontos</h3>
+<h4>Somar os percentuais</h4>
+<p>É o erro mais comum. Com 20% e 10% sobre R$ 100, somar dá R$ 70 e o preço correto é R$ 72. A calculadora mostra o preço que sairia somando para você ver a diferença.</p>
+<h4>Aplicar o segundo desconto sobre o preço inicial</h4>
+<p>É uma variante do mesmo erro: calcular 10% de R$ 100 (R$ 10) em vez de 10% de R$ 80 (R$ 8). O segundo desconto sempre é calculado sobre o preço que o primeiro deixou.</p>
+<h4>Achar que a ordem importa</h4>
+<p>Não importa. Aplicar primeiro 10% e depois 20% também deixa R$ 72. Muda quantos reais são reduzidos em cada etapa, mas não o resultado final.</p>
+<h4>Achar que subir e baixar o mesmo percentual volta ao preço inicial</h4>
+<p>Se um preço de R$ 100 sobe 20%, vai a R$ 120; se depois cai 20%, fica em R$ 96. Para desfazer um desconto de 20% é preciso subir 25%: 80 × 1,25 = 100.</p>
+<h4>Esquecer o efeito sobre a margem</h4>
+<p>Um desconto reduz o preço, mas não o custo. Se um produto de R$ 100 custa R$ 60 (margem de 40%), com um desconto de 20% ele sai por R$ 80 e a margem cai para 25%. Antes de reduzir, vale conferir com a calculadora de margem comercial.</p>
+<h3>Um exemplo completo, passo a passo</h3>
+<p>Uma loja reduz um item de R$ 80 em 15% e, durante um fim de semana, dá ainda 5% a quem paga com o cartão de fidelidade.</p>
+<ol>
+<li><strong>Primeiro desconto:</strong> 80 × 0,15 = R$ 12, que deixa o preço em R$ 68.</li>
+<li><strong>Segundo desconto:</strong> 68 × 0,05 = R$ 3,40, que deixa o preço em R$ 64,60.</li>
+<li><strong>Economia total:</strong> 80 − 64,60 = R$ 15,40.</li>
+<li><strong>Desconto efetivo:</strong> 15,40 ÷ 80 = 19,25%. Somar 15% e 5% teria dado 20% e R$ 64.</li>
+</ol>
+<p>Se o item custava R$ 50 para a loja, a margem sobre o preço de R$ 64,60 é de 22,60%. Com a calculadora de markup você vê que markup esse preço de R$ 64,60 representa sobre um custo de R$ 50.</p>
+<h3>Como interpretar o resultado</h3>
+<ul>
+<li><strong>Olhe o desconto efetivo.</strong> É o que o cliente realmente paga ou economiza, e quase sempre é menor que a soma dos percentuais.</li>
+<li><strong>Confira o preço com o seu custo.</strong> Um desconto que leva o preço abaixo do custo significa vender com prejuízo.</li>
+<li><strong>Comunique o desconto real.</strong> Se você anuncia «até 70%» somando 50% e 20%, o desconto efetivo é, na verdade, de 60%.</li>
+<li><strong>Decida se o preço inclui imposto.</strong> O percentual é o mesmo com ou sem imposto, mas o valor economizado muda.</li>
+</ul>

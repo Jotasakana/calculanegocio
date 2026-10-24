@@ -119,6 +119,85 @@ export function createCalculator(content, currency) {
         ], f.money),
       };
     },
+    recargo(mode, d) {
+      return {
+        label: t('recargo.label'),
+        main: f.money(d.price),
+        note: d.margin === null ? t('recargo.note.free') : t('recargo.note', { markup: f.percentCompact(d.markup), margin: f.percentCompact(d.margin) }),
+        lines: [
+          [t('recargo.line.cost'), f.money(d.cost)],
+          [t('recargo.line.benefit'), f.money(d.benefit)],
+          [t('recargo.line.markup'), f.percent(d.markup)],
+          [t('recargo.line.margin'), na(d.margin, f.percent)],
+          [t('recargo.line.ifMargin', { markup: f.percentCompact(d.markup) }), na(d.priceIfMargin, f.money)],
+        ],
+        assumption: t('recargo.assumption'),
+        bar: stackBar([['cost', t('recargo.bar.cost'), d.cost], ['profit', t('recargo.bar.profit'), d.benefit]], f.money),
+      };
+    },
+    descuento(mode, d) {
+      const lines = [
+        [t('descuento.line.price'), f.money(d.price)],
+        [t('descuento.line.first', { rate: f.percentCompact(d.first) }), f.money(d.firstSaving)],
+      ];
+      if (d.hasSecond) lines.push([t('descuento.line.second', { rate: f.percentCompact(d.second) }), f.money(d.secondSaving)]);
+      lines.push([t('descuento.line.saving'), f.money(d.saving)], [t('descuento.line.effective'), f.percent(d.effective)]);
+      if (d.hasSecond && d.priceIfSummed !== null) lines.push([t('descuento.line.summed', { rate: f.percentCompact(d.summed) }), f.money(d.priceIfSummed)]);
+      return {
+        label: t('descuento.label'),
+        main: f.money(d.final),
+        note: t('descuento.note', { saving: f.money(d.saving), effective: f.percentCompact(d.effective) }),
+        lines,
+        assumption: t('descuento.assumption'),
+        bar: stackBar([['final', t('descuento.bar.final'), d.final], ['saving', t('descuento.bar.saving'), d.saving]], f.money),
+      };
+    },
+    equilibrio(mode, d) {
+      const lines = [
+        [t('equilibrio.line.unitMargin'), f.money(d.unitMargin)],
+        [t('equilibrio.line.ratio'), na(d.contributionRatio, f.percent)],
+      ];
+      if (d.status === 'ok') lines.push([t('equilibrio.line.exact'), f.integer(d.exactUnits)], [t('equilibrio.line.revenue'), f.money(d.revenue)]);
+      if (d.expected) {
+        const state = t(d.expected.profit > 0 ? 'equilibrio.state.profit' : d.expected.profit < 0 ? 'equilibrio.state.loss' : 'equilibrio.state.even');
+        lines.push([t('equilibrio.line.expected', { units: f.integer(d.expected.units) }, d.expected.units), `${f.money(d.expected.profit)} · ${state}`]);
+      }
+      const note = d.status === 'no-margin'
+        ? t('equilibrio.note.noMargin', { margin: f.money(d.unitMargin) })
+        : d.status === 'no-fixed'
+          ? t('equilibrio.note.noFixed', { margin: f.money(d.unitMargin) })
+          : t('equilibrio.note', { revenue: f.money(d.revenue) });
+      return {
+        label: t('equilibrio.label'),
+        main: d.status === 'no-margin' ? t('common.notComputable') : f.integer(d.units),
+        note,
+        lines,
+        assumption: t('equilibrio.assumption'),
+        bar: d.bar ? stackBar([['variable', t('equilibrio.bar.variable'), d.bar.variable], ['fixed', t('equilibrio.bar.fixed'), d.bar.fixed], ['surplus', t('equilibrio.bar.surplus'), d.bar.surplus]], f.money) : [],
+      };
+    },
+    roi(mode, d) {
+      const loss = d.verdict === 'loss' || d.verdict === 'total-loss';
+      const verdictKey = { gain: 'roi.verdict.gain', even: 'roi.verdict.even', loss: 'roi.verdict.loss', 'total-loss': 'roi.verdict.totalLoss' }[d.verdict];
+      return {
+        label: t('roi.label'),
+        main: f.percent(d.roi),
+        note: t(verdictKey, { roi: f.percentCompact(Math.abs(d.roi)) }),
+        lines: [
+          [t('roi.line.investment'), f.money(d.investment)],
+          [t('roi.line.total'), f.money(d.total)],
+          [t('roi.line.net'), f.money(d.net)],
+          [t('roi.line.roi'), f.percent(d.roi)],
+          [t('roi.line.multiple'), f.number(d.multiple)],
+        ],
+        assumption: t('roi.assumption'),
+        bar: stackBar([
+          ['base', t(loss ? 'roi.bar.recovered' : 'roi.bar.invested'), loss ? d.total : d.investment],
+          ['gain', t('roi.bar.gain'), d.net > 0 ? d.net : 0],
+          ['loss', t('roi.bar.loss'), d.net < 0 ? -d.net : 0],
+        ], f.money),
+      };
+    },
     iva(mode, d) {
       const groupLines = d.groups.flatMap((g) => [
         [t('iva.line.groupBase', { rate: f.integer(g.rate) }), f.money(g.base)],

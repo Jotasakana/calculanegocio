@@ -6,7 +6,7 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Calculadoras para autônomos e pequenos negócios',
-    devLabel: 'DEMO PRIVADA · v0.9 · tradução pendente de revisão nativa',
+    devLabel: 'DEMO PRIVADA · v0.10 · tradução pendente de revisão nativa',
   },
   a11y: {
     skip: 'Pular para o conteúdo',
@@ -61,7 +61,7 @@ export const ui = {
   },
   home: {
     metaTitle: 'CalculaNegocio · Calculadoras para autônomos e pequenos negócios',
-    metaDescription: 'Calculadoras gratuitas de margens, preços, rentabilidade e imposto em percentual para autônomos e pequenos negócios, com fórmulas explicadas e exemplos resolvidos.',
+    metaDescription: 'Calculadoras gratuitas de margens, preços, descontos, ponto de equilíbrio, ROI e imposto em percentual para autônomos e pequenos negócios, com fórmulas e exemplos.',
     eyebrow: 'CALCULADORAS PARA AUTÔNOMOS E PEQUENOS NEGÓCIOS',
     titleA: 'Dê o preço certo ao seu trabalho',
     titleB: 'com as contas em dia.',
@@ -126,7 +126,7 @@ export const ui = {
     faqKicker: 'PERGUNTAS FREQUENTES',
     faqTitle: 'O que mais perguntam',
     faq: [
-      ['Os cálculos incluem imposto?', 'Depende da ferramenta. Margem e rentabilidade trabalham com valores sem imposto. A de preço de venda soma o imposto no final e mostra o preço com e sem imposto. A de base e imposto serve para somar ou tirar um imposto em percentual.'],
+      ['Os cálculos incluem imposto?', 'Depende da ferramenta. Margem e rentabilidade trabalham com valores sem imposto. A de preço de venda soma o imposto no final e mostra o preço com e sem imposto. A de base e imposto serve para somar ou tirar um imposto em percentual. Markup, descontos, ponto de equilíbrio e ROI trabalham com o número que você digitar, sem somar impostos.'],
       ['Meus dados são guardados?', 'Não. O cálculo é feito no seu navegador e os números que você digita não são enviados a nenhum servidor.'],
       ['Posso usar as calculadoras no Brasil?', 'Sim. Margem comercial e margem bruta e líquida são matemática pura: o real (R$) vem como padrão e você pode trocar a moeda. As calculadoras de preço com imposto e de base e imposto aplicam o percentual que você digita e não implementam as regras de nenhum tributo brasileiro; confirme com o seu contador.'],
       ['Elas substituem um contador?', 'Não. São ferramentas de cálculo e orientação. Para obrigações fiscais ou legais, confirme com fontes oficiais ou consulte um profissional.'],
@@ -137,10 +137,10 @@ export const ui = {
   },
   toolsHub: {
     metaTitle: 'Calculadoras gratuitas para autônomos | CalculaNegocio',
-    metaDescription: 'Catálogo de calculadoras do CalculaNegocio: as disponíveis (margem comercial, preço de venda, margem bruta e líquida, base e imposto) e as que estão em desenvolvimento.',
+    metaDescription: 'Catálogo de calculadoras do CalculaNegocio: as disponíveis (margem, markup, descontos, preço de venda, rentabilidade, ponto de equilíbrio, ROI e base e imposto) e as em desenvolvimento.',
     kicker: 'CATÁLOGO DE CALCULADORAS',
     title: 'Calculadoras para autônomos e pequenos negócios',
-    lead: 'Ferramentas para calcular margens, preços, rentabilidade e um imposto em percentual. Cada uma explica sua fórmula e traz exemplos resolvidos.',
+    lead: 'Ferramentas para calcular margens, preços, descontos, ponto de equilíbrio, ROI e um imposto em percentual. Cada uma explica sua fórmula e traz exemplos resolvidos.',
     searchLabel: 'Buscar entre as calculadoras',
     searchPlaceholder: 'Buscar calculadora…',
     noResults: 'Nenhuma calculadora corresponde à sua busca.',
@@ -150,10 +150,12 @@ export const ui = {
     metaTitles: {
       'margenes-y-precios': 'Margens e preços: calculadoras para autônomos | CalculaNegocio',
       facturacion: 'Faturamento: base e imposto em percentual | CalculaNegocio',
+      crecimiento: 'Rentabilidade e crescimento: equilíbrio e ROI | CalculaNegocio',
     },
     metaDescriptions: {
-      'margenes-y-precios': 'Calculadoras de margem comercial, preço de venda e margem bruta e líquida para entender quanto você ganha e por quanto vender.',
+      'margenes-y-precios': 'Calculadoras de margem comercial, markup, descontos, preço de venda e margem bruta e líquida para entender quanto você ganha e a que preço vender.',
       facturacion: 'Ferramentas de faturamento: calcule a base, some ou tire um imposto em percentual e detalhe uma lista com vários itens.',
+      crecimiento: 'Calcule o ponto de equilíbrio do seu negócio e o ROI de um investimento, com fórmulas explicadas e exemplos resolvidos.',
     },
   },
   methodology: {

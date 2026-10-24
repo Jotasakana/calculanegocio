@@ -6,7 +6,7 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Rechner für Selbstständige und kleine Unternehmen',
-    devLabel: 'PRIVATE DEMO · v0.9 · Übersetzung wartet auf muttersprachliche Prüfung',
+    devLabel: 'PRIVATE DEMO · v0.10 · Übersetzung wartet auf muttersprachliche Prüfung',
   },
   a11y: {
     skip: 'Zum Inhalt springen',
@@ -61,7 +61,7 @@ export const ui = {
   },
   home: {
     metaTitle: 'CalculaNegocio · Rechner für Selbstständige und kleine Unternehmen',
-    metaDescription: 'Kostenlose Rechner für Marge, Preisgestaltung, Rentabilität und Steuer für Selbstständige und kleine Unternehmen – mit verständlichen Formeln und Rechenbeispielen.',
+    metaDescription: 'Kostenlose Rechner für Marge, Preise, Rabatte, Gewinnschwelle, ROI und Steuer für Selbstständige und kleine Unternehmen – mit Formeln und Rechenbeispielen.',
     eyebrow: 'RECHNER FÜR SELBSTSTÄNDIGE UND KLEINE UNTERNEHMEN',
     titleA: 'Geben Sie Ihrer Arbeit einen Preis',
     titleB: 'mit offenen Zahlen.',
@@ -126,7 +126,7 @@ export const ui = {
     faqKicker: 'HÄUFIGE FRAGEN',
     faqTitle: 'Was am häufigsten gefragt wird',
     faq: [
-      ['Enthalten die Berechnungen Steuer?', 'Das hängt vom Rechner ab. Marge und Rentabilität arbeiten mit Nettobeträgen. Der Verkaufspreisrechner addiert die Steuer am Ende und zeigt den Preis mit und ohne Steuer. Der Rechner für den Nettobetrag dient dazu, Steuer hinzuzufügen oder herauszurechnen.'],
+      ['Enthalten die Berechnungen Steuer?', 'Das hängt vom Rechner ab. Marge und Rentabilität arbeiten mit Nettobeträgen. Der Verkaufspreisrechner addiert die Steuer am Ende und zeigt den Preis mit und ohne Steuer. Der Rechner für den Nettobetrag dient dazu, Steuer hinzuzufügen oder herauszurechnen. Aufschlag, Rabatte, Gewinnschwelle und ROI arbeiten mit der eingegebenen Zahl und schlagen keine Steuer auf.'],
       ['Werden meine Daten gespeichert?', 'Nein. Die Berechnung erfolgt in Ihrem Browser, und die eingegebenen Zahlen werden an keinen Server gesendet.'],
       ['Kann ich die Rechner in meinem Land nutzen?', 'Die Rechner für Marge und Rentabilität sind reine Arithmetik und erlauben die Wahl der Währung. Die Rechner für den Verkaufspreis mit Steuer und für den Nettobetrag wenden einfach den von Ihnen eingegebenen Prozentsatz an: Sie kennen weder Steuersätze noch Vorschriften eines Landes.'],
       ['Ersetzen sie eine Beratung?', 'Nein. Es sind Rechen- und Orientierungshilfen. Bei steuerlichen oder rechtlichen Pflichten wenden Sie sich an amtliche Quellen oder an eine fachkundige Person.'],
@@ -137,10 +137,10 @@ export const ui = {
   },
   toolsHub: {
     metaTitle: 'Kostenlose Rechner für Selbstständige | CalculaNegocio',
-    metaDescription: 'Der Katalog von CalculaNegocio: verfügbare Rechner (Gewinnmarge, Verkaufspreis, Brutto- und Nettomarge, Nettobetrag) und Rechner in Entwicklung.',
+    metaDescription: 'Der Katalog von CalculaNegocio: verfügbare Rechner (Gewinnmarge, Aufschlag, Rabatte, Verkaufspreis, Rentabilität, Gewinnschwelle, ROI, Nettobetrag) und Rechner in Entwicklung.',
     kicker: 'RECHNERKATALOG',
     title: 'Rechner für Selbstständige und kleine Unternehmen',
-    lead: 'Werkzeuge für Marge, Preis, Rentabilität und die Steuer Ihrer Rechnungen. Jeder erklärt seine Formel und enthält durchgerechnete Beispiele.',
+    lead: 'Werkzeuge für Marge, Preis, Rabatte, Gewinnschwelle, ROI und die Steuer Ihrer Rechnungen. Jeder erklärt seine Formel und enthält durchgerechnete Beispiele.',
     searchLabel: 'Rechner durchsuchen',
     searchPlaceholder: 'Rechner suchen …',
     noResults: 'Kein Rechner passt zu Ihrer Suche.',
@@ -150,10 +150,12 @@ export const ui = {
     metaTitles: {
       'margenes-y-precios': 'Marge und Preise: Rechner | CalculaNegocio',
       facturacion: 'Rechnungen: Nettobetrag und Steuerbetrag | CalculaNegocio',
+      crecimiento: 'Rentabilität und Wachstum: Gewinnschwelle und ROI | CalculaNegocio',
     },
     metaDescriptions: {
-      'margenes-y-precios': 'Rechner für Gewinnmarge, Verkaufspreis sowie Brutto- und Nettomarge – damit Sie wissen, wie viel Sie verdienen und welchen Preis Sie verlangen sollten.',
+      'margenes-y-precios': 'Rechner für Gewinnmarge, Aufschlag, Rabatte, Verkaufspreis sowie Brutto- und Nettomarge – damit Sie wissen, was Sie verdienen und zu welchem Preis Sie verkaufen sollten.',
       facturacion: 'Werkzeuge für Rechnungen: Nettobetrag berechnen, Steuer hinzufügen oder herausrechnen und eine Rechnung mit mehreren Positionen aufschlüsseln – mit dem von Ihnen eingegebenen Satz.',
+      crecimiento: 'Berechnen Sie die Gewinnschwelle Ihres Unternehmens und den ROI einer Investition – mit erklärten Formeln und Rechenbeispielen.',
     },
   },
   methodology: {

@@ -6,12 +6,16 @@
 export const slugs = {
   tools: 'calculadoras',
   methodology: 'metodologia',
-  categories: { 'margenes-y-precios': 'margens-e-precos', facturacion: 'faturamento-e-impostos' },
+  categories: { 'margenes-y-precios': 'margens-e-precos', facturacion: 'faturamento-e-impostos', crecimiento: 'rentabilidade-e-crescimento' },
   toolPages: {
     margen: 'calculadora-de-margem-comercial',
     precio: 'calculadora-de-preco-de-venda',
     rentabilidad: 'margem-bruta-e-margem-liquida',
     iva: 'calculadora-de-base-e-imposto',
+    recargo: 'calculadora-de-markup',
+    descuento: 'calculadora-de-descontos-e-preco-final',
+    equilibrio: 'calculadora-de-ponto-de-equilibrio',
+    roi: 'calculadora-de-roi',
   },
 };
 
@@ -19,9 +23,9 @@ export const categories = {
   'margenes-y-precios': {
     title: 'Margens e preços',
     kicker: 'CATEGORIA',
-    short: 'Cálculo de margem, markup, preço de venda e rentabilidade',
+    short: 'Margem, markup, descontos, preço de venda e rentabilidade',
     description:
-      'Calculadoras para definir preços, entender a diferença entre margem e markup e analisar a rentabilidade do seu negócio.',
+      'Calculadoras para definir preços, entender a diferença entre margem e markup, aplicar descontos e analisar a rentabilidade do seu negócio.',
   },
   facturacion: {
     title: 'Faturamento e impostos',
@@ -29,6 +33,14 @@ export const categories = {
     short: 'Valor base e detalhamento de um imposto em percentual',
     description:
       'Ferramentas para trabalhar com a base e um imposto em percentual: somar ou tirar o imposto e detalhar vários itens. É aritmética genérica, sem regras de um tributo específico.',
+  },
+
+  crecimiento: {
+    title: 'Rentabilidade e crescimento',
+    kicker: 'CATEGORIA',
+    short: 'Variação, ponto de equilíbrio, ROI e publicidade',
+    description:
+      'Calculadoras para saber quantas unidades você precisa vender para cobrir seus custos fixos e que retorno um investimento deixa.',
   },
 };
 
@@ -152,6 +164,112 @@ export const tools = {
     ],
     defaults: { vat: 10, vat1: 10, vat2: 10, vat3: 5 },
   },
+  recargo: {
+    title: 'Calculadora de markup',
+    menuTitle: 'Markup sobre o custo',
+    metaTitle: 'Calculadora de markup: preço de venda e margem',
+    metaDescription:
+      'Calcule o preço de venda sem imposto ao aplicar um markup sobre o custo e compare o markup com a margem sobre as vendas. Com exemplos resolvidos. Grátis.',
+    kicker: 'MARGENS E PREÇOS',
+    desc: 'Aplique um markup ao seu custo e veja que margem sobre as vendas ele representa, para não confundir um percentual com o outro.',
+    tileText: 'Vá do custo ao preço com um markup e compare com a margem.',
+    tileCta: 'Calcular markup',
+    search: 'markup sobre custo preço de venda margem lucro porcentagem acréscimo recargo',
+    formulas: [
+      ['Lucro bruto por unidade', 'Custo × markup'],
+      ['Preço de venda sem imposto', 'Custo × (1 + markup)'],
+      ['Margem sobre as vendas equivalente', 'Lucro ÷ preço de venda × 100 = markup ÷ (1 + markup)'],
+      ['Markup necessário para uma margem', 'Margem ÷ (1 − margem)'],
+    ],
+    faq: [
+      ['Qual é a diferença entre markup e margem?', 'O markup é calculado sobre o custo e a margem, sobre o preço de venda. Com custo de R$ 100 e markup de 25%, o preço é R$ 125, o lucro é R$ 25 e a margem é de 20%.'],
+      ['Como passo de markup para margem, e vice-versa?', 'Margem = markup ÷ (1 + markup) e markup = margem ÷ (1 − margem). Um markup de 25% equivale a uma margem de 20%; para chegar a uma margem de 25% é preciso um markup de 33,33%.'],
+      ['Por que um markup de 100% não dá uma margem de 100%?', 'Porque dobrar o custo deixa um lucro igual ao custo, que é metade do preço: uma margem de 50%. O markup pode passar de 100%; a margem sobre as vendas nunca chega a esse valor.'],
+      ['O preço calculado inclui imposto?', 'Não. É o preço de venda antes do imposto. Se depois você precisar somar o imposto, use a calculadora de preço de venda ou a de base e imposto.'],
+      ['O lucro calculado é o que sobra para mim?', 'Não. É o lucro bruto por unidade, antes das despesas gerais, das comissões e dos impostos.'],
+    ],
+    modes: ['Aplicar um markup'],
+    fields: [{ cost: 'Custo do produto', markup: 'Markup sobre o custo' }],
+  },
+  descuento: {
+    title: 'Calculadora de descontos e preço final',
+    menuTitle: 'Descontos e preço final',
+    metaTitle: 'Calculadora de descontos sucessivos e preço final',
+    metaDescription:
+      'Calcule o preço final após um ou dois descontos sucessivos, a economia total e o desconto efetivo. Com fórmulas e exemplos resolvidos. Grátis.',
+    kicker: 'MARGENS E PREÇOS',
+    desc: 'Aplique um ou dois descontos sucessivos e veja o preço final, a economia e o desconto efetivo, sem somar percentuais por engano.',
+    tileText: 'Calcule o preço final, a economia e o desconto real de uma ou duas reduções.',
+    tileCta: 'Calcular desconto',
+    search: 'desconto redução preço final promoção economia porcentagem sucessivo',
+    formulas: [
+      ['Preço final', 'Preço inicial × (1 − desconto 1) × (1 − desconto 2)'],
+      ['Economia total', 'Preço inicial − preço final'],
+      ['Desconto efetivo', '100 − (100 − desconto 1) × (100 − desconto 2) ÷ 100'],
+    ],
+    faq: [
+      ['Por que dois descontos de 20% e 10% não somam 30%?', 'Porque o segundo incide sobre o preço já reduzido. Com R$ 100: os 20% deixam R$ 80, 10% de R$ 80 são R$ 8 e o preço final é R$ 72. A economia total é de R$ 28, um desconto efetivo de 28%.'],
+      ['A ordem dos descontos importa?', 'Não. A multiplicação é comutativa: aplicar primeiro 10% e depois 20% dá o mesmo preço final. O que muda é quanto cada etapa reduz em reais, não o total.'],
+      ['Como calculo o desconto efetivo?', 'Com 100 − (100 − d1) × (100 − d2) ÷ 100. Com 20% e 10%: 100 − 80 × 90 ÷ 100 = 28%. Depende apenas dos percentuais, não do preço.'],
+      ['Posso usar um único desconto?', 'Sim. Deixe o segundo desconto vazio ou digite 0, e a calculadora aplica só o primeiro.'],
+      ['Digito o preço com ou sem imposto?', 'O que você quiser reduzir: o percentual incide sobre o número que você digitar. O resultado mantém a mesma base, com ou sem imposto.'],
+    ],
+    modes: ['Descontos sucessivos'],
+    fields: [{ price: 'Preço inicial', first: 'Desconto', second: 'Segundo desconto (opcional)' }],
+  },
+  equilibrio: {
+    title: 'Calculadora de ponto de equilíbrio',
+    menuTitle: 'Ponto de equilíbrio',
+    metaTitle: 'Calculadora de ponto de equilíbrio: unidades e vendas',
+    metaDescription:
+      'Calcule quantas unidades você precisa vender para cobrir os custos fixos, o faturamento necessário e a margem de contribuição. Com exemplos resolvidos. Grátis.',
+    kicker: 'RENTABILIDADE E CRESCIMENTO',
+    desc: 'Descubra quantas unidades você precisa vender para cobrir seus custos fixos e que faturamento isso representa, a partir da margem de contribuição de cada unidade.',
+    tileText: 'Calcule quantas unidades precisa vender para começar a ganhar dinheiro.',
+    tileCta: 'Calcular equilíbrio',
+    search: 'ponto de equilíbrio break even custos fixos custos variáveis margem de contribuição unidades',
+    formulas: [
+      ['Margem de contribuição por unidade', 'Preço de venda − custo variável'],
+      ['Unidades no ponto de equilíbrio', 'Custos fixos ÷ margem de contribuição (arredondado para cima)'],
+      ['Faturamento no ponto de equilíbrio', 'Unidades arredondadas × preço de venda'],
+      ['Resultado com um volume dado', 'Unidades × margem de contribuição − custos fixos'],
+    ],
+    faq: [
+      ['O que é o ponto de equilíbrio?', 'É o nível de vendas em que a receita iguala os custos totais: não há lucro nem prejuízo. A partir da unidade seguinte, cada venda traz lucro.'],
+      ['O que é a margem de contribuição?', 'É o que sobra de cada venda depois de pagar os custos variáveis daquela unidade. Com preço de R$ 50 e custo variável de R$ 30, cada unidade contribui com R$ 20 para cobrir os custos fixos.'],
+      ['Por que o resultado é arredondado para cima?', 'Porque não se vendem frações de unidade. Se o cálculo dá 437,5 unidades, com 437 ainda há prejuízo e é preciso vender 438.'],
+      ['E se o preço for igual ou menor que o custo variável?', 'Cada unidade vendida deixa zero ou dá prejuízo, então nenhum volume cobre os custos fixos. A calculadora avisa em vez de mostrar um número impossível.'],
+      ['O que é custo fixo e o que é custo variável?', 'Os fixos não mudam com as unidades vendidas no período (aluguel, seguros, mensalidades, salários fixos). Os variáveis dependem delas (matéria-prima, frete, comissão por venda). Se um custo for misto, separe a parte fixa e a parte variável.'],
+    ],
+    modes: ['Ponto de equilíbrio'],
+    fields: [{ fixed: 'Custos fixos do período', price: 'Preço de venda por unidade', variable: 'Custo variável por unidade', units: 'Unidades que você espera vender (opcional)' }],
+  },
+  roi: {
+    title: 'Calculadora de ROI',
+    menuTitle: 'ROI de um investimento',
+    metaTitle: 'Calculadora de ROI: retorno de um investimento',
+    metaDescription:
+      'Calcule o lucro líquido e o ROI percentual de um investimento a partir do valor investido e do retorno total. Com exemplos resolvidos e limites. Grátis.',
+    kicker: 'RENTABILIDADE E CRESCIMENTO',
+    desc: 'Calcule o lucro ou prejuízo líquido e o ROI percentual de um investimento a partir do que você investiu e do que recuperou no total.',
+    tileText: 'Meça quanto você ganhou ou perdeu em relação ao que investiu.',
+    tileCta: 'Calcular ROI',
+    search: 'roi retorno sobre investimento rentabilidade lucro líquido investimento porcentagem',
+    formulas: [
+      ['Lucro ou prejuízo líquido', 'Retorno total − investimento inicial'],
+      ['ROI', '(Retorno total − investimento inicial) ÷ investimento inicial × 100'],
+      ['Retorno por unidade investida', 'Retorno total ÷ investimento inicial'],
+    ],
+    faq: [
+      ['O que devo digitar em «Retorno total obtido»?', 'Tudo o que você recuperou, incluindo o investimento. Se investiu R$ 1.000 e hoje tem R$ 1.300, o retorno total é R$ 1.300, não R$ 300. A calculadora subtrai o investimento por você.'],
+      ['ROI e ROAS são a mesma coisa?', 'Não. O ROAS divide a receita de uma campanha pelo gasto com publicidade; o ROI usa o lucro líquido sobre o que foi investido. Com R$ 500 em anúncios que geram R$ 2.000 em vendas, o ROAS é 4, mas se os produtos vendidos custaram R$ 1.200, o lucro é de R$ 300 e o ROI desses R$ 500 é de 60%.'],
+      ['O ROI é uma rentabilidade anual?', 'Não: ele não leva o tempo em conta. Um retorno de 30% em três anos equivale a 9,14% ao ano, compostos, e 30% em um ano é muito diferente. Esta calculadora não anualiza o resultado.'],
+      ['O que significa um ROI negativo?', 'Que você recuperou menos do que investiu. Se investe R$ 5.000 e recupera R$ 4.000, perde R$ 1.000 e o ROI é de −20%. Um ROI de −100% significa que você não recuperou nada.'],
+      ['E se o investimento inicial for zero?', 'O ROI não pode ser calculado, porque seria preciso dividir por zero. A calculadora pede um investimento maior que zero.'],
+    ],
+    modes: ['Retorno de um investimento'],
+    fields: [{ investment: 'Investimento inicial', total: 'Retorno total obtido (com o investimento)' }],
+  },
 };
 
 /** Rótulos dos valores dos campos de lista fechada. */
@@ -163,4 +281,8 @@ export const autolinkPhrases = [
   ['calculadora de preço de venda', 'precio'],
   ['calculadora de margem bruta e líquida', 'rentabilidad'],
   ['calculadora de base e imposto', 'iva'],
+  ['calculadora de markup', 'recargo'],
+  ['calculadora de descontos e preço final', 'descuento'],
+  ['calculadora de ponto de equilíbrio', 'equilibrio'],
+  ['calculadora de ROI', 'roi'],
 ];

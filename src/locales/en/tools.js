@@ -9,12 +9,16 @@
 export const slugs = {
   tools: 'calculators',
   methodology: 'methodology',
-  categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing-and-tax' },
+  categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing-and-tax', crecimiento: 'profitability-and-growth' },
   toolPages: {
     margen: 'profit-margin-calculator',
     precio: 'selling-price-calculator',
     rentabilidad: 'gross-and-net-margin-calculator',
     iva: 'tax-base-calculator',
+    recargo: 'markup-calculator',
+    descuento: 'discount-and-final-price-calculator',
+    equilibrio: 'break-even-calculator',
+    roi: 'roi-calculator',
   },
 };
 
@@ -22,9 +26,9 @@ export const categories = {
   'margenes-y-precios': {
     title: 'Margins and pricing',
     kicker: 'CATEGORY',
-    short: 'Margin, markup, selling price and profitability',
+    short: 'Margin, markup, discounts, selling price and profitability',
     description:
-      'Calculators to set prices, understand the difference between margin and markup and analyse the profitability of your business.',
+      'Calculators to set prices, understand the difference between margin and markup, apply discounts and analyse the profitability of your business.',
   },
   facturacion: {
     title: 'Invoicing and tax',
@@ -32,6 +36,14 @@ export const categories = {
     short: 'Tax base and tax breakdown',
     description:
       'Tools to work with the tax base and tax amount on your invoices: add or remove tax and break down several lines, using the percentage you type.',
+  },
+
+  crecimiento: {
+    title: 'Profitability and growth',
+    kicker: 'CATEGORY',
+    short: 'Change, break-even point, ROI and advertising',
+    description:
+      'Calculators to find out how many units you need to sell to cover your fixed costs and what return an investment gives you.',
   },
 };
 
@@ -155,6 +167,112 @@ export const tools = {
       { qty1: 'Line 1 quantity', unit1: 'Line 1 unit price', disc1: 'Line 1 discount', vat1: 'Line 1 tax rate', qty2: 'Line 2 quantity', unit2: 'Line 2 unit price', vat2: 'Line 2 tax rate', qty3: 'Line 3 quantity', unit3: 'Line 3 unit price', vat3: 'Line 3 tax rate' },
     ],
   },
+  recargo: {
+    title: 'Markup calculator',
+    menuTitle: 'Markup on cost',
+    metaTitle: 'Markup calculator: selling price and margin',
+    metaDescription:
+      'Work out the selling price before tax when you add a markup to your cost, and compare the markup with the margin on sales. Worked examples. Free.',
+    kicker: 'MARGINS AND PRICING',
+    desc: 'Add a markup to your cost and see what margin on sales it represents, so you do not mix up one percentage with the other.',
+    tileText: 'Go from cost to price with a markup and compare it with the margin.',
+    tileCta: 'Calculate markup',
+    search: 'markup on cost selling price margin profit percentage mark-up cost-plus',
+    formulas: [
+      ['Gross profit per unit', 'Cost × markup'],
+      ['Selling price before tax', 'Cost × (1 + markup)'],
+      ['Equivalent margin on sales', 'Profit ÷ selling price × 100 = markup ÷ (1 + markup)'],
+      ['Markup needed for a margin', 'Margin ÷ (1 − margin)'],
+    ],
+    faq: [
+      ['What is the difference between markup and margin?', 'Markup is calculated on the cost and margin on the selling price. With a cost of 100 and a markup of 25%, the price is 125, the profit is 25 and the margin is 20%.'],
+      ['How do I convert markup to margin, and back?', 'Margin = markup ÷ (1 + markup) and markup = margin ÷ (1 − margin). A 25% markup equals a 20% margin; to reach a 25% margin you need a 33.33% markup.'],
+      ['Why does a 100% markup not give a 100% margin?', 'Because doubling the cost leaves a profit equal to the cost, which is half of the price: a 50% margin. Markup can go above 100%; margin on sales never reaches it.'],
+      ['Does the price it calculates include tax?', 'No. It is the selling price before tax. If you then need to add sales tax, use the selling price calculator or the tax base calculator.'],
+      ['Is the profit it shows what I keep?', 'No. It is the gross profit per unit, before overheads, commissions and tax.'],
+    ],
+    modes: ['Apply a markup'],
+    fields: [{ cost: 'Product cost', markup: 'Markup on cost' }],
+  },
+  descuento: {
+    title: 'Discount and final price calculator',
+    menuTitle: 'Discounts and final price',
+    metaTitle: 'Successive discounts and final price calculator',
+    metaDescription:
+      'Work out the final price after one or two successive discounts, the total saving and the effective discount. With formulas and worked examples. Free.',
+    kicker: 'MARGINS AND PRICING',
+    desc: 'Apply one or two successive discounts and get the final price, the saving and the effective discount, without adding percentages by mistake.',
+    tileText: 'Work out the final price, the saving and the real discount of one or two markdowns.',
+    tileCta: 'Calculate discount',
+    search: 'discount markdown final price sale saving percentage successive',
+    formulas: [
+      ['Final price', 'Initial price × (1 − discount 1) × (1 − discount 2)'],
+      ['Total saving', 'Initial price − final price'],
+      ['Effective discount', '100 − (100 − discount 1) × (100 − discount 2) ÷ 100'],
+    ],
+    faq: [
+      ['Why do two discounts of 20% and 10% not add up to 30%?', 'Because the second applies to the price that is already reduced. With 100: 20% leaves 80, 10% of 80 is 8, and the final price is 72. The total saving is 28, an effective discount of 28%.'],
+      ['Does the order of the discounts matter?', 'No. Multiplication is commutative: applying 10% first and then 20% gives the same final price. What changes is the amount taken off at each step, not the total.'],
+      ['How do I work out the effective discount?', 'With 100 − (100 − d1) × (100 − d2) ÷ 100. With 20% and 10%: 100 − 80 × 90 ÷ 100 = 28%. It depends only on the percentages, not on the price.'],
+      ['Can I use just one discount?', 'Yes. Leave the second discount empty or type 0 and the calculator applies only the first.'],
+      ['Should I enter the price with or without tax?', 'The one you want to reduce: the percentage applies to the figure you type. The result keeps the same basis, with or without tax.'],
+    ],
+    modes: ['Successive discounts'],
+    fields: [{ price: 'Initial price', first: 'Discount', second: 'Second discount (optional)' }],
+  },
+  equilibrio: {
+    title: 'Break-even calculator',
+    menuTitle: 'Break-even point',
+    metaTitle: 'Break-even calculator: units and sales',
+    metaDescription:
+      'Work out how many units you must sell to cover your fixed costs, the sales needed and the contribution margin. With worked examples. Free.',
+    kicker: 'PROFITABILITY AND GROWTH',
+    desc: 'Find out how many units you have to sell to cover your fixed costs and what sales that means, based on the contribution margin of each unit.',
+    tileText: 'Work out how many units you need to sell to start making money.',
+    tileCta: 'Calculate break-even',
+    search: 'break-even point breakeven fixed costs variable costs contribution margin units threshold',
+    formulas: [
+      ['Contribution margin per unit', 'Selling price − variable cost'],
+      ['Units at break-even', 'Fixed costs ÷ contribution margin (rounded up)'],
+      ['Sales at break-even', 'Rounded units × selling price'],
+      ['Result at a given volume', 'Units × contribution margin − fixed costs'],
+    ],
+    faq: [
+      ['What is the break-even point?', 'It is the sales level at which revenue equals total costs: no profit and no loss. From the next unit on, every sale adds profit.'],
+      ['What is the contribution margin?', 'It is what is left of each sale after paying the variable costs of that unit. With a price of 50 and a variable cost of 30, each unit contributes 20 towards the fixed costs.'],
+      ['Why is the result rounded up?', 'Because you cannot sell a fraction of a unit. If the calculation gives 437.5 units, 437 still means a loss and you need to sell 438.'],
+      ['What happens if the price is equal to or below the variable cost?', 'Every unit sold earns nothing or loses money, so no volume will cover the fixed costs. The calculator warns you instead of showing an impossible figure.'],
+      ['What is a fixed cost and what is a variable cost?', 'Fixed costs do not change with the units sold in the period (rent, insurance, subscriptions, fixed salaries). Variable costs do depend on them (raw materials, shipping, sales commissions). If a cost is mixed, split its fixed and variable parts.'],
+    ],
+    modes: ['Break-even point'],
+    fields: [{ fixed: 'Fixed costs for the period', price: 'Selling price per unit', variable: 'Variable cost per unit', units: 'Units you expect to sell (optional)' }],
+  },
+  roi: {
+    title: 'ROI calculator',
+    menuTitle: 'ROI of an investment',
+    metaTitle: 'ROI calculator: return on investment',
+    metaDescription:
+      'Work out the net profit and the ROI percentage of an investment from what you invested and the total return. With worked examples and limits. Free.',
+    kicker: 'PROFITABILITY AND GROWTH',
+    desc: 'Work out the net profit or loss and the ROI percentage of an investment from what you invested and what you have recovered in total.',
+    tileText: 'Measure how much you have gained or lost compared with what you invested.',
+    tileCta: 'Calculate ROI',
+    search: 'roi return on investment profitability net profit investment percentage',
+    formulas: [
+      ['Net profit or loss', 'Total return − initial investment'],
+      ['ROI', '(Total return − initial investment) ÷ initial investment × 100'],
+      ['Return per unit invested', 'Total return ÷ initial investment'],
+    ],
+    faq: [
+      ['What should I enter in “Total return”?', 'Everything you have recovered, including the investment. If you invested 1,000 and now have 1,300, the total return is 1,300, not 300. The calculator subtracts the investment for you.'],
+      ['Are ROI and ROAS the same thing?', 'No. ROAS divides the revenue of a campaign by its advertising spend; ROI uses the net profit over what was invested. With 500 of advertising that generates 2,000 in sales the ROAS is 4, but if the goods sold cost 1,200, the profit is 300 and the ROI on that 500 is 60%.'],
+      ['Is ROI an annual return?', 'No: it does not take time into account. A 30% return over three years is equivalent to 9.14% a year compounded, and 30% in one year is very different. This calculator does not annualise the result.'],
+      ['What does a negative ROI mean?', 'That you recovered less than you invested. If you invest 5,000 and recover 4,000, you lose 1,000 and the ROI is −20%. An ROI of −100% means you recovered nothing.'],
+      ['What happens if the initial investment is zero?', 'ROI cannot be calculated, because it would mean dividing by zero. The calculator asks for an investment greater than zero.'],
+    ],
+    modes: ['Return on an investment'],
+    fields: [{ investment: 'Initial investment', total: 'Total return (including the investment)' }],
+  },
 };
 
 /** Labels for the values of closed-list fields. */
@@ -166,4 +284,8 @@ export const autolinkPhrases = [
   ['selling price calculator', 'precio'],
   ['gross and net margin calculator', 'rentabilidad'],
   ['tax base calculator', 'iva'],
+  ['markup calculator', 'recargo'],
+  ['discount and final price calculator', 'descuento'],
+  ['break-even calculator', 'equilibrio'],
+  ['ROI calculator', 'roi'],
 ];

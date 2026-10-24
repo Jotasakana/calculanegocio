@@ -1,0 +1,83 @@
+<p>This calculator gives you the final price after applying one or two successive discounts. Enter the initial price and the percentages, and you get the final price, the total saving and the effective discount, which is the real percentage you have taken off overall. Discounts are calculated by multiplying, not adding, which is where most people go wrong.</p>
+<h3>How to use the calculator</h3>
+<p>Enter three figures:</p>
+<ul>
+<li><strong>Initial price.</strong> The price before any markdown.</li>
+<li><strong>Discount.</strong> The first markdown percentage, from 0 to 100%.</li>
+<li><strong>Second discount (optional).</strong> A second percentage that applies to the price that is already reduced. If you leave it empty or type 0, only the first applies.</li>
+</ul>
+<p>The discount applies to the figure you type, with or without tax. Results are rounded to two decimals when displayed, but the internal calculations are not rounded.</p>
+<h3>How successive discounts are applied</h3>
+<p>Each discount acts on the price left by the previous one. That means percentages are multiplied, and the second discount takes less off than the first, because it starts from a lower price.</p>
+<p><strong>Final price = Initial price × (1 − discount 1) × (1 − discount 2)</strong></p>
+<p>The total saving is the difference between the initial price and the final one:</p>
+<p><strong>Saving = Initial price − Final price</strong></p>
+<p>And the effective discount, which depends only on the percentages, is:</p>
+<p><strong>Effective discount (%) = 100 − (100 − discount 1) × (100 − discount 2) ÷ 100</strong></p>
+<p>Control example: an item priced at 100 with a 20% discount and another 10%. The first leaves it at 80; the second takes 10% of 80, that is 8, off, and the final price is 72. The total saving is 28 and the effective discount is 28%, not 30%.</p>
+<h3>Why percentages are not added</h3>
+<p>Adding 20% and 10% would give 30% and a price of 70, but the second discount does not apply to the original 100; it applies to the 80 that was left. The gap grows with high percentages:</p>
+<table>
+<thead>
+<tr>
+  <th>Discounts</th>
+  <th>Sum (wrong)</th>
+  <th>Effective discount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>10% and 10%</td>
+  <td>20%</td>
+  <td>19%</td>
+</tr>
+<tr>
+  <td>20% and 10%</td>
+  <td>30%</td>
+  <td>28%</td>
+</tr>
+<tr>
+  <td>30% and 20%</td>
+  <td>50%</td>
+  <td>44%</td>
+</tr>
+<tr>
+  <td>50% and 20%</td>
+  <td>70%</td>
+  <td>60%</td>
+</tr>
+<tr>
+  <td>50% and 50%</td>
+  <td>100%</td>
+  <td>75%</td>
+</tr>
+</tbody>
+</table>
+<p>Two 50% discounts do not give the product away: the first leaves it at half and the second takes half of that half, so 25% of the initial price is paid. When percentages are added, the price you calculate ends up below the real one and the buyer expects a markdown that does not exist.</p>
+<h3>Common mistakes with discounts</h3>
+<h4>Adding the percentages</h4>
+<p>This is the most common mistake. With 20% and 10% on 100, adding gives 70 and the correct price is 72. The calculator shows the price you would get by adding so you can see the difference.</p>
+<h4>Applying the second discount to the initial price</h4>
+<p>This is a variant of the same mistake: working out 10% of 100 (10) instead of 10% of 80 (8). The second discount is always calculated on the price left by the first.</p>
+<h4>Believing the order matters</h4>
+<p>It does not. Applying 10% first and then 20% also leaves 72. The amount taken off at each step changes, but not the final result.</p>
+<h4>Thinking that raising and lowering by the same percentage returns to the initial price</h4>
+<p>If a price of 100 rises by 20%, it becomes 120; if it then falls by 20%, it ends at 96. To undo a 20% discount you have to raise the price by 25%: 80 × 1.25 = 100.</p>
+<h4>Forgetting the effect on margin</h4>
+<p>A discount lowers the price, but not the cost. If a 100 product costs 60 (a 40% margin), a 20% discount sells it at 80 and the margin falls to 25%. Before marking down, check it with the profit margin calculator.</p>
+<h3>A complete example, step by step</h3>
+<p>A shop marks an item priced at 80 down by 15% and, for one weekend, also gives 5% to customers who pay with a loyalty card.</p>
+<ol>
+<li><strong>First discount:</strong> 80 × 0.15 = 12, which leaves the price at 68.</li>
+<li><strong>Second discount:</strong> 68 × 0.05 = 3.40, which leaves the price at 64.60.</li>
+<li><strong>Total saving:</strong> 80 − 64.60 = 15.40.</li>
+<li><strong>Effective discount:</strong> 15.40 ÷ 80 = 19.25%. Adding 15% and 5% would have given 20% and 64.</li>
+</ol>
+<p>If the item cost the shop 50, the margin on the price of 64.60 is 22.60%. With the markup calculator you can see what markup that price of 64.60 represents on a cost of 50.</p>
+<h3>How to read the result</h3>
+<ul>
+<li><strong>Look at the effective discount.</strong> It is the one the customer really pays or saves, and it is almost always lower than the sum of the percentages.</li>
+<li><strong>Check the price against your cost.</strong> A discount that takes the price below cost means selling at a loss.</li>
+<li><strong>Communicate the real discount.</strong> If you advertise “up to 70%” by adding 50% and 20%, the effective discount is actually 60%.</li>
+<li><strong>Decide whether the price includes tax.</strong> The percentage is the same with or without tax, but the amount saved changes.</li>
+</ul>

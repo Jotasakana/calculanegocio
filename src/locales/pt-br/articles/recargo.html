@@ -1,0 +1,83 @@
+<p>Esta calculadora transforma um custo em preço de venda aplicando um markup, isto é, um percentual somado ao custo. Digite o custo do produto e o markup, sem imposto, e você obtém o preço de venda, o lucro bruto por unidade e a margem sobre as vendas que esse markup representa. A ideia é que você veja os dois percentuais ao mesmo tempo e não confunda um com o outro.</p>
+<h3>Como usar a calculadora</h3>
+<p>Digite dois dados:</p>
+<ul>
+<li><strong>Custo do produto.</strong> O que custa ter uma unidade pronta para vender: compra, frete, embalagem e qualquer outro custo direto.</li>
+<li><strong>Markup sobre o custo.</strong> O percentual que você quer somar ao custo. Pode passar de 100%: um markup de 150% multiplica o custo por 2,5.</li>
+</ul>
+<p>Todos os valores são digitados e mostrados <strong>antes do imposto</strong>. Se precisar do preço com imposto, calcule-o depois com a calculadora de preço de venda. Os resultados aparecem arredondados a duas casas decimais, mas as contas internas não são arredondadas.</p>
+<h3>O que é o markup sobre o custo</h3>
+<p>O markup sobre o custo é o percentual somado ao custo de um produto para obter o preço de venda. É uma forma muito comum de definir preços porque basta multiplicar: o custo é o ponto de partida e o markup, o percentual que você acrescenta. Com custo de R$ 100 e markup de 25%, você soma R$ 25 e vende por R$ 125.</p>
+<p>Seu limite é que diz pouco sobre quanto do preço é lucro. Para isso existe a margem sobre as vendas, que é medida sobre o preço e não sobre o custo. Esta calculadora mostra os dois para você comparar.</p>
+<h3>Fórmulas do markup</h3>
+<p>O lucro bruto por unidade é o custo multiplicado pelo markup:</p>
+<p><strong>Lucro = Custo × Markup</strong></p>
+<p>O preço de venda é o custo mais esse lucro:</p>
+<p><strong>Preço de venda = Custo × (1 + Markup)</strong></p>
+<p>A margem sobre as vendas equivalente sai de dividir o lucro pelo preço:</p>
+<p><strong>Margem (%) = Lucro ÷ Preço de venda × 100 = Markup ÷ (1 + Markup)</strong></p>
+<p>Exemplo: custo de R$ 100 e markup de 25%. O lucro é 100 × 0,25 = R$ 25, o preço de venda é R$ 125 e a margem é 25 ÷ 125 = 20%.</p>
+<h3>Markup e margem: mesmo lucro, base diferente</h3>
+<p>Com os mesmos dados, o markup sai sempre maior que a margem, porque o lucro é dividido por um número menor (o custo) em vez de pelo preço. Esta tabela mostra a equivalência:</p>
+<table>
+<thead>
+<tr>
+  <th>Markup sobre o custo</th>
+  <th>Margem sobre as vendas equivalente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>10%</td>
+  <td>9,09%</td>
+</tr>
+<tr>
+  <td>20%</td>
+  <td>16,67%</td>
+</tr>
+<tr>
+  <td>25%</td>
+  <td>20,00%</td>
+</tr>
+<tr>
+  <td>30%</td>
+  <td>23,08%</td>
+</tr>
+<tr>
+  <td>50%</td>
+  <td>33,33%</td>
+</tr>
+<tr>
+  <td>100%</td>
+  <td>50,00%</td>
+</tr>
+</tbody>
+</table>
+<p>Para o caminho inverso, o markup de que você precisa para chegar a uma margem concreta é:</p>
+<p><strong>Markup = Margem ÷ (1 − Margem)</strong></p>
+<p>Se você quer uma margem de 25% sobre as vendas, o markup é 0,25 ÷ 0,75 = 33,33%. Para partir de uma margem desejada e obter o preço, use a calculadora de margem comercial.</p>
+<h3>Erros comuns ao aplicar um markup</h3>
+<h4>Achar que markup e margem são a mesma coisa</h4>
+<p>É o erro mais comum. Se você aplica um markup de 40% sobre um custo de R$ 60, vende por R$ 84 e ganha R$ 24. Mas a margem real é 24 ÷ 84 = 28,57%, não os 40% que talvez esperasse. A calculadora mostra uma linha com o preço que sairia se esse mesmo percentual fosse uma margem: com custo de R$ 100 e 25%, seriam R$ 133,33 em vez de R$ 125.</p>
+<h4>Achar que um markup de 100% dá uma margem de 100%</h4>
+<p>Dobrar o custo deixa um lucro igual ao custo, que é metade do preço: uma margem de 50%. A margem sobre as vendas nunca chega a 100%, enquanto o markup não tem teto.</p>
+<h4>Aplicar o markup sobre um custo incompleto</h4>
+<p>Se o markup incide só sobre o preço de compra e você esquece o frete ou a embalagem, o lucro real é menor que o calculado. Inclua no custo tudo o que é preciso para deixar o produto pronto para vender.</p>
+<h4>Confundir lucro bruto com lucro final</h4>
+<p>O lucro por unidade que esta ferramenta calcula é bruto: dele saem depois as despesas gerais, as comissões e os impostos. Um markup generoso ainda pode não cobrir as despesas se você vende pouco.</p>
+<h3>Um exemplo completo, passo a passo</h3>
+<p>Uma loja compra um produto por R$ 12,40 e decide aplicar um markup de 35%.</p>
+<ol>
+<li><strong>Lucro por unidade:</strong> 12,40 × 0,35 = R$ 4,34.</li>
+<li><strong>Preço de venda sem imposto:</strong> 12,40 + 4,34 = R$ 16,74.</li>
+<li><strong>Margem sobre as vendas:</strong> 4,34 ÷ 16,74 = 25,93%.</li>
+<li><strong>Se os 35% fossem uma margem:</strong> 12,40 ÷ 0,65 = R$ 19,08. A diferença para R$ 16,74 é o que se perde ao confundir os dois percentuais.</li>
+</ol>
+<p>Com a calculadora de descontos e preço final você vê como o preço muda se depois fizer uma redução.</p>
+<h3>Como interpretar o resultado</h3>
+<ul>
+<li><strong>Fale sempre na mesma base.</strong> Se combinar um percentual com um fornecedor ou sócio, deixe claro se é markup sobre o custo ou margem sobre as vendas.</li>
+<li><strong>Confira a margem resultante.</strong> Um markup de 25% parece alto, mas deixa só 20% de margem.</li>
+<li><strong>Não aplique às cegas.</strong> O mercado, a concorrência e seus custos fixos também influenciam o preço que você pode cobrar.</li>
+<li><strong>Calcule com valores sem imposto.</strong> O imposto é somado no final e não faz parte do custo nem do lucro.</li>
+</ul>

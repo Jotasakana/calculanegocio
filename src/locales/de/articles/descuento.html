@@ -1,0 +1,83 @@
+<p>Dieser Rechner liefert den Endpreis nach einem oder zwei aufeinanderfolgenden Rabatten. Geben Sie den Ausgangspreis und die Prozentsätze ein, und Sie erhalten den Endpreis, die Gesamtersparnis und den effektiven Rabatt, also den tatsächlichen Prozentsatz, den Sie insgesamt abgezogen haben. Rabatte werden multipliziert, nicht addiert, und genau da irren sich die meisten.</p>
+<h3>So verwenden Sie den Rechner</h3>
+<p>Geben Sie drei Werte ein:</p>
+<ul>
+<li><strong>Ausgangspreis.</strong> Der Preis vor jedem Nachlass.</li>
+<li><strong>Rabatt.</strong> Der erste Prozentsatz, von 0 bis 100 %.</li>
+<li><strong>Zweiter Rabatt (optional).</strong> Ein zweiter Prozentsatz, der auf den bereits gesenkten Preis angewendet wird. Lassen Sie ihn leer oder geben Sie 0 ein, gilt nur der erste.</li>
+</ul>
+<p>Der Rabatt gilt für die eingegebene Zahl, mit oder ohne Steuer. Die Ergebnisse werden bei der Anzeige auf zwei Nachkommastellen gerundet, die internen Berechnungen jedoch nicht.</p>
+<h3>Wie aufeinanderfolgende Rabatte angewendet werden</h3>
+<p>Jeder Rabatt wirkt auf den Preis, den der vorherige übrig gelassen hat. Prozentsätze werden also multipliziert, und der zweite Rabatt zieht weniger ab als der erste, weil er von einem niedrigeren Preis ausgeht.</p>
+<p><strong>Endpreis = Ausgangspreis × (1 − Rabatt 1) × (1 − Rabatt 2)</strong></p>
+<p>Die Gesamtersparnis ist die Differenz zwischen Ausgangs- und Endpreis:</p>
+<p><strong>Ersparnis = Ausgangspreis − Endpreis</strong></p>
+<p>Und der effektive Rabatt, der nur von den Prozentsätzen abhängt, lautet:</p>
+<p><strong>Effektiver Rabatt (%) = 100 − (100 − Rabatt 1) × (100 − Rabatt 2) ÷ 100</strong></p>
+<p>Kontrollbeispiel: Ein Artikel zu 100 mit einem Rabatt von 20 % und einem weiteren von 10 %. Der erste lässt ihn bei 80; der zweite zieht 10 % von 80 ab, also 8, und der Endpreis beträgt 72. Die Gesamtersparnis ist 28 und der effektive Rabatt 28 %, nicht 30 %.</p>
+<h3>Warum Prozentsätze nicht addiert werden</h3>
+<p>Die Addition von 20 % und 10 % ergäbe 30 % und einen Preis von 70, aber der zweite Rabatt gilt nicht für die ursprünglichen 100, sondern für die verbliebenen 80. Die Abweichung wächst bei hohen Prozentsätzen:</p>
+<table>
+<thead>
+<tr>
+  <th>Rabatte</th>
+  <th>Summe (falsch)</th>
+  <th>Effektiver Rabatt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>10 % und 10 %</td>
+  <td>20 %</td>
+  <td>19 %</td>
+</tr>
+<tr>
+  <td>20 % und 10 %</td>
+  <td>30 %</td>
+  <td>28 %</td>
+</tr>
+<tr>
+  <td>30 % und 20 %</td>
+  <td>50 %</td>
+  <td>44 %</td>
+</tr>
+<tr>
+  <td>50 % und 20 %</td>
+  <td>70 %</td>
+  <td>60 %</td>
+</tr>
+<tr>
+  <td>50 % und 50 %</td>
+  <td>100 %</td>
+  <td>75 %</td>
+</tr>
+</tbody>
+</table>
+<p>Zwei Rabatte von 50 % verschenken das Produkt nicht: Der erste lässt es bei der Hälfte, der zweite zieht die Hälfte dieser Hälfte ab, sodass 25 % des Ausgangspreises bezahlt werden. Addiert man die Prozentsätze, liegt der berechnete Preis unter dem echten, und der Käufer erwartet einen Nachlass, den es nicht gibt.</p>
+<h3>Häufige Fehler bei Rabatten</h3>
+<h4>Die Prozentsätze addieren</h4>
+<p>Das ist der häufigste Fehler. Bei 20 % und 10 % auf 100 ergibt die Addition 70, und der richtige Preis ist 72. Der Rechner zeigt den Preis, den Sie durch Addition erhielten, damit Sie den Unterschied sehen.</p>
+<h4>Den zweiten Rabatt auf den Ausgangspreis anwenden</h4>
+<p>Das ist eine Variante desselben Fehlers: 10 % von 100 (10) statt 10 % von 80 (8) zu berechnen. Der zweite Rabatt wird immer auf den Preis berechnet, den der erste übrig lässt.</p>
+<h4>Glauben, die Reihenfolge spiele eine Rolle</h4>
+<p>Tut sie nicht. Erst 10 % und dann 20 % anzuwenden, ergibt ebenfalls 72. Der bei jedem Schritt abgezogene Betrag ändert sich, das Endergebnis nicht.</p>
+<h4>Denken, dass Erhöhen und Senken um denselben Prozentsatz zum Ausgangspreis zurückführt</h4>
+<p>Steigt ein Preis von 100 um 20 %, wird er 120; sinkt er danach um 20 %, endet er bei 96. Um einen Rabatt von 20 % rückgängig zu machen, müssen Sie den Preis um 25 % erhöhen: 80 × 1,25 = 100.</p>
+<h4>Die Wirkung auf die Marge vergessen</h4>
+<p>Ein Rabatt senkt den Preis, nicht die Kosten. Kostet ein Produkt zu 100 in der Herstellung 60 (eine Marge von 40 %), verkauft es ein Rabatt von 20 % für 80, und die Marge fällt auf 25 %. Prüfen Sie das vor einer Preissenkung mit dem Gewinnmargenrechner.</p>
+<h3>Ein vollständiges Beispiel, Schritt für Schritt</h3>
+<p>Ein Geschäft senkt einen Artikel zu 80 um 15 % und gewährt für ein Wochenende zusätzlich 5 % für Kunden, die mit der Kundenkarte zahlen.</p>
+<ol>
+<li><strong>Erster Rabatt:</strong> 80 × 0,15 = 12, der Preis sinkt auf 68.</li>
+<li><strong>Zweiter Rabatt:</strong> 68 × 0,05 = 3,40, der Preis sinkt auf 64,60.</li>
+<li><strong>Gesamtersparnis:</strong> 80 − 64,60 = 15,40.</li>
+<li><strong>Effektiver Rabatt:</strong> 15,40 ÷ 80 = 19,25 %. Die Addition von 15 % und 5 % hätte 20 % und 64 ergeben.</li>
+</ol>
+<p>Hat der Artikel das Geschäft 50 gekostet, beträgt die Marge auf den Preis von 64,60 genau 22,60 %. Mit dem Aufschlagsrechner sehen Sie, welcher Aufschlag dieser Preis von 64,60 bei Kosten von 50 bedeutet.</p>
+<h3>So lesen Sie das Ergebnis</h3>
+<ul>
+<li><strong>Achten Sie auf den effektiven Rabatt.</strong> Er ist der, den der Kunde tatsächlich zahlt oder spart, und liegt fast immer unter der Summe der Prozentsätze.</li>
+<li><strong>Prüfen Sie den Preis gegen Ihre Kosten.</strong> Ein Rabatt, der den Preis unter die Kosten drückt, bedeutet Verkauf mit Verlust.</li>
+<li><strong>Kommunizieren Sie den echten Rabatt.</strong> Wer „bis zu 70 %“ bewirbt, indem er 50 % und 20 % addiert, bietet tatsächlich 60 % effektiven Rabatt.</li>
+<li><strong>Entscheiden Sie, ob der Preis Steuer enthält.</strong> Der Prozentsatz ist mit und ohne Steuer gleich, der gesparte Betrag aber nicht.</li>
+</ul>

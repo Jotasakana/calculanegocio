@@ -1,0 +1,83 @@
+<p>Esta calculadora te da el precio final después de aplicar uno o dos descuentos sucesivos. Introduce el precio inicial y los porcentajes, y obtendrás el precio final, el ahorro total y el descuento efectivo, que es el porcentaje real que has rebajado en conjunto. Los descuentos se calculan multiplicando, no sumando, que es donde más personas se equivocan.</p>
+<h3>Cómo usar la calculadora</h3>
+<p>Escribe tres datos:</p>
+<ul>
+<li><strong>Precio inicial.</strong> El precio antes de cualquier rebaja.</li>
+<li><strong>Descuento.</strong> El primer porcentaje de rebaja, de 0 a 100 %.</li>
+<li><strong>Segundo descuento (opcional).</strong> Un segundo porcentaje que se aplica sobre el precio ya rebajado. Si lo dejas vacío o escribes 0, solo se aplica el primero.</li>
+</ul>
+<p>El descuento se aplica sobre la cifra que escribas, con o sin IVA. Los resultados se redondean a dos decimales al mostrarlos, pero los cálculos internos no se redondean.</p>
+<h3>Cómo se aplican los descuentos sucesivos</h3>
+<p>Cada descuento actúa sobre el precio que dejó el anterior. Eso significa que los porcentajes se multiplican y que el segundo descuento rebaja menos euros que el primero, porque parte de un precio más bajo.</p>
+<p><strong>Precio final = Precio inicial × (1 − descuento 1) × (1 − descuento 2)</strong></p>
+<p>El ahorro total es la diferencia entre el precio inicial y el final:</p>
+<p><strong>Ahorro = Precio inicial − Precio final</strong></p>
+<p>Y el descuento efectivo, que depende solo de los porcentajes, es:</p>
+<p><strong>Descuento efectivo (%) = 100 − (100 − descuento 1) × (100 − descuento 2) ÷ 100</strong></p>
+<p>Ejemplo de control: un artículo de 100 € con un descuento del 20 % y otro del 10 %. El primero lo deja en 80 €; el segundo rebaja el 10 % de 80 €, es decir, 8 €, y el precio final es 72 €. El ahorro total es 28 € y el descuento efectivo es del 28 %, no del 30 %.</p>
+<h3>Por qué no se suman los porcentajes</h3>
+<p>Sumar 20 % y 10 % daría un 30 % y un precio de 70 €, pero el segundo descuento no se aplica sobre los 100 € iniciales sino sobre los 80 € que ya quedaban. La diferencia crece con porcentajes altos:</p>
+<table>
+<thead>
+<tr>
+  <th>Descuentos</th>
+  <th>Suma (incorrecta)</th>
+  <th>Descuento efectivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>10 % y 10 %</td>
+  <td>20 %</td>
+  <td>19 %</td>
+</tr>
+<tr>
+  <td>20 % y 10 %</td>
+  <td>30 %</td>
+  <td>28 %</td>
+</tr>
+<tr>
+  <td>30 % y 20 %</td>
+  <td>50 %</td>
+  <td>44 %</td>
+</tr>
+<tr>
+  <td>50 % y 20 %</td>
+  <td>70 %</td>
+  <td>60 %</td>
+</tr>
+<tr>
+  <td>50 % y 50 %</td>
+  <td>100 %</td>
+  <td>75 %</td>
+</tr>
+</tbody>
+</table>
+<p>Dos descuentos del 50 % no regalan el producto: el primero lo deja a la mitad y el segundo rebaja la mitad de esa mitad, con lo que se paga el 25 % del precio inicial. Cuando se suman los porcentajes, el precio que se calcula queda por debajo del real y el comprador espera una rebaja que no existe.</p>
+<h3>Errores frecuentes con los descuentos</h3>
+<h4>Sumar los porcentajes</h4>
+<p>Es el error más habitual. Con 20 % y 10 % sobre 100 €, sumar da 70 € y el precio correcto es 72 €. La calculadora muestra el precio que saldría sumando para que veas la diferencia.</p>
+<h4>Aplicar el segundo descuento sobre el precio inicial</h4>
+<p>Es una variante del mismo error: calcular el 10 % de 100 € (10 €) en lugar del 10 % de 80 € (8 €). El segundo descuento siempre se calcula sobre el precio que dejó el primero.</p>
+<h4>Creer que importa el orden</h4>
+<p>No importa. Aplicar primero el 10 % y después el 20 % deja también 72 €. Cambia cuántos euros se rebajan en cada paso, pero no el resultado final.</p>
+<h4>Pensar que subir y bajar el mismo porcentaje vuelve al precio inicial</h4>
+<p>Si un precio de 100 € sube un 20 %, pasa a 120 €; si después baja un 20 %, queda en 96 €. Para deshacer una rebaja del 20 % hay que subir un 25 %: 80 × 1,25 = 100.</p>
+<h4>Olvidar el efecto sobre el margen</h4>
+<p>Un descuento reduce el precio, pero no el coste. Si un producto de 100 € tiene un coste de 60 € (margen del 40 %), con un descuento del 20 % se vende a 80 € y el margen baja al 25 %. Antes de rebajar, conviene comprobarlo con la calculadora de margen comercial.</p>
+<h3>Un ejemplo completo, paso a paso</h3>
+<p>Un comercio rebaja un artículo de 80 € un 15 % y, durante un fin de semana, aplica además un 5 % a quienes pagan con tarjeta de fidelización.</p>
+<ol>
+<li><strong>Primer descuento:</strong> 80 × 0,15 = 12 €, que deja el precio en 68 €.</li>
+<li><strong>Segundo descuento:</strong> 68 × 0,05 = 3,40 €, que deja el precio en 64,60 €.</li>
+<li><strong>Ahorro total:</strong> 80 − 64,60 = 15,40 €.</li>
+<li><strong>Descuento efectivo:</strong> 15,40 ÷ 80 = 19,25 %. Sumar 15 % y 5 % habría dado un 20 % y 64 €.</li>
+</ol>
+<p>Si el artículo costaba 50 € al comercio, el margen sobre el precio de 64,60 € es del 22,60 %. Con la calculadora de recargo sobre coste puedes ver qué recargo representa ese precio de 64,60 € sobre un coste de 50 €.</p>
+<h3>Cómo interpretar el resultado</h3>
+<ul>
+<li><strong>Fíjate en el descuento efectivo.</strong> Es el que de verdad paga o ahorra el cliente, y casi siempre es menor que la suma de los porcentajes.</li>
+<li><strong>Comprueba el precio con tu coste.</strong> Un descuento que deja el precio por debajo del coste supone vender con pérdida.</li>
+<li><strong>Comunica el descuento real.</strong> Si anuncias «hasta un 70 %» sumando un 50 % y un 20 %, el descuento efectivo es en realidad del 60 %.</li>
+<li><strong>Decide si el precio lleva IVA.</strong> El porcentaje es el mismo con o sin IVA, pero el importe del ahorro cambia.</li>
+</ul>

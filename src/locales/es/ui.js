@@ -6,7 +6,7 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Calculadoras para autónomos y pequeños negocios',
-    devLabel: 'DEMO PRIVADA · v0.9',
+    devLabel: 'DEMO PRIVADA · v0.10',
   },
   a11y: {
     skip: 'Saltar al contenido',
@@ -61,7 +61,7 @@ export const ui = {
   },
   home: {
     metaTitle: 'CalculaNegocio · Calculadoras para autónomos y pequeños negocios',
-    metaDescription: 'Calculadoras gratuitas de márgenes, precios, rentabilidad e IVA para autónomos y pequeños negocios, con fórmulas explicadas y ejemplos resueltos.',
+    metaDescription: 'Calculadoras gratuitas de márgenes, precios, descuentos, punto de equilibrio, ROI e IVA para autónomos y pequeños negocios, con fórmulas y ejemplos.',
     eyebrow: 'CALCULADORAS PARA AUTÓNOMOS Y PEQUEÑOS NEGOCIOS',
     titleA: 'Pon precio a tu trabajo',
     titleB: 'con las cuentas claras.',
@@ -126,7 +126,7 @@ export const ui = {
     faqKicker: 'PREGUNTAS FRECUENTES',
     faqTitle: 'Lo que más se pregunta',
     faq: [
-      ['¿Los cálculos incluyen IVA?', 'Depende de la herramienta. Margen y rentabilidad trabajan con importes sin IVA. La de precio de venta añade el IVA al final y muestra el precio con y sin IVA. La de base imponible sirve para añadir o quitar IVA.'],
+      ['¿Los cálculos incluyen IVA?', 'Depende de la herramienta. Margen y rentabilidad trabajan con importes sin IVA. La de precio de venta añade el IVA al final y muestra el precio con y sin IVA. La de base imponible sirve para añadir o quitar IVA. Recargo, descuentos, punto de equilibrio y ROI trabajan con la cifra que escribas, sin añadir impuestos.'],
       ['¿Se guardan mis datos?', 'No. El cálculo se hace en tu navegador y las cifras que escribes no se envían a ningún servidor.'],
       ['¿Puedo usarlas fuera de España?', 'Las calculadoras de márgenes y rentabilidad usan fórmulas matemáticas y permiten elegir la moneda. Las de precio con IVA y base imponible siguen la práctica española; en los otros idiomas se ofrecen como versión genérica, que aplica el porcentaje que tú escribes sin asumir las normas de ningún país.'],
       ['¿Sustituyen a un asesor?', 'No. Son herramientas de cálculo y orientación. Para obligaciones fiscales o legales, contrasta con fuentes oficiales o consulta a un profesional.'],
@@ -137,10 +137,10 @@ export const ui = {
   },
   toolsHub: {
     metaTitle: 'Calculadoras gratuitas para autónomos | CalculaNegocio',
-    metaDescription: 'Catálogo de calculadoras de CalculaNegocio: las disponibles (margen comercial, precio de venta, margen bruto y neto, base imponible e IVA) y las que están en desarrollo.',
+    metaDescription: 'Catálogo de calculadoras de CalculaNegocio: las disponibles (margen, recargo, descuentos, precio de venta, rentabilidad, punto de equilibrio, ROI y base imponible) y las que están en desarrollo.',
     kicker: 'CATÁLOGO DE CALCULADORAS',
     title: 'Calculadoras para autónomos y pequeños negocios',
-    lead: 'Herramientas para calcular márgenes, precios, rentabilidad y el IVA de tus facturas. Cada una explica su fórmula e incluye ejemplos resueltos.',
+    lead: 'Herramientas para calcular márgenes, precios, descuentos, punto de equilibrio, ROI y el IVA de tus facturas. Cada una explica su fórmula e incluye ejemplos resueltos.',
     searchLabel: 'Buscar entre las calculadoras',
     searchPlaceholder: 'Buscar calculadora…',
     noResults: 'Ninguna calculadora coincide con tu búsqueda.',
@@ -150,10 +150,12 @@ export const ui = {
     metaTitles: {
       'margenes-y-precios': 'Márgenes y precios: calculadoras para autónomos | CalculaNegocio',
       facturacion: 'Facturación: base imponible e IVA | CalculaNegocio',
+      crecimiento: 'Rentabilidad y crecimiento: equilibrio y ROI | CalculaNegocio',
     },
     metaDescriptions: {
-      'margenes-y-precios': 'Calculadoras de margen comercial, precio de venta y margen bruto y neto para entender cuánto ganas y a qué precio vender.',
+      'margenes-y-precios': 'Calculadoras de margen, recargo, descuentos, precio de venta y margen bruto y neto para entender cuánto ganas y a qué precio vender.',
       facturacion: 'Herramientas de facturación: calcula la base imponible, añade o quita IVA y desglosa una factura con varias líneas.',
+      crecimiento: 'Calcula el punto de equilibrio de tu negocio y el ROI de una inversión, con fórmulas explicadas y ejemplos resueltos.',
     },
   },
   methodology: {
