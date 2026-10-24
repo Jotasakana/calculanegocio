@@ -15,9 +15,9 @@ export const LEGAL = {
   hosting: 'Cloudflare Pages',
   email: {
     address: 'admin@calculanegocio.com',
-    // false = propuesta: todavía no se ha comprobado que reciba y responda correo.
-    // Mientras sea false NO se muestra como enlace ni como canal de contacto disponible.
-    verified: false,
+    // Correo confirmado operativo por la persona responsable (24-10-2026).
+    // Se presenta como medio de contacto y enlace de correo.
+    verified: true,
   },
   // Fecha del borrador de los textos (AAAA-MM-DD).
   updated: '2026-10-24',
