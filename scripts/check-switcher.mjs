@@ -107,13 +107,14 @@ try {
   // 4. El idioma se mantiene al navegar por la web (menú, catálogo, tarjetas, migas, logotipo)
   for (const locale of locales) {
     const ctx = buildContext(locale);
-    const page = await browser.newPage({ viewport: { width: 1440, height: 900 } }); // el menú horizontal solo se ve por encima de 1400 px
+    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } }); // comprobar también la navegación con el menú compacto
     await page.goto(base + pathFor(locale, 'home'), { waitUntil: 'networkidle' });
     const hrefs = await page.$$eval('header a[href], main a[href], footer a[href]', (as) => as.filter((a) => !a.closest('[data-langswitch]')).map((a) => a.getAttribute('href')).filter((h) => h.startsWith('/')));
     const prefix = '/' + ctx.loc.prefix + '/';
     ok(hrefs.every((h) => h === '/favicon.svg' || h.startsWith(prefix) || h.startsWith('/_astro/') || h.startsWith('/src/')), `${locale}: la portada enlaza fuera de su idioma: ${hrefs.filter((h) => !h.startsWith(prefix)).join(' ')}`);
     // Recorrido: portada → calculadora (menú) → categoría (migas) → inicio (logotipo)
-    await page.click(`header nav a[href="${ctx.toolById.margen.path}"], header nav a[href="${ctx.path('tools')}"]`);
+    await page.locator('#mobileToggle').click();
+    await page.locator(`header nav a[href="${ctx.toolById.margen.path}"], header nav a[href="${ctx.path('tools')}"]`).click();
     ok(new URL(page.url()).pathname.startsWith(prefix), `${locale}: el menú cambió de idioma`);
     await page.goto(base + ctx.toolById.precio.path, { waitUntil: 'load' });
     await page.click('.logo');
