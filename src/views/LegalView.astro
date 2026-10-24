@@ -19,7 +19,6 @@ const crumbs = [
   { label: p.title, path: ctx.path('page:' + pageId) },
 ];
 const body = renderFragment(fragment(ctx.locale, 'pages', 'legal-' + pageId), ctx.fragmentCtx);
-const isDraft = LEGAL.status !== 'final';
 const updated = legalField('updated', { ui, intl: ctx.loc.intl });
 const others = PAGE_IDS.filter((id) => id !== pageId);
 ---
@@ -32,7 +31,6 @@ const others = PAGE_IDS.filter((id) => id !== pageId);
       <p>{p.lead}</p>
     </div>
     <article class="content">
-      {isDraft && <div class="devnote legal-draft" role="note"><strong>{ui.legal.draftTitle}</strong> {ui.legal.draftNotice}</div>}
       {!SITE.indexable && <div class="devnote">{ui.legal.devNote}</div>}
       <div class="prose" set:html={body} />
       <p class="legal-updated">{ui.legal.updatedLabel}: <span set:html={updated} /></p>
