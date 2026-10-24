@@ -28,8 +28,8 @@ for (const r of routes) {
   if (!new RegExp(`<html\\b[^>]*lang=["']${r.locale}["']`, 'i').test(html)) fail(`${r.path}: lang incorrecto`);
   const robots = html.match(/<meta\b[^>]*name=["']robots["'][^>]*>/i)?.[0] || '';
   if (!indexed && !/noindex/i.test(robots)) fail(`${r.path}: falta noindex en desarrollo`);
-  if (indexed && r.locale === 'es' && /noindex/i.test(robots)) fail(`${r.path}: español noindex al lanzar`);
-  if (indexed && r.locale !== 'es' && !/noindex/i.test(robots)) fail(`${r.path}: idioma no revisado indexable`);
+  if (indexed && r.key.startsWith('page:') && !/noindex/i.test(robots)) fail(`${r.path}: página legal debe llevar noindex`);
+  if (indexed && !r.key.startsWith('page:') && /noindex/i.test(robots)) fail(`${r.path}: contenido debe ser indexable`);
   if ((html.match(/<h1\b/gi) || []).length !== 1) fail(`${r.path}: debe tener un solo h1`);
 }
 for (const [p, html] of pages) {
