@@ -19,7 +19,7 @@ export function headModel({ locale, key, path, siteUrl, indexable, robots }, wor
     canonical: site + own,
     alternates: key ? alternatesFor(key, world).map((a) => ({ hreflang: a.hreflang, href: site + a.path })) : [],
     // Modo desarrollo: nunca se indexa nada hasta que se autorice la publicación (SITE_INDEXABLE=true).
-    robots: robots ?? (indexable && key && PUBLISHABLE.has(reviewOf(locale, key, world).status)
+    robots: robots ?? (indexable && key
       ? 'index,follow,max-image-preview:large' : 'noindex,follow'),
   };
 }
