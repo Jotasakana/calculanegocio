@@ -363,7 +363,7 @@ a.card:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var
 [dir=rtl] .field input{direction:ltr;text-align:right}
 
 /* ---------- Adaptación a pantallas ---------- */
-@media(min-width:1601px){
+@media(min-width:2001px){
   /* Con tres categorías, la barra horizontal cabe también con textos un 45 % más largos (alemán, fr, hi). */
   .nav{gap:14px}
   .links{gap:2px}
@@ -375,7 +375,7 @@ a.card:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var
   .iconbtn.search-link span{display:none}
   .iconbtn.search-link{padding-inline:11px}
 }
-@media(max-width:1600px){
+@media(max-width:2000px){
   .mobile-toggle{display:inline-flex}
   .links{display:none;position:absolute;inset-inline:0;inset-block-start:100%;background:#fff;flex-direction:column;padding:10px 16px 16px;border-block-end:1px solid var(--line);box-shadow:0 18px 30px rgba(12,27,46,.14);gap:2px}
   .links.open{display:flex}
