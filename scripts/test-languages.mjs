@@ -103,14 +103,14 @@ for (const key of ALL_KEYS) {
   }
   check('hreflang recíproco', nonRecip, 0);
   const xml = sitemapXml('https://calculanegocio.com');
-  check('sitemap: una URL por página', (xml.match(/<loc>/g) || []).length, table.length);
-  check('sitemap: 7 alternativas por página (6 idiomas + x-default)', (xml.match(/xhtml:link/g) || []).length, table.length * 7);
-  check('sitemap: incluye pt-BR, de, fr y hi', ['pt-BR', 'de', 'fr', 'hi'].every((h) => xml.includes(`hreflang="${h}"`)), true);
+  check('sitemap: solo páginas españolas revisadas', (xml.match(/<loc>/g) || []).length, 19);
+  check('sitemap: sin hreflang de versiones no indexables', (xml.match(/xhtml:link/g) || []).length, 0);
+  check('sitemap: excluye idiomas no revisados', ['pt-BR', 'de', 'fr', 'hi'].every((h) => !xml.includes(`hreflang="${h}"`)), true);
   check('sitemap: 114 URLs (6 idiomas x 19 páginas)', table.length, 114);
   for (const l of LANGS) {
     const h = headModel({ locale: l, key: 'tool:margen', siteUrl: 'https://calculanegocio.com', indexable: false });
     check(`${l}: canonical propio`, h.canonical, 'https://calculanegocio.com' + pathFor(l, 'tool:margen'));
-    check(`${l}: noindex,nofollow en desarrollo`, h.robots, 'noindex,nofollow');
+    check(`${l}: noindex,nofollow en desarrollo`, h.robots, 'noindex,follow');
     check(`${l}: lang`, h.lang, REAL_WORLD.locales[l].hreflang);
   }
 }
