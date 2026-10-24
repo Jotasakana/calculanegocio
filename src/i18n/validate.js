@@ -75,11 +75,28 @@ export function validateLocale(code, world, io) {
       const got = Object.keys(t.fields?.[i] ?? {}).sort().join();
       if (want !== got) P(`tools.${id}.fields[${i}]: campos "${got}", se esperaban "${want}"`);
     });
+    if (!Array.isArray(t.formulas) || !t.formulas.length || t.formulas.some((x) => !Array.isArray(x) || x.length !== 2 || !x[0] || !x[1])) P(`tools.${id}.formulas: se esperaba una lista [nombre, expresión] no vacía`);
+    if (!Array.isArray(t.faq) || t.faq.length < 2 || t.faq.some((x) => !Array.isArray(x) || x.length !== 2 || !x[0] || !x[1])) P(`tools.${id}.faq: se esperaban al menos 2 pares [pregunta, respuesta]`);
     for (const f of tool.modes.flat()) if (f.kind === 'select' && f.options.some((o) => !c.selectOptions?.[f.key]?.[o])) P(`falta la etiqueta de las opciones de "${f.key}"`);
     if (t.metaTitle && t.metaTitle.length > 60) P(`tools.${id}.metaTitle largo (${t.metaTitle.length})`);
     if (t.metaDescription && t.metaDescription.length > 165) P(`tools.${id}.metaDescription larga (${t.metaDescription.length})`);
   }
   for (const id of Object.keys(world.categories)) if (!c.categories?.[id]?.title) P(`falta la categoría "${id}"`);
+
+  // Catálogo: texto de las calculadoras en desarrollo y de las categorías que aún no tienen página
+  for (const e of world.catalog ?? []) {
+    if (world.tools[e.id]) continue;
+    if (e.scope === 'fiscal' && !world.markets[e.market]?.locales.includes(code)) continue; // no se ofrece en este idioma
+    const p = c.catalog?.planned?.[e.id];
+    if (!p) { P(`catalog.planned.${e.id}: falta el texto de la calculadora en desarrollo`); continue; }
+    for (const k of ['title', 'desc', 'search']) if (!p[k]) P(`catalog.planned.${e.id}.${k} vacío`);
+  }
+  for (const id of world.catalogCategories ?? []) {
+    if (world.categories[id]) continue;
+    const cat = c.catalog?.categories?.[id];
+    if (!cat?.title || !cat?.short) P(`catalog.categories.${id}: faltan título o descripción`);
+  }
+  for (const id of Object.keys(c.catalog?.planned ?? {})) if (!(world.catalog ?? []).some((e) => e.id === id) || world.tools[id]) P(`catalog.planned.${id}: sobrante (no está en desarrollo)`);
 
   // Slugs: ASCII, únicos y completos (las URLs de otros alfabetos se transliteran)
   const s = c.slugs ?? {};
@@ -131,6 +148,18 @@ export function validateWorld(world) {
   for (const m of Object.values(world.markets)) {
     if (m.verified && (!m.sources?.length || !m.verifiedAt)) problems.push(`[mercado ${m.id}] marcado como verificado sin fuentes ni fecha`);
     for (const l of m.locales) if (!world.locales[l]) problems.push(`[mercado ${m.id}] idioma desconocido ${l}`);
+  }
+  if (world.catalog) {
+    const ids = world.catalog.map((e) => e.id);
+    if (new Set(ids).size !== ids.length) problems.push('catálogo: ids repetidos');
+    for (const e of world.catalog) {
+      if (!world.catalogCategories?.includes(e.category)) problems.push(`catálogo: ${e.id} tiene una categoría desconocida (${e.category})`);
+      if (!world.tools[e.id] && !['universal', 'fiscal'].includes(e.scope)) problems.push(`catálogo: ${e.id} en desarrollo sin "scope"`);
+      if (!world.tools[e.id] && e.scope === 'fiscal' && !world.markets[e.market]) problems.push(`catálogo: ${e.id} fiscal sin mercado`);
+      if (world.tools[e.id] && world.tools[e.id].category !== e.category) problems.push(`catálogo: ${e.id} no coincide con la categoría del registro`);
+    }
+    for (const id of Object.keys(world.tools)) if (!ids.includes(id)) problems.push(`catálogo: la calculadora ${id} del registro no está en el catálogo`);
+    for (const id of Object.keys(world.categories)) if (!world.catalogCategories?.includes(id)) problems.push(`catálogo: la categoría ${id} del registro no está en el catálogo`);
   }
   for (const t of Object.values(world.tools)) if (t.scope === 'fiscal' && !world.markets[t.market]) problems.push(`[${t.id}] calculadora fiscal sin mercado`);
   return problems;

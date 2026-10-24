@@ -53,6 +53,27 @@ jobs:
       - name: Comprobar dist/
         run: npm run test:dist
 
+      - name: Instalar navegador para las pruebas visuales
+        run: |
+          npm install --no-save --no-audit --no-fund playwright-core
+          npx playwright-core install --with-deps chromium
+
+      - name: Maquetación (sin desplazamiento horizontal), accesibilidad y comportamiento
+        run: |
+          npm run test:layout
+          npm run test:a11y
+          npm run test:behavior
+
+      - name: Capturas de pantalla (320 a 1440 px)
+        run: node scripts/screenshots.mjs dist screenshots
+
+      - name: Guardar capturas
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: screenshots
+          retention-days: 7
+
       - name: Guardar dist/ para revisión
         uses: actions/upload-artifact@v4
         with:

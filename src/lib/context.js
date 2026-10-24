@@ -6,6 +6,10 @@ import { REAL_WORLD, isPublished, publishedLocales } from '../i18n/publish.js';
 import { pathFor } from '../i18n/routes.js';
 import { createCalculator } from './present.js';
 import { currencyOptions } from '../i18n/currencies.js';
+import { buildCatalog } from './catalog.js';
+import { FEATURED_TOOLS } from '../domain/catalog.js';
+import { fill } from './fill.js';
+import { withToc } from './toc.js';
 
 export function buildContext(localeCode, world = REAL_WORLD) {
   const loc = world.locales[localeCode];
@@ -29,6 +33,8 @@ export function buildContext(localeCode, world = REAL_WORLD) {
       // Las calculadoras fiscales tienen moneda fija (la de su mercado); las universales permiten elegirla.
       currency: reg.scope === 'fiscal' ? world.markets[reg.market].currency : null,
       currencyFixed: reg.scope === 'fiscal',
+      // Calculadora fiscal de un mercado que aún no está verificado con fuentes oficiales: se avisa en la ficha.
+      fiscalPending: reg.scope === 'fiscal' && !world.markets[reg.market]?.verified,
     };
   };
   const tools = Object.keys(world.tools).filter((id) => published('tool:' + id)).map(toolView);
@@ -40,6 +46,8 @@ export function buildContext(localeCode, world = REAL_WORLD) {
   const categoryById = Object.fromEntries(categories.map((c) => [c.id, c]));
 
   const defaultCurrency = loc.defaultCurrency;
+  const catalog = buildCatalog(world, localeCode, published, path);
+  const featuredTools = FEATURED_TOOLS.filter((id) => toolById[id]).map((id) => toolById[id]);
 
   /** Versiones publicadas de una página en todos los idiomas (para el selector de idioma). */
   const versions = (pageKey) =>
@@ -56,6 +64,11 @@ export function buildContext(localeCode, world = REAL_WORLD) {
     path,
     versions,
     tools, toolById, categories, categoryById,
+    catalog, featuredTools,
+    /** Rellena los marcadores {x} de un texto de interfaz. */
+    fill,
+    /** Añade ids a los apartados de un fragmento y devuelve el índice: { html, toc:[{id,title}] }. */
+    withToc,
     defaultCurrency,
     currencies: currencyOptions(loc.intl),
     /** Calculador del idioma con la moneda dada (por defecto, la del idioma; null = sin símbolo). */
@@ -66,7 +79,10 @@ export function buildContext(localeCode, world = REAL_WORLD) {
       title: (kind, id) => (kind === 'tool' ? toolById[id] : categoryById[id]).title,
     },
     /** Solo lo que necesita el navegador para calcular: nada de textos de página. */
-    clientI18n: { code: localeCode, errors: content.errors, messages: content.messages, selectOptions: content.selectOptions ?? {} },
+    clientI18n: {
+      code: localeCode, errors: content.errors, messages: content.messages, selectOptions: content.selectOptions ?? {},
+      ui: { copy: content.ui.tool.copy, copied: content.ui.tool.copied, copyFailed: content.ui.tool.copyFailed },
+    },
     nav: [
       { key: 'home', label: content.ui.nav.home },
       { key: 'tools', label: content.ui.nav.tools },

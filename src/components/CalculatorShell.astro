@@ -2,8 +2,9 @@
 // Calculadora interactiva (HTML estático con el resultado inicial ya calculado; el JS solo mejora).
 // Sirve a todos los idiomas: los textos vienen del contexto, las fórmulas de src/domain.
 import { unitSuffix } from '../lib/present.js';
+import Icon from './Icon.astro';
 
-const { ctx, tool } = Astro.props;
+const { ctx, tool, formulaLink = false } = Astro.props;
 const { ui, content } = ctx;
 // Fiscales: moneda fija del mercado. Universales: la del idioma, o ninguna, y la persona puede elegirla.
 const currency = tool.currencyFixed ? tool.currency : ctx.defaultCurrency;
@@ -49,20 +50,24 @@ const selectLabels = content.selectOptions ?? {};
       </div>
     ))}
     <div class="error" data-err role="alert" hidden></div>
-    <div style="margin-top:17px"><button class="outline" type="button" data-reset>{ui.tool.reset}</button></div>
+    <div class="panel-actions"><button class="btn btn-line" type="button" data-reset>{ui.tool.reset}</button></div>
     <noscript><p class="noscript-note">{ui.tool.noscript}</p></noscript>
   </div>
 
-  <div aria-live="polite" class="panel results">
+  <div aria-live="polite" class="results">
     <div class="resultlabel" data-label>{initial.label}</div>
     <div class="mainnumber" data-main dir="auto">{initial.main}</div>
     <div class="subtle" data-note>{initial.note}</div>
     <div class="stackbar" data-bar aria-hidden="true">{initial.bar.map((b) => <i class={`s${b.slot}`} style={`width:${b.share}%`}></i>)}</div>
     <ul class="stacklegend" data-legend>{initial.bar.map((b) => <li class={`s${b.slot}`}>{b.label} · <span dir="auto">{b.text}</span></li>)}</ul>
-    <div data-lines style="margin-top:22px">
+    <div class="lines" data-lines>
       {initial.lines.map(([k, v]) => <div class="resultline"><span>{k}</span><strong dir="auto">{v}</strong></div>)}
     </div>
     <div class="note" data-assumption>{initial.assumption}</div>
+    <div class="result-actions">
+      <button class="btn btn-lime copy-btn" type="button" data-copy hidden><Icon name="copy" /><span data-copy-label>{ui.tool.copy}</span></button>
+      {formulaLink && <a class="btn btn-ghost arrow-next" href={tool.path}>{ui.home.calcFormula}</a>}
+    </div>
   </div>
   <script is:inline type="application/json" data-calc-i18n set:html={JSON.stringify(ctx.clientI18n)}></script>
 </div>

@@ -13,7 +13,6 @@ if (toggle && nav) {
     nav.classList.toggle('open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? t.close : t.open);
-    toggle.textContent = open ? '✕' : '☰';
   };
   toggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
   nav.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
@@ -56,36 +55,69 @@ if (input && out && indexEl) {
     if (e.key === 'Escape') { out.hidden = true; input.blur(); }
     if (e.key === 'Enter') { const a = out.querySelector('a'); if (a) location.href = a.getAttribute('href'); }
   });
-  document.addEventListener('click', (e) => { if (!e.target.closest('.hero-search')) out.hidden = true; });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.herosearch')) out.hidden = true; });
 }
 
-// Catálogo de calculadoras: filtro por categoría + búsqueda en la propia página
-const catalog = document.querySelector('[data-catalog]');
-if (catalog) {
-  const chips = [...catalog.querySelectorAll('[data-filter]')];
+// Calculadoras de la portada: pestañas entre las herramientas destacadas
+for (const bench of document.querySelectorAll('[data-bench]')) {
+  const tabs = [...bench.querySelectorAll('[data-bench-tab]')];
+  const panels = [...bench.querySelectorAll('[data-bench-panel]')];
+  const select = (i, focus) => {
+    tabs.forEach((tab, j) => { tab.setAttribute('aria-selected', String(j === i)); tab.tabIndex = j === i ? 0 : -1; });
+    panels.forEach((p, j) => { p.hidden = j !== i; });
+    if (focus) tabs[i].focus();
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(i, false));
+    tab.addEventListener('keydown', (e) => {
+      const rtl = getComputedStyle(bench).direction === 'rtl';
+      const next = rtl ? 'ArrowLeft' : 'ArrowRight';
+      const prev = rtl ? 'ArrowRight' : 'ArrowLeft';
+      const last = tabs.length - 1;
+      let to = null;
+      if (e.key === next) to = i === last ? 0 : i + 1;
+      if (e.key === prev) to = i === 0 ? last : i - 1;
+      if (e.key === 'Home') to = 0;
+      if (e.key === 'End') to = last;
+      if (to !== null) { e.preventDefault(); select(to, true); }
+    });
+  });
+  bench.classList.add('is-ready');
+  if (tabs.length) select(0, false);
+}
+
+// Catálogo de calculadoras: filtros por tema y por estado + búsqueda en la propia página
+for (const catalog of document.querySelectorAll('[data-catalog]')) {
+  const topicChips = [...catalog.querySelectorAll('[data-filter-category]')];
+  const statusChips = [...catalog.querySelectorAll('[data-filter-status]')];
   const cards = [...catalog.querySelectorAll('[data-filter-item]')];
   const groups = [...catalog.querySelectorAll('[data-filter-group]')];
   const search = catalog.querySelector('[data-catalog-search]');
   const empty = catalog.querySelector('[data-catalog-empty]');
   let category = '';
+  let status = '';
   const apply = () => {
     const q = norm((search?.value || '').trim());
     let visible = 0;
     for (const c of cards) {
-      const show = (!category || c.dataset.category === category) && (!q || norm(c.dataset.terms || '').includes(q));
+      const show = (!category || c.dataset.category === category) && (!status || c.dataset.status === status) && (!q || norm(c.dataset.terms || '').includes(q));
       c.classList.toggle('is-filtered-out', !show);
       if (show) visible++;
     }
     for (const g of groups) g.classList.toggle('is-filtered-out', !g.querySelector('[data-filter-item]:not(.is-filtered-out)'));
     if (empty) empty.hidden = visible > 0;
   };
-  for (const chip of chips) {
-    chip.addEventListener('click', () => {
-      category = chip.dataset.filter;
-      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
-      apply();
-    });
-  }
+  const wire = (chips, set) => {
+    for (const chip of chips) {
+      chip.addEventListener('click', () => {
+        set(chip);
+        chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        apply();
+      });
+    }
+  };
+  wire(topicChips, (chip) => { category = chip.dataset.filterCategory; });
+  wire(statusChips, (chip) => { status = chip.dataset.filterStatus; });
   search?.addEventListener('input', apply);
   catalog.classList.add('is-ready');
 }

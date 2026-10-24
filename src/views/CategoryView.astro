@@ -13,6 +13,7 @@ const crumbs = [
   { label: ui.nav.home, href: ctx.path('home'), path: ctx.path('home') },
   { label: cat.title, path: cat.path },
 ];
+const items = ctx.catalog.items.filter((i) => i.category === cat.id);
 const body = renderFragment(fragment(ctx.locale, 'pages', `category-${cat.id}`), ctx.fragmentCtx);
 ---
 <BaseLayout
@@ -29,8 +30,8 @@ const body = renderFragment(fragment(ctx.locale, 'pages', `category-${cat.id}`),
       <h1>{cat.title}</h1>
       <p>{cat.description}</p>
     </div>
-    <div class={`grid tools-v3 tools-${cat.tools.length === 1 ? '1' : '3'}`}>
-      {cat.tools.map((t) => <ToolCard tool={t} category={cat.id} />)}
+    <div class="cards">
+      {items.map((item) => <ToolCard item={item} ui={ui} />)}
     </div>
     <article class="content">
       <div class="prose" set:html={body} />

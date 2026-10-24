@@ -118,6 +118,27 @@ for (const root of document.querySelectorAll('[data-calculator]')) {
     });
   }
 
+  // Copiar el resultado (texto plano: etiqueta, cifra principal y desglose). Los textos del botón vienen del idioma.
+  const copyBtn = $('[data-copy]');
+  if (copyBtn) {
+    const labelEl = copyBtn.querySelector('[data-copy-label]');
+    const ui = content.ui ?? {};
+    const lastText = () => {
+      const lines = [...root.querySelectorAll('[data-lines] .resultline')].map((row) => row.children[0].textContent + ': ' + row.children[1].textContent);
+      return [$('[data-label]').textContent + ': ' + $('[data-main]').textContent, ...lines].join('\n');
+    };
+    let timer;
+    const flash = (msg) => {
+      labelEl.textContent = msg;
+      clearTimeout(timer);
+      timer = setTimeout(() => { labelEl.textContent = ui.copy; }, 1800);
+    };
+    copyBtn.hidden = !navigator.clipboard;
+    copyBtn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(lastText()); flash(ui.copied); } catch { flash(ui.copyFailed); }
+    });
+  }
+
   const reset = $('[data-reset]');
   if (reset) {
     reset.addEventListener('click', () => {

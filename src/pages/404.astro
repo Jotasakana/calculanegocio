@@ -12,9 +12,9 @@ const n = ctx.ui.notFound;
     <span class="kicker">{n.kicker}</span>
     <h1>{n.title}</h1>
     <p>{n.text}</p>
-    <div class="actions" style="justify-content:center">
-      <a class="cta" href={ctx.path('tools')}>{n.cta}</a>
-      <a class="outline" href={ctx.path('home')} style="text-decoration:none">{n.home}</a>
+    <div class="actions">
+      <a class="btn btn-dark" href={ctx.path('tools')}>{n.cta}</a>
+      <a class="btn btn-line" href={ctx.path('home')}>{n.home}</a>
     </div>
   </div>
 </BaseLayout>

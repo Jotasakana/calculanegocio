@@ -1,0 +1,49 @@
+---
+// Catálogo completo (portada y página de calculadoras). Mismo componente para todos los idiomas.
+// Sin JavaScript se ven todas las tarjetas; con JavaScript se activan el buscador y los filtros (src/scripts/site.js).
+import ToolCard from './ToolCard.astro';
+import Icon from './Icon.astro';
+
+const { ctx, level = 2 } = Astro.props;
+const { ui } = ctx;
+const { items, categories, counts } = ctx.catalog;
+const H = level === 2 ? 'h2' : 'h3';
+const anyFiscal = items.some((i) => i.fiscal);
+---
+<div data-catalog>
+  <div class="catalog-bar catalog-js">
+    <div class="sbox">
+      <Icon name="search" />
+      <label class="sr-only" for={`catalog-search-${level}`}>{ui.toolsHub.searchLabel}</label>
+      <input id={`catalog-search-${level}`} type="search" data-catalog-search placeholder={ui.toolsHub.searchPlaceholder} autocomplete="off" />
+    </div>
+    <div class="chipset" role="group" aria-label={ui.catalog.filterTopic}>
+      <button class="chip" type="button" data-filter-category="" aria-pressed="true">{ui.catalog.all}</button>
+      {categories.map((c) => <button class="chip" type="button" data-filter-category={c.id} aria-pressed="false">{c.title}</button>)}
+    </div>
+    {counts.planned > 0 && (
+      <div class="chipset" role="group" aria-label={ui.catalog.filterStatus}>
+        <button class="chip" type="button" data-filter-status="" aria-pressed="true">{ui.catalog.all}</button>
+        <button class="chip" type="button" data-filter-status="available" aria-pressed="false">{ui.catalog.onlyAvailable}</button>
+        <button class="chip" type="button" data-filter-status="planned" aria-pressed="false">{ui.catalog.onlyPlanned}</button>
+      </div>
+    )}
+  </div>
+
+  {categories.map((c) => (
+    <section class="catalog-group" aria-labelledby={`cat-${level}-${c.id}`} data-filter-group={c.id}>
+      <div class="group-head">
+        <H id={`cat-${level}-${c.id}`}>{c.path ? <a href={c.path}>{c.title}</a> : c.title}</H>
+        <span class="count">{ctx.fill(ui.catalog.count, { available: c.available, total: c.total })}</span>
+      </div>
+      <p class="group-short">{c.short}</p>
+      <div class="cards">
+        {items.filter((i) => i.category === c.id).map((item) => <ToolCard item={item} ui={ui} />)}
+      </div>
+    </section>
+  ))}
+
+  <p class="catalog-empty" data-catalog-empty hidden>{ui.toolsHub.noResults}</p>
+  {counts.planned > 0 && <p class="catalog-note">{ui.catalog.plannedNote}</p>}
+  {anyFiscal && <p class="catalog-note">{ui.catalog.fiscalNote}</p>}
+</div>

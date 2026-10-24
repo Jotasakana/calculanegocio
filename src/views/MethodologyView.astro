@@ -26,10 +26,10 @@ const body = renderFragment(fragment(ctx.locale, 'pages', 'methodology'), ctx.fr
     <article class="content">
       {!SITE.indexable && <div class="devnote">{m.devNote}</div>}
       <div class="prose" set:html={body} />
-      <h2 class="related-title">{m.calculators}</h2>
+      <div class="prose"><h2 class="sec">{m.calculators}</h2>
       <ul class="related">
         {ctx.tools.map((t) => <li><a href={t.path}>{t.title}</a></li>)}
-      </ul>
+      </ul></div>
     </article>
   </div>
 </BaseLayout>

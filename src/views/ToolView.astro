@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CalculatorShell from '../components/CalculatorShell.astro';
+import Icon from '../components/Icon.astro';
 import { SITE } from '../data/site.js';
 import { breadcrumbLd, webApplicationLd } from '../lib/jsonld.js';
 import { fragment } from '../locales/fragments.js';
@@ -16,37 +17,89 @@ const crumbs = [
   { label: category.title, href: category.path, path: category.path },
   { label: tool.title, path: tool.path },
 ];
-const body = renderFragment(fragment(ctx.locale, 'articles', tool.article), ctx.fragmentCtx, { currentToolId: tool.id, autolinks: ctx.content.autolinkPhrases });
-const related = tool.related.map((id) => ctx.toolById[id]);
+const rendered = renderFragment(fragment(ctx.locale, 'articles', tool.article), ctx.fragmentCtx, { currentToolId: tool.id, autolinks: ctx.content.autolinkPhrases });
+const { html: body, toc } = ctx.withToc(rendered);
+const related = tool.related.map((id) => ctx.catalog.items.find((i) => i.id === id)).filter(Boolean);
 const currency = tool.currencyFixed ? tool.currency : ctx.defaultCurrency;
+const index = [
+  ...(tool.formulas?.length ? [{ id: 'formulas', title: ui.tool.formulasTitle }] : []),
+  ...toc,
+  ...(tool.faq?.length ? [{ id: 'faq', title: ui.tool.faqTitle }] : []),
+];
+// Datos estructurados de las preguntas frecuentes (claves de schema.org; el texto sale del idioma).
+const faqLd = tool.faq?.length
+  ? { '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: ctx.loc.hreflang, mainEntity: tool.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }
+  : null;
 ---
 <BaseLayout
   ctx={ctx}
   pageKey={tool.key}
   title={`${tool.metaTitle} | ${ui.site.name}`}
   description={tool.metaDescription}
-  jsonLd={[breadcrumbLd(crumbs), webApplicationLd(tool, { lang: ctx.loc.hreflang, currency })]}
+  jsonLd={[breadcrumbLd(crumbs), webApplicationLd(tool, { lang: ctx.loc.hreflang, currency }), ...(faqLd ? [faqLd] : [])]}
 >
   <div class="wrap">
     <Breadcrumbs items={crumbs} label={ui.a11y.breadcrumbs} />
     <div class="pagehead">
+      <div class="badges">
+        <span class="badge ok">{ui.catalog.statusAvailable}</span>
+        {tool.scope === 'fiscal' && <span class="badge">{ui.catalog.fiscalBadge}</span>}
+      </div>
       <span class="kicker">{tool.kicker}</span>
       <h1>{tool.title}</h1>
       <p>{tool.desc}</p>
-      <div class="trusted">{ui.tool.trust.map((x) => <span>✓ {x}</span>)}</div>
+      <ul class="trusted">{ui.tool.trust.map((x) => <li><Icon name="check" />{x}</li>)}</ul>
     </div>
 
     <CalculatorShell ctx={ctx} tool={tool} />
 
-    <article class="content">
-      {!SITE.indexable && <div class="devnote">{ui.tool.devNote}</div>}
-      <div class="prose" set:html={body} />
-      <h2 class="related-title">{ui.tool.related}</h2>
-      <ul class="related">
-        {related.map((t) => <li><a href={t.path}>{t.title}</a></li>)}
-        <li><a href={category.path}>{category.title}: {ui.tool.allInCategory}</a></li>
-      </ul>
-    </article>
+    <div class="tool-layout">
+      <div>
+        <article class="content">
+          {!SITE.indexable && <div class="devnote">{ui.tool.devNote}</div>}
+          {tool.fiscalPending && <div class="callout"><Icon name="info" /><p>{ui.tool.fiscalPending}</p></div>}
+          {tool.formulas?.length > 0 && (
+            <section class="formulas-block">
+              <span class="kicker">{ui.tool.formulasKicker}</span>
+              <h2 id="formulas">{ui.tool.formulasTitle}</h2>
+              <ul class="formula-list">
+                {tool.formulas.map(([name, expr]) => <li class="formula"><small>{name}</small><code dir="auto">{expr}</code></li>)}
+              </ul>
+            </section>
+          )}
+          <div class="prose" set:html={body} />
+          {tool.faq?.length > 0 && (
+            <section class="faq-block">
+              <span class="kicker">{ui.tool.faqKicker}</span>
+              <h2 id="faq">{ui.tool.faqTitle}</h2>
+              <div class="faq">
+                {tool.faq.map(([q, a]) => <details class="faq-item"><summary>{q}</summary><p>{a}</p></details>)}
+              </div>
+            </section>
+          )}
+        </article>
+        <section class="related-block">
+          <h2>{ui.tool.related}</h2>
+          <div class="cards">
+            {related.map((item) => (
+              <a class="card" href={item.path}>
+                <div class="card-top"><span class="ico"><Icon name={item.icon} /></span></div>
+                <strong class="card-title">{item.title}</strong>
+                <p class="card-desc">{item.desc}</p>
+                <span class="card-foot"><span>{item.cta}</span><Icon name="arrow" /></span>
+              </a>
+            ))}
+          </div>
+          <p class="related-more"><a class="arrow-next" href={category.path}>{category.title}: {ui.tool.allInCategory}</a></p>
+        </section>
+      </div>
+      <aside class="side">
+        <nav class="box toc" aria-labelledby="toc-title">
+          <h2 id="toc-title">{ui.tool.tocTitle}</h2>
+          {index.map((s) => <a href={`#${s.id}`}>{s.title}</a>)}
+        </nav>
+      </aside>
+    </div>
   </div>
   <script>
     import '../scripts/calculator.js';

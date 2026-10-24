@@ -1,5 +1,6 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
+import Icon from './Icon.astro';
 
 const { ctx, currentKey } = Astro.props;
 const { ui } = ctx;
@@ -8,16 +9,17 @@ const toolsHref = ctx.path('tools');
 // Versiones de ESTA página en otros idiomas (solo las publicadas); con una sola versión no se pinta el selector.
 const versions = ctx.versions(currentKey);
 ---
-<header>
+<header class="hdr">
   <div class="wrap nav">
     <a class="logo" href={homeHref}><span class="logomark" aria-hidden="true">▥</span><span>Calcula<strong>Negocio</strong></span></a>
     <nav aria-label={ui.a11y.mainNav} class="links" id="siteNav">
       {ctx.nav.map((n) => <a href={n.href} aria-current={currentKey === n.key ? 'page' : undefined}>{n.label}</a>)}
     </nav>
     <div class="nav-actions">
+      <a class="iconbtn search-link" href={toolsHref} aria-label={ui.nav.search}><Icon name="search" /><span>{ui.nav.search}</span></a>
       {versions.length > 1 && <LanguageSwitcher label={ui.a11y.language} versions={versions} />}
       <a class="navbutton arrow-out" href={toolsHref}>{ui.nav.cta}</a>
-      <button aria-controls="siteNav" aria-expanded="false" aria-label={ui.a11y.openMenu} class="mobile-toggle" id="mobileToggle" type="button">☰</button>
+      <button aria-controls="siteNav" aria-expanded="false" aria-label={ui.a11y.openMenu} class="iconbtn mobile-toggle" id="mobileToggle" type="button"><Icon name="menu" class="i-open" /><Icon name="close" class="i-close" /></button>
     </div>
   </div>
 </header>

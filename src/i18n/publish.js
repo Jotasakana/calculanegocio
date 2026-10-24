@@ -9,10 +9,11 @@ import { LOCALES } from './locales.js';
 import { CONTENT } from '../locales/index.js';
 import { MARKETS } from '../markets/es.js';
 import { TOOL_REGISTRY, CATEGORY_REGISTRY } from '../domain/registry.js';
+import { CATALOG, CATALOG_CATEGORIES } from '../domain/catalog.js';
 
 export const PUBLISHABLE = new Set(['source', 'reviewed']);
 
-export const REAL_WORLD = { locales: LOCALES, content: CONTENT, markets: MARKETS, tools: TOOL_REGISTRY, categories: CATEGORY_REGISTRY };
+export const REAL_WORLD = { locales: LOCALES, content: CONTENT, markets: MARKETS, tools: TOOL_REGISTRY, categories: CATEGORY_REGISTRY, catalog: CATALOG, catalogCategories: CATALOG_CATEGORIES };
 
 export function reviewOf(localeCode, pageKey, world = REAL_WORLD) {
   const r = world.content[localeCode]?.review;

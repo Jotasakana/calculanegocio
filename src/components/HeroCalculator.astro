@@ -1,0 +1,29 @@
+---
+// Calculadora de la portada: las calculadoras destacadas (src/domain/catalog.js) con el MISMO CalculatorShell que las fichas.
+// Sin JavaScript se ven todas apiladas, cada una con su título; con JavaScript se convierten en pestañas.
+import CalculatorShell from './CalculatorShell.astro';
+
+const { ctx } = Astro.props;
+const { ui } = ctx;
+const tools = ctx.featuredTools;
+---
+{tools.length > 0 && (
+  <div class="bench" data-bench>
+    {tools.length > 1 && (
+      <div class="bench-tabs" role="tablist" aria-label={ui.home.calcChoose}>
+        {tools.map((t, i) => (
+          <button class="btab" type="button" role="tab" id={`btab-${t.id}`} aria-controls={`bpanel-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-bench-tab>{t.menuTitle}</button>
+        ))}
+      </div>
+    )}
+    {tools.map((t, i) => (
+      <div role={tools.length > 1 ? 'tabpanel' : undefined} id={`bpanel-${t.id}`} aria-labelledby={tools.length > 1 ? `btab-${t.id}` : undefined} data-bench-panel>
+        <h3 class="bench-title">{t.title}</h3>
+        <CalculatorShell ctx={ctx} tool={t} formulaLink={true} />
+      </div>
+    ))}
+  </div>
+)}
+<script>
+  import '../scripts/calculator.js';
+</script>
