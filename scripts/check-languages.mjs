@@ -45,7 +45,7 @@ for (const r of table) {
   ok(new RegExp(`<html\\b[^>]*\\blang="${loc.hreflang}"`, 'i').test(html), `${r.path}: lang debería ser ${loc.hreflang}`);
   ok(html.includes(`<link rel="canonical" href="${site}${r.path}"`), `${r.path}: canonical propio incorrecto`);
   const robots = html.match(/<meta\b[^>]*name="robots"[^>]*>/i)?.[0] ?? '';
-  ok(indexed ? (r.locale === 'es' ? !/noindex/i.test(robots) : /noindex,follow/i.test(robots)) : /noindex,follow/i.test(robots), `${r.path}: robots inesperado (${robots})`);
+  ok(indexed ? (r.key.startsWith('page:') ? /noindex/i.test(robots) : !/noindex/i.test(robots)) : /noindex,follow/i.test(robots), `${r.path}: robots inesperado (${robots})`);
   ok(/<meta\b[^>]*property="og:locale"[^>]*content="[a-z]{2}_[A-Z]{2}"/i.test(html) || /content="[a-z]{2}_[A-Z]{2}"[^>]*property="og:locale"/i.test(html), `${r.path}: falta og:locale`);
 
   // hreflang: exactamente las versiones equivalentes, recíprocas y absolutas
@@ -123,10 +123,10 @@ for (const r of table) {
 // Sitemap multilingüe
 {
   const xml = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
-  const indexedRoutes = indexed ? table.filter((r) => r.locale === 'es') : table;
+  const indexedRoutes = indexed ? table.filter((r) => !r.key.startsWith('page:')) : table;
   ok((xml.match(/<loc>/g) || []).length === indexedRoutes.length, 'sitemap: número de URLs');
   for (const r of indexedRoutes) ok(xml.includes(`<loc>${site}${r.path}</loc>`), `sitemap: falta ${r.path}`);
-  for (const l of locales) ok((xml.match(new RegExp(`hreflang="${REAL_WORLD.locales[l].hreflang}"`, 'g')) || []).length === (indexed ? 0 : table.length), `sitemap: hreflang ${REAL_WORLD.locales[l].hreflang} por cada URL`);
+  for (const l of locales) ok((xml.match(new RegExp(`hreflang="${REAL_WORLD.locales[l].hreflang}"`, 'g')) || []).length === (indexed ? indexedRoutes.length : table.length), `sitemap: hreflang ${REAL_WORLD.locales[l].hreflang} por cada URL`);
   ok(!/\/(it|nl|pl|ar|id|ja|zh|ru|uk|cs)\//.test(xml), 'sitemap: contiene idiomas no publicados');
 }
 // No se generan carpetas de idiomas no publicados
