@@ -244,8 +244,8 @@ const vw = (en) => ({ ...REAL_WORLD, locales: { ...LOCALES, en: { ...LOCALES.en,
 const probs = (en) => validateLocale('en', vw(en), io);
 check('es válido', validateLocale('es', REAL_WORLD, io).join('; ') || 'ok', 'ok');
 check('copia literal del español: detecta traducción sin hacer', probs(enBase()).some((p) => /idénticos|sin hacer/.test(p)), 'true');
-{ const en = enBase(); delete en.messages['iva.label']; en.ui.home.metaTitle = ''; delete en.ui.footer.status;
-  const p = probs(en).join('|'); check('detecta claves ausentes y vacías', /falta la clave "iva.label"/.test(p) && /falta la clave "footer.status"/.test(p) && /home.metaTitle.*vacío/.test(p), 'true'); }
+{ const en = enBase(); delete en.messages['iva.label']; en.ui.home.metaTitle = ''; delete en.ui.footer.market;
+  const p = probs(en).join('|'); check('detecta claves ausentes y vacías', /falta la clave "iva.label"/.test(p) && /falta la clave "footer.market"/.test(p) && /home.metaTitle.*vacío/.test(p), 'true'); }
 { const en = enBase(); en.messages['iva.note'] = 'VAT'; check('detecta marcadores {x} perdidos', probs(en).some((p) => /iva\.note.*marcadores/.test(p)), 'true'); }
 { const en = enBase(); delete en.errors.negative; check('detecta falta de un mensaje de error', probs(en).some((p) => /negative/.test(p)), 'true'); }
 { const en = enBase(); en.slugs.toolPages.margen = 'Margin Calc'; check('detecta slugs no válidos', probs(en).some((p) => /slug no válido/.test(p)), 'true'); }
@@ -270,7 +270,7 @@ check('autolink omite calculadoras no disponibles', renderFragment('<p>calc B</p
 check('h3 -> h2.sec y h4 -> h3.sub', renderFragment('<h3>A</h3><h4>B</h4>', ctxF), '<h2 class="sec">A</h2><h3 class="sub">B</h3>');
 {
   const readAll = (kind, key) => fs.readFileSync(path.join(root, 'src/locales/es', kind, key + '.html'), 'utf8');
-  const ctxReal = { path: (k) => pathFor('es', k), title: (kind, id) => es.tools[id]?.title ?? es.categories[id].title };
+  const ctxReal = { path: (k) => pathFor('es', k), legal: (id) => `[${id}]`, title: (kind, id) => es.tools[id]?.title ?? es.categories[id].title };
   let unresolved = 0;
   for (const [kind, key] of [['pages', 'methodology'], ['pages', 'category-facturacion'], ['pages', 'category-margenes-y-precios'], ...Object.values(TOOL_REGISTRY).map((t) => ['articles', t.article])]) {
     const out = renderFragment(readAll(kind, key), ctxReal, { autolinks: es.autolinkPhrases });

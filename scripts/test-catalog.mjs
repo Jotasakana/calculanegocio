@@ -2,7 +2,7 @@
 // desarrollo, mercados fiscales, marcadores de texto, índice de apartados y contexto de página. No requiere Astro.
 import { REAL_WORLD, isPublished } from '../src/i18n/publish.js';
 import { routeTable, pathFor } from '../src/i18n/routes.js';
-import { CATALOG, CATALOG_CATEGORIES, FEATURED_TOOLS } from '../src/domain/catalog.js';
+import { CATALOG, CATALOG_CATEGORIES, FEATURED_TOOLS, SHOW_PLANNED_TOOLS } from '../src/domain/catalog.js';
 import { TOOL_REGISTRY } from '../src/domain/registry.js';
 import { ICON_PATHS } from '../src/lib/icons.js';
 import { buildCatalog, STATUS } from '../src/lib/catalog.js';
@@ -30,17 +30,22 @@ check('plan: las pendientes declaran ámbito', CATALOG.filter((e) => !TOOL_REGIS
 
 // 2. Español real: 18 = 4 disponibles + 14 en desarrollo; categorías 6/4/4/4
 const es = buildContext('es');
-check('es: total', es.catalog.counts.total, 18);
-check('es: disponibles', es.catalog.counts.available, Object.keys(TOOL_REGISTRY).length);
-check('es: en desarrollo', es.catalog.counts.planned, 18 - Object.keys(TOOL_REGISTRY).length);
-check('es: tamaños de categoría', es.catalog.categories.map((c) => c.total).join('/'), '6/4/4/4');
-check('es: categorías con página = las del registro', es.catalog.categories.filter((c) => c.path).map((c) => c.id).join(), Object.keys(REAL_WORLD.categories).join());
-check('es: las categorías sin calculadoras disponibles no tienen página', es.catalog.categories.filter((c) => c.available === 0).every((c) => c.path === null), true);
-check('es: cada tarjeta tiene título, descripción e icono', es.catalog.items.every((i) => i.title && i.desc && ICON_PATHS[i.icon]), true);
+// Fase 7A: el sitio real SOLO muestra las 8 calculadoras disponibles; el catálogo completo (18) se conserva como dato.
+check('Fase 7A: el catálogo del sitio muestra 8 calculadoras y ninguna en desarrollo', `${es.catalog.counts.total}/${es.catalog.counts.available}/${es.catalog.counts.planned}`, '8/8/0');
+check('Fase 7A: categorías visibles = las 3 con página (sin «finanzas», que solo tenía planificadas)', es.catalog.categories.map((c) => c.id).join(), Object.keys(REAL_WORLD.categories).join());
+check('Fase 7A: SHOW_PLANNED_TOOLS está desactivado', SHOW_PLANNED_TOOLS, false);
+const esAll = { catalog: buildCatalog(REAL_WORLD, 'es', (k) => isPublished('es', k), (k) => pathFor('es', k), { includePlanned: true }) };
+check('es: total', esAll.catalog.counts.total, 18);
+check('es: disponibles', esAll.catalog.counts.available, Object.keys(TOOL_REGISTRY).length);
+check('es: en desarrollo', esAll.catalog.counts.planned, 18 - Object.keys(TOOL_REGISTRY).length);
+check('es: tamaños de categoría', esAll.catalog.categories.map((c) => c.total).join('/'), '6/4/4/4');
+check('es: categorías con página = las del registro', esAll.catalog.categories.filter((c) => c.path).map((c) => c.id).join(), Object.keys(REAL_WORLD.categories).join());
+check('es: las categorías sin calculadoras disponibles no tienen página', esAll.catalog.categories.filter((c) => c.available === 0).every((c) => c.path === null), true);
+check('es: cada tarjeta tiene título, descripción e icono', esAll.catalog.items.every((i) => i.title && i.desc && ICON_PATHS[i.icon]), true);
 
 // 3. Nada «en desarrollo» tiene URL, ni en el catálogo ni en la tabla de rutas, el buscador o el sitemap
 const urls = new Set(routeTable().map((r) => r.path));
-const planned = es.catalog.items.filter((i) => i.status === STATUS.planned);
+const planned = esAll.catalog.items.filter((i) => i.status === STATUS.planned);
 const available = es.catalog.items.filter((i) => i.status === STATUS.available);
 check('planned: sin ruta en el catálogo', planned.every((i) => i.path === null && i.cta === null), true);
 check('planned: no existe su clave de página', planned.every((i) => !REAL_WORLD.tools[i.id] && !isPublished('es', 'tool:' + i.id)), true);
@@ -78,7 +83,7 @@ const at = (k) => '/p/' + k.replace(':', '-') + '/';
   const item = c.items.find((i) => i.id === 'variacion');
   check('registro: una calculadora nueva pasa a disponible', item.status, STATUS.available);
   check('registro: y obtiene su ruta', item.path, at('tool:variacion'));
-  check('registro: los contadores se actualizan', `${c.counts.available}/${c.counts.planned}`, `${es.catalog.counts.available + 1}/${es.catalog.counts.planned - 1}`);
+  check('registro: los contadores se actualizan', `${c.counts.available}/${c.counts.planned}`, `${esAll.catalog.counts.available + 1}/${esAll.catalog.counts.planned - 1}`);
 }
 {
   // Un idioma sin texto para una calculadora pendiente no la muestra (no se promete algo sin traducir)

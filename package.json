@@ -1,6 +1,6 @@
 {
   "name": "calculanegocio",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "private": true,
   "type": "module",
   "description": "CalculaNegocio — calculadoras gratuitas para autónomos y pequeños negocios (Astro, HTML estático; español, inglés, portugués de Brasil, alemán, francés e hindi).",

@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CalculatorShell from '../components/CalculatorShell.astro';
 import Icon from '../components/Icon.astro';
-import { SITE } from '../data/site.js';
+import TrustStrip from '../components/TrustStrip.astro';
 import { breadcrumbLd, webApplicationLd } from '../lib/jsonld.js';
 import { fragment } from '../locales/fragments.js';
 import { renderFragment } from '../lib/fragments.js';
@@ -49,6 +49,7 @@ const faqLd = tool.faq?.length
       <h1>{tool.title}</h1>
       <p>{tool.desc}</p>
       <ul class="trusted">{ui.tool.trust.map((x) => <li><Icon name="check" />{x}</li>)}</ul>
+      <TrustStrip ctx={ctx} />
     </div>
 
     <CalculatorShell ctx={ctx} tool={tool} />
@@ -56,7 +57,6 @@ const faqLd = tool.faq?.length
     <div class="tool-layout">
       <div>
         <article class="content">
-          {!SITE.indexable && <div class="devnote">{ui.tool.devNote}</div>}
           {tool.generic && <div class="callout"><Icon name="info" /><p>{ui.tool.genericTax}</p></div>}
           {tool.fiscalPending && <div class="callout"><Icon name="info" /><p>{ui.tool.fiscalPending}</p></div>}
           {tool.formulas?.length > 0 && (

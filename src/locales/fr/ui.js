@@ -6,7 +6,6 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Calculatrices pour indépendants et petites entreprises',
-    devLabel: 'DÉMO PRIVÉE · v0.10 · traduction en attente de relecture native',
   },
   a11y: {
     skip: 'Aller au contenu',
@@ -26,7 +25,6 @@ export const ui = {
   },
   footer: {
     blurb: 'Des outils gratuits pour comprendre les chiffres de votre activité.',
-    status: 'Projet en développement',
     calculators: 'Calculatrices',
     explore: 'Explorer',
     allTools: 'Toutes les calculatrices',
@@ -37,9 +35,6 @@ export const ui = {
     market: 'Conçu pour les petites entreprises du monde entier',
   },
   legal: {
-    draftTitle: 'Projet en attente de vérification.',
-    draftNotice: 'Ce texte a été préparé à partir des informations fournies par le titulaire du site et n’est pas encore un document juridique définitif : des vérifications restent à effectuer. Ne le considérez pas comme un texte juridique final tant que cet avis n’a pas été retiré.',
-    devNote: 'Note de développement : le site est une démonstration privée et non indexable. Ces pages seront publiées comme définitives une fois les vérifications en attente terminées.',
     emailPending: '(adresse proposée, en attente de vérification : pas encore un canal de contact disponible)',
     contactPending: 'L’adresse e-mail de contact n’est pas encore opérationnelle ; elle sera publiée ici une fois vérifiée.',
     contactOperative: 'Vous pouvez nous écrire à l’adresse e-mail indiquée.',
@@ -50,7 +45,7 @@ export const ui = {
     contact: {
       footerLabel: 'Contact',
       metaTitle: 'Contact | CalculaNegocio',
-      metaDescription: 'Informations sur le titulaire de CalculaNegocio et état de l’e-mail de contact, en attente de vérification.',
+      metaDescription: 'Informations sur le titulaire de CalculaNegocio et e-mail de contact.',
       kicker: 'INFORMATIONS',
       title: 'Contact',
       lead: 'Qui est derrière le site et comment le contacter.',
@@ -129,7 +124,7 @@ export const ui = {
     ],
     catalogKicker: 'CATALOGUE',
     catalogTitle: 'Un catalogue de {total} calculatrices pour votre activité',
-    catalogLead: '{available} disponibles dès maintenant et {planned} en développement. Recherchez par nom ou filtrez par thème et par statut.',
+    catalogLead: '{available} calculatrices disponibles. Recherchez par nom ou filtrez par thème.',
     catalogAll: 'Voir le catalogue complet',
     contrastKicker: 'POUR NE PAS SE TROMPER',
     contrastTitle: 'Taux de marque et taux de marge ne sont pas la même chose',
@@ -172,7 +167,6 @@ export const ui = {
       'Lisez les hypothèses de chaque outil.',
       'Pour vos obligations fiscales, consultez les sources officielles ou votre conseiller.',
     ],
-    devNote: 'Note de développement : les pages légales et la vérification des règles fiscales seront terminées avant le lancement.',
     faqKicker: 'QUESTIONS FRÉQUENTES',
     faqTitle: 'Ce que l’on demande le plus',
     faq: [
@@ -185,9 +179,16 @@ export const ui = {
     ctaText: 'Gardez sous la main le coût de votre produit ou service et calculez en moins d’une minute.',
     ctaButton: 'Aller à la calculatrice',
   },
+  trust: {
+    updated: 'Contenu mis à jour',
+    tests: 'Formules contrôlées par des tests automatiques',
+    method: 'Comment nous calculons',
+    publisher: 'Édité par',
+    contact: 'Contact',
+  },
   toolsHub: {
     metaTitle: 'Calculatrices gratuites pour indépendants | CalculaNegocio',
-    metaDescription: 'Le catalogue de CalculaNegocio : calculatrices disponibles (marge, majoration, remises, prix de vente, seuil de rentabilité, ROI, montant HT) et à venir.',
+    metaDescription: 'Le catalogue de CalculaNegocio : marge, majoration, remises, prix de vente, seuil de rentabilité, ROI et montant HT.',
     kicker: 'CATALOGUE DE CALCULATRICES',
     title: 'Calculatrices pour indépendants et petites entreprises',
     lead: 'Des outils pour calculer marges, prix, remises, seuil de rentabilité, ROI et la taxe de vos factures. Chacun explique sa formule et propose des exemples chiffrés.',
@@ -214,7 +215,6 @@ export const ui = {
     kicker: 'TRANSPARENCE',
     title: 'Méthodologie et limites',
     lead: 'Ce que calculent les outils, selon quels critères et jusqu’où ils vont.',
-    devNote: 'Note de développement : cette page décrit le fonctionnement actuel et sera complétée avant le lancement.',
     calculators: 'Calculatrices',
   },
   tool: {
@@ -229,7 +229,6 @@ export const ui = {
     noscript: 'Activez JavaScript pour recalculer lorsque vous modifiez les chiffres. Le résultat de l’exemple est affiché.',
     currencyLabel: 'Devise',
     currencyNone: 'Sans devise',
-    devNote: 'Note de développement : le contenu explicatif est en cours de relecture. Les informations fiscales doivent être validées avant le lancement.',
     genericTax: 'Cette version applique le pourcentage de taxe que vous saisissez. Elle ne connaît les règles fiscales d’aucun pays : vérifiez le taux et son mode de calcul auprès de sources officielles ou de votre conseiller.',
     fiscalPending: 'La partie fiscale de cette calculatrice attend la relecture d’un professionnel. D’ici là, considérez-la comme indicative.',
     formulasKicker: 'FORMULES CLÉS',

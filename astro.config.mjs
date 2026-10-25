@@ -1,8 +1,8 @@
 import { defineConfig } from 'astro/config';
 
 // SITE_URL define el dominio canónico (por defecto, el definitivo).
-// El sitio sigue en modo desarrollo (noindex + robots Disallow) mientras
-// SITE_INDEXABLE no valga "true". No activar hasta que se autorice la publicación.
+// SITE_INDEXABLE: por defecto el sitio es indexable (84 páginas index,follow; las 30 legales, noindex). Solo el valor
+// exacto "false" activa noindex + robots Disallow (previews y pruebas locales). Ver src/data/site.js.
 const site = (process.env.SITE_URL || 'https://calculanegocio.com').replace(/\/+$/, '');
 
 export default defineConfig({

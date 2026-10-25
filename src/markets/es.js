@@ -1,6 +1,6 @@
 // Configuración del mercado fiscal de España. Solo contiene lo que ya usan las calculadoras.
-// Pendiente antes de publicar (no verificado en esta fase): validar los tipos con fuentes oficiales
-// (Agencia Tributaria) y registrar aquí `sources` y `verifiedAt`. Hasta entonces, `verified: false`.
+// Pendiente (no verificado): validar los tipos con fuentes oficiales (Agencia Tributaria) y registrar aquí
+// `sources` y `verifiedAt`. Hasta entonces, `verified: false` y la ficha de la calculadora lo indica al lector.
 
 export const MARKET_ES = {
   id: 'es',

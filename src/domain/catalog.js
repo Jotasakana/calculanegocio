@@ -37,3 +37,8 @@ export const CATALOG = [
 
 /** Calculadoras que se ofrecen en la portada, por orden de pestaña. Solo se muestran las publicadas en el idioma. */
 export const FEATURED_TOOLS = ['precio', 'margen'];
+
+// Fase 7A: el sitio muestra solo las calculadoras que ya funcionan. Las entradas de CATALOG que no están en el
+// registro («en desarrollo») se conservan como datos para futuras fases, pero no se anuncian en portada ni en el
+// catálogo. Ponerlo en true las volvería a mostrar sin enlace (no tienen URL, sitemap ni hreflang en ningún caso).
+export const SHOW_PLANNED_TOOLS = false;

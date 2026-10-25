@@ -6,7 +6,6 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Calculadoras para autónomos y pequeños negocios',
-    devLabel: 'DEMO PRIVADA · v0.10',
   },
   a11y: {
     skip: 'Saltar al contenido',
@@ -26,7 +25,6 @@ export const ui = {
   },
   footer: {
     blurb: 'Herramientas gratuitas para entender los números de tu negocio.',
-    status: 'Proyecto en desarrollo',
     calculators: 'Calculadoras',
     explore: 'Explorar',
     allTools: 'Todas las calculadoras',
@@ -37,9 +35,6 @@ export const ui = {
     market: 'Diseñado para España',
   },
   legal: {
-    draftTitle: 'Borrador pendiente de revisión.',
-    draftNotice: 'Este texto se ha preparado con los datos facilitados por la persona titular y todavía no es un documento legal definitivo: quedan comprobaciones pendientes. No debe considerarse texto jurídico final hasta que se retire este aviso.',
-    devNote: 'Nota de desarrollo: el sitio es una demo privada y no indexable. Estas páginas se publicarán como definitivas cuando se completen las comprobaciones pendientes.',
     emailPending: '(dirección propuesta, pendiente de verificación: todavía no es un canal de contacto disponible)',
     contactPending: 'El correo electrónico de contacto todavía no está operativo; se publicará aquí cuando se verifique.',
     contactOperative: 'Puedes escribirnos a la dirección de correo indicada.',
@@ -50,7 +45,7 @@ export const ui = {
     contact: {
       footerLabel: 'Contacto',
       metaTitle: 'Contacto | CalculaNegocio',
-      metaDescription: 'Datos del titular de CalculaNegocio y estado del correo de contacto, pendiente de verificación.',
+      metaDescription: 'Datos del titular de CalculaNegocio y correo de contacto.',
       kicker: 'INFORMACIÓN',
       title: 'Contacto',
       lead: 'Quién está detrás del sitio y cómo contactar.',
@@ -129,7 +124,7 @@ export const ui = {
     ],
     catalogKicker: 'CATÁLOGO',
     catalogTitle: 'Catálogo de {total} calculadoras para tu negocio',
-    catalogLead: '{available} disponibles ahora y {planned} en desarrollo. Busca por nombre o filtra por tema y estado.',
+    catalogLead: '{available} calculadoras disponibles. Busca por nombre o filtra por tema.',
     catalogAll: 'Ver el catálogo completo',
     contrastKicker: 'PARA NO EQUIVOCARTE',
     contrastTitle: 'Margen y recargo no son lo mismo',
@@ -172,7 +167,6 @@ export const ui = {
       'Lee los supuestos de cada herramienta.',
       'Para obligaciones fiscales, contrasta con fuentes oficiales o tu asesoría.',
     ],
-    devNote: 'Nota de desarrollo: las páginas legales y la revisión normativa se completarán antes de publicar.',
     faqKicker: 'PREGUNTAS FRECUENTES',
     faqTitle: 'Lo que más se pregunta',
     faq: [
@@ -185,9 +179,16 @@ export const ui = {
     ctaText: 'Ten a mano el coste de tu producto o servicio y calcula en menos de un minuto.',
     ctaButton: 'Ir a la calculadora',
   },
+  trust: {
+    updated: 'Contenido actualizado',
+    tests: 'Fórmulas comprobadas con pruebas automáticas',
+    method: 'Cómo calculamos',
+    publisher: 'Edita',
+    contact: 'Contacto',
+  },
   toolsHub: {
     metaTitle: 'Calculadoras gratuitas para autónomos | CalculaNegocio',
-    metaDescription: 'Catálogo de calculadoras de CalculaNegocio: las disponibles (margen, recargo, descuentos, precio de venta, rentabilidad, punto de equilibrio, ROI y base imponible) y las que están en desarrollo.',
+    metaDescription: 'Catálogo de calculadoras de CalculaNegocio: margen, recargo, descuentos, precio de venta, rentabilidad, punto de equilibrio, ROI y base imponible.',
     kicker: 'CATÁLOGO DE CALCULADORAS',
     title: 'Calculadoras para autónomos y pequeños negocios',
     lead: 'Herramientas para calcular márgenes, precios, descuentos, punto de equilibrio, ROI y el IVA de tus facturas. Cada una explica su fórmula e incluye ejemplos resueltos.',
@@ -214,7 +215,6 @@ export const ui = {
     kicker: 'TRANSPARENCIA',
     title: 'Metodología y alcance',
     lead: 'Qué calculan las herramientas, con qué criterios y hasta dónde llegan.',
-    devNote: 'Nota de desarrollo: esta página describe el funcionamiento actual y se ampliará antes de publicar.',
     calculators: 'Calculadoras',
   },
   tool: {
@@ -229,7 +229,6 @@ export const ui = {
     noscript: 'Activa JavaScript para recalcular al modificar los datos. Se muestra el resultado del ejemplo.',
     currencyLabel: 'Moneda',
     currencyNone: 'Sin moneda',
-    devNote: 'Nota de desarrollo: contenido explicativo en fase de revisión. La información fiscal requiere validación antes de publicar.',
     genericTax: 'Esta versión aplica el porcentaje de impuesto que tú escribes. No conoce las normas fiscales de ningún país: comprueba el tipo y la forma de calcularlo con fuentes oficiales o con tu asesoría.',
     fiscalPending: 'La parte fiscal de esta calculadora está pendiente de revisión por una persona profesional. Hasta entonces, trátala como orientativa.',
     formulasKicker: 'FÓRMULAS CLAVE',

@@ -42,7 +42,7 @@ export const categories = {
   crecimiento: {
     title: 'Profitability and growth',
     kicker: 'CATEGORY',
-    short: 'Change, break-even point, ROI and advertising',
+    short: 'Break-even point and ROI of an investment',
     description:
       'Calculators to find out how many units you need to sell to cover your fixed costs and what return an investment gives you.',
   },
