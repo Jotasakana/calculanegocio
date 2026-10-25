@@ -5,6 +5,7 @@
 export const slugs = {
   tools: 'herramientas',
   methodology: 'metodologia',
+  pages: { contact: 'contacto', legal: 'aviso-legal', privacy: 'politica-de-privacidad', cookies: 'politica-de-cookies', terms: 'condiciones-de-uso' },
   categories: { 'margenes-y-precios': 'margenes-y-precios', facturacion: 'facturacion', crecimiento: 'rentabilidad-y-crecimiento' },
   toolPages: {
     margen: 'calculadora-margen-comercial',
@@ -37,7 +38,7 @@ export const categories = {
   crecimiento: {
     title: 'Rentabilidad y crecimiento',
     kicker: 'CATEGORÍA',
-    short: 'Variación, punto de equilibrio, ROI y publicidad',
+    short: 'Punto de equilibrio y ROI de una inversión',
     description:
       'Calculadoras para saber cuántas unidades necesitas vender para cubrir tus costes fijos y qué retorno te deja una inversión.',
   },

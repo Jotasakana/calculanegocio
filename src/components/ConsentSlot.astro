@@ -1,0 +1,7 @@
+---
+// Punto de integración de una futura CMP certificada por Google (ver src/data/consent.js y docs/CMP-GOOGLE-TCF.md).
+// Mientras CONSENT.enabled sea false (estado actual) no renderiza nada: no hay ningún script de terceros.
+import { CONSENT } from '../data/consent.js';
+const active = CONSENT.enabled && typeof CONSENT.scriptUrl === 'string' && /^https:\/\//.test(CONSENT.scriptUrl);
+---
+{active && <script is:inline src={CONSENT.scriptUrl}></script>}

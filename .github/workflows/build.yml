@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      # Modo desarrollo: noindex y robots Disallow. check-site.mjs lo comprueba así.
+      # Compilación como producción (indexable): 114 páginas, 84 index,follow y 30 legales noindex. check-site.mjs lo comprueba así.
       SITE_URL: https://calculanegocio.com
-      SITE_INDEXABLE: "false"
+      SITE_INDEXABLE: "true"
     steps:
       - uses: actions/checkout@v4
 

@@ -34,7 +34,7 @@ const anyFiscal = items.some((i) => i.fiscal);
     <section class="catalog-group" aria-labelledby={`cat-${level}-${c.id}`} data-filter-group={c.id}>
       <div class="group-head">
         <H id={`cat-${level}-${c.id}`}>{c.path ? <a href={c.path}>{c.title}</a> : c.title}</H>
-        <span class="count">{ctx.fill(ui.catalog.count, { available: c.available, total: c.total })}</span>
+        {c.available < c.total && <span class="count">{ctx.fill(ui.catalog.count, { available: c.available, total: c.total })}</span>}
       </div>
       <p class="group-short">{c.short}</p>
       <div class="cards">

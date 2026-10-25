@@ -9,6 +9,7 @@
 export const slugs = {
   tools: 'rechner',
   methodology: 'methodik',
+  pages: { contact: 'kontakt', legal: 'impressum', privacy: 'datenschutz', cookies: 'cookie-richtlinie', terms: 'nutzungsbedingungen' },
   categories: { 'margenes-y-precios': 'marge-und-preise', facturacion: 'rechnungen-und-steuer', crecimiento: 'rentabilitaet-und-wachstum' },
   toolPages: {
     margen: 'gewinnmargenrechner',
@@ -41,7 +42,7 @@ export const categories = {
   crecimiento: {
     title: 'Rentabilität und Wachstum',
     kicker: 'KATEGORIE',
-    short: 'Veränderung, Gewinnschwelle, ROI und Werbung',
+    short: 'Gewinnschwelle und ROI einer Investition',
     description:
       'Rechner, um herauszufinden, wie viele Einheiten Sie verkaufen müssen, um Ihre Fixkosten zu decken, und welche Rendite eine Investition bringt.',
   },

@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroCalculator from '../components/HeroCalculator.astro';
 import Catalog from '../components/Catalog.astro';
 import Icon from '../components/Icon.astro';
-import { SITE } from '../data/site.js';
 import { websiteLd } from '../lib/jsonld.js';
 
 const { ctx } = Astro.props;
@@ -123,7 +122,6 @@ const featureIcons = ['lock', 'formula', 'copy', 'globe'];
       <div class="about-note">
         <strong>{h.howTitle}</strong>
         <ul>{h.howItems.map((item) => <li>{item}</li>)}</ul>
-        {!SITE.indexable && <div class="devnote">{h.devNote}</div>}
       </div>
     </div>
   </section>

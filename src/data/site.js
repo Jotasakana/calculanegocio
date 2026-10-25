@@ -4,8 +4,10 @@ const siteUrl = (process.env.SITE_URL || 'https://calculanegocio.com').replace(/
 
 export const SITE = {
   url: siteUrl,
-  // Modo desarrollo por defecto: noindex + robots.txt con Disallow. No activar sin autorización.
-  indexable: process.env.SITE_INDEXABLE === 'true',
+  // Estado real (Fase 7A): el sitio es INDEXABLE por defecto. Solo el valor exacto "false" activa noindex + robots.txt con
+  // Disallow (previews y pruebas locales). Las 30 páginas legales son siempre noindex y no entran en el sitemap.
+  // Pendiente (fase posterior, tras verificar las variables de Cloudflare): valorar un valor por defecto «seguro».
+  indexable: process.env.SITE_INDEXABLE !== 'false',
 };
 
 export const absoluteUrl = (path) => siteUrl + path;

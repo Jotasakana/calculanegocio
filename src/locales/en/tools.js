@@ -9,6 +9,7 @@
 export const slugs = {
   tools: 'calculators',
   methodology: 'methodology',
+  pages: { contact: 'contact', legal: 'legal-notice', privacy: 'privacy-policy', cookies: 'cookie-policy', terms: 'terms-of-use' },
   categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing-and-tax', crecimiento: 'profitability-and-growth' },
   toolPages: {
     margen: 'profit-margin-calculator',
@@ -41,7 +42,7 @@ export const categories = {
   crecimiento: {
     title: 'Profitability and growth',
     kicker: 'CATEGORY',
-    short: 'Change, break-even point, ROI and advertising',
+    short: 'Break-even point and ROI of an investment',
     description:
       'Calculators to find out how many units you need to sell to cover your fixed costs and what return an investment gives you.',
   },

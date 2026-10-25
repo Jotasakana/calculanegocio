@@ -1,0 +1,15 @@
+---
+// Señales de confianza verificables (Fase 7A): fecha de actualización del contenido, fórmulas comprobadas con pruebas
+// automáticas del repositorio, y enlaces a la metodología, al titular (aviso legal) y al contacto.
+// Solo afirma lo que es cierto y comprobable; no menciona experiencia, credenciales ni revisiones humanas.
+const { ctx } = Astro.props;
+const { trust } = ctx;
+const t = ctx.ui.trust;
+---
+<ul class="trustbar" aria-label={t.updated}>
+  <li>{t.updated}: <time datetime={trust.updatedIso}>{trust.updated}</time></li>
+  <li>{t.tests}</li>
+  {trust.methodologyPath && <li><a href={trust.methodologyPath}>{t.method}</a></li>}
+  {trust.legalPath && <li>{t.publisher}: <a href={trust.legalPath}>{trust.publisher}</a></li>}
+  {trust.contactPath && <li><a href={trust.contactPath}>{t.contact}</a></li>}
+</ul>

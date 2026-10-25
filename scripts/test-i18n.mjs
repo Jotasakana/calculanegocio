@@ -197,7 +197,7 @@ check('ningún borrador publica páginas', Object.keys(LOCALES).filter((c) => LO
 // ---------------------------------------------------------------------------
 const mkEn = (status, extra = {}) => ({
   ...es, code: 'en',
-  slugs: { tools: 'tools', methodology: 'methodology', categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing', crecimiento: 'growth' }, toolPages: { margen: 'profit-margin-calculator', precio: 'selling-price-calculator', rentabilidad: 'gross-and-net-margin', iva: 'vat-calculator', recargo: 'markup-calculator', descuento: 'discount-calculator', equilibrio: 'break-even-calculator', roi: 'roi-calculator' } },
+  slugs: { tools: 'tools', methodology: 'methodology', pages: { contact: 'contact', legal: 'legal-notice', privacy: 'privacy-policy', cookies: 'cookie-policy', terms: 'terms-of-use' }, categories: { 'margenes-y-precios': 'margins-and-pricing', facturacion: 'invoicing', crecimiento: 'growth' }, toolPages: { margen: 'profit-margin-calculator', precio: 'selling-price-calculator', rentabilidad: 'gross-and-net-margin', iva: 'vat-calculator', recargo: 'markup-calculator', descuento: 'discount-calculator', equilibrio: 'break-even-calculator', roi: 'roi-calculator' } },
   review: { default: { status }, pages: extra },
 });
 // Mundo sintético SOLO con es + un `en` de prueba; el mercado genérico real (en, pt-br) se vacía para conservar la semántica original.
@@ -244,8 +244,8 @@ const vw = (en) => ({ ...REAL_WORLD, locales: { ...LOCALES, en: { ...LOCALES.en,
 const probs = (en) => validateLocale('en', vw(en), io);
 check('es válido', validateLocale('es', REAL_WORLD, io).join('; ') || 'ok', 'ok');
 check('copia literal del español: detecta traducción sin hacer', probs(enBase()).some((p) => /idénticos|sin hacer/.test(p)), 'true');
-{ const en = enBase(); delete en.messages['iva.label']; en.ui.home.metaTitle = ''; delete en.ui.footer.status;
-  const p = probs(en).join('|'); check('detecta claves ausentes y vacías', /falta la clave "iva.label"/.test(p) && /falta la clave "footer.status"/.test(p) && /home.metaTitle.*vacío/.test(p), 'true'); }
+{ const en = enBase(); delete en.messages['iva.label']; en.ui.home.metaTitle = ''; delete en.ui.footer.market;
+  const p = probs(en).join('|'); check('detecta claves ausentes y vacías', /falta la clave "iva.label"/.test(p) && /falta la clave "footer.market"/.test(p) && /home.metaTitle.*vacío/.test(p), 'true'); }
 { const en = enBase(); en.messages['iva.note'] = 'VAT'; check('detecta marcadores {x} perdidos', probs(en).some((p) => /iva\.note.*marcadores/.test(p)), 'true'); }
 { const en = enBase(); delete en.errors.negative; check('detecta falta de un mensaje de error', probs(en).some((p) => /negative/.test(p)), 'true'); }
 { const en = enBase(); en.slugs.toolPages.margen = 'Margin Calc'; check('detecta slugs no válidos', probs(en).some((p) => /slug no válido/.test(p)), 'true'); }
@@ -270,7 +270,7 @@ check('autolink omite calculadoras no disponibles', renderFragment('<p>calc B</p
 check('h3 -> h2.sec y h4 -> h3.sub', renderFragment('<h3>A</h3><h4>B</h4>', ctxF), '<h2 class="sec">A</h2><h3 class="sub">B</h3>');
 {
   const readAll = (kind, key) => fs.readFileSync(path.join(root, 'src/locales/es', kind, key + '.html'), 'utf8');
-  const ctxReal = { path: (k) => pathFor('es', k), title: (kind, id) => es.tools[id]?.title ?? es.categories[id].title };
+  const ctxReal = { path: (k) => pathFor('es', k), legal: (id) => `[${id}]`, title: (kind, id) => es.tools[id]?.title ?? es.categories[id].title };
   let unresolved = 0;
   for (const [kind, key] of [['pages', 'methodology'], ['pages', 'category-facturacion'], ['pages', 'category-margenes-y-precios'], ...Object.values(TOOL_REGISTRY).map((t) => ['articles', t.article])]) {
     const out = renderFragment(readAll(kind, key), ctxReal, { autolinks: es.autolinkPhrases });
@@ -280,8 +280,8 @@ check('h3 -> h2.sec y h4 -> h3.sub', renderFragment('<h3>A</h3><h4>B</h4>', ctxF
 }
 {
   const xml = sitemapXml('https://calculanegocio.com/');
-  check('sitemap: una URL por página publicada', (xml.match(/<loc>/g) || []).length, table.length);
-  check('sitemap real: hreflang entre los seis idiomas', ['en', 'pt-BR', 'de', 'fr', 'hi'].every((h) => xml.includes(`hreflang="${h}"`)), 'true');
+  check('sitemap: 84 páginas de contenido', (xml.match(/<loc>/g) || []).length, 84);
+  check('sitemap real: hreflang seis idiomas', ['en', 'pt-BR', 'de', 'fr', 'hi'].every((h) => xml.includes(`hreflang="${h}"`)), 'true');
   const onlyEs = { ...REAL_WORLD, locales: Object.fromEntries(Object.entries(LOCALES).map(([c, l]) => [c, c === 'es' ? l : { ...l, status: 'draft' }])) };
   check('sitemap: sin hreflang con un solo idioma', sitemapXml('https://x.test', onlyEs).includes('xhtml:link'), 'false');
   check('sitemap: no incluye "/" (redirige)', xml.includes('<loc>https://calculanegocio.com/</loc>'), 'false');
@@ -292,7 +292,7 @@ check('h3 -> h2.sec y h4 -> h3.sub', renderFragment('<h3>A</h3><h4>B</h4>', ctxF
 {
   const h = headModel({ locale: 'es', key: 'tool:margen', siteUrl: 'https://calculanegocio.com', indexable: false });
   check('head: canonical', h.canonical, 'https://calculanegocio.com/es/calculadora-margen-comercial/');
-  check('head: modo desarrollo = noindex', h.robots, 'noindex,nofollow');
+  check('head: modo desarrollo = noindex', h.robots, 'noindex,follow');
   check('head: indexable', headModel({ locale: 'es', key: 'home', siteUrl: 'https://a.b', indexable: true }).robots.startsWith('index,follow'), 'true');
   check('head: lang y dir', `${h.lang}/${h.dir}`, 'es/ltr');
   const hAr = headModel({ locale: 'ar', key: null, path: '/ar/', siteUrl: 'https://a.b', indexable: false }, { ...REAL_WORLD, locales: LOCALES });

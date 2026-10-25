@@ -4,6 +4,7 @@ import { SITE } from '../data/site.js';
 import { headModel } from '../i18n/seo.js';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ConsentSlot from '../components/ConsentSlot.astro';
 
 // Props: ctx (contexto del idioma, ver src/lib/context.js), pageKey (clave en la tabla de rutas; null fuera de ella),
 // path (solo si pageKey es null), title, description, ogType, jsonLd, robots.
@@ -15,6 +16,8 @@ const { ui } = ctx;
 <html lang={head.lang} dir={head.dir}>
   <head>
     <meta charset="utf-8" />
+    <meta name="google-site-verification" content="ryTMVfyc4RxAKIpxqKYdcivaRMRdP7ZirevoOgV83c0" />
+    <ConsentSlot />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -41,7 +44,6 @@ const { ui } = ctx;
       <slot />
     </main>
     <Footer ctx={ctx} />
-    {!SITE.indexable && <div class="status"><b>●</b> {ui.site.devLabel}</div>}
     <script is:inline id="search-index" type="application/json" set:html={JSON.stringify(ctx.searchIndex)} />
     <script is:inline id="page-i18n" type="application/json" set:html={JSON.stringify({ open: ui.a11y.openMenu, close: ui.a11y.closeMenu, empty: ui.search.empty, noResults: ui.toolsHub.noResults })} />
     <script>

@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { routeTable, pageKeys } from '../src/i18n/routes.js';
-import { REAL_WORLD } from '../src/i18n/publish.js';
+import { REAL_WORLD, PAGE_IDS } from '../src/i18n/publish.js';
 import { TOOL_REGISTRY, CATEGORY_REGISTRY } from '../src/domain/registry.js';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -17,7 +17,7 @@ const known = new Set(table.map((r) => r.path));
 
 // 1. Toda página publicada se genera con la plantilla dinámica y su vista existe
 const dispatcher = read(path.join(root, 'src/pages/[...slug].astro'));
-const VIEWS = { home: 'HomeView', tools: 'ToolsHubView', methodology: 'MethodologyView', category: 'CategoryView', tool: 'ToolView' };
+const VIEWS = { home: 'HomeView', tools: 'ToolsHubView', methodology: 'MethodologyView', page: 'LegalView', category: 'CategoryView', tool: 'ToolView' };
 for (const [kind, view] of Object.entries(VIEWS)) {
   if (!fs.existsSync(path.join(root, `src/views/${view}.astro`))) bad(`Falta la vista ${view}`);
   if (!dispatcher.includes(`<${view} `)) bad(`[...slug].astro no usa ${view}`);
@@ -103,12 +103,12 @@ for (const l of Object.keys(REAL_WORLD.content)) {
   const ids = new Set(table.filter((r) => r.locale === l && r.key.startsWith('tool:')).map((r) => r.key.slice(5)));
   if (ids.size && !ids.has('margen')) bad(`[${l}] la portada usa la calculadora de margen: debe estar publicada`);
 }
-if (pageKeys().length !== 3 + Object.keys(CATEGORY_REGISTRY).length + Object.keys(TOOL_REGISTRY).length) bad('pageKeys incoherente');
+if (pageKeys().length !== 3 + PAGE_IDS.length + Object.keys(CATEGORY_REGISTRY).length + Object.keys(TOOL_REGISTRY).length) bad('pageKeys incoherente');
 
 // 8. Modo desarrollo y despliegue: noindex + Disallow y redirección temporal de "/"
 const robots = read(path.join(root, 'src/pages/robots.txt.ts'));
 if (!/Disallow: \//.test(robots) || !/SITE\.indexable/.test(robots)) bad('robots.txt.ts debe bloquear todo mientras SITE.indexable sea false');
-if (!/indexable:\s*process\.env\.SITE_INDEXABLE === 'true'/.test(read(path.join(root, 'src/data/site.js')))) bad('site.js: indexable debe depender de SITE_INDEXABLE === "true"');
+if (!/indexable:\s*process\.env\.SITE_INDEXABLE !== 'false'/.test(read(path.join(root, 'src/data/site.js')))) bad('site.js: la configuración indexable debe respetar SITE_INDEXABLE=false');
 const redirects = read(path.join(root, 'public/_redirects')).split('\n').filter((l) => l.trim() && !l.startsWith('#'));
 if (redirects.length !== 1 || !/^\/\s+\/es\/\s+302$/.test(redirects[0])) bad('public/_redirects debe contener solo "/ /es/ 302"');
 

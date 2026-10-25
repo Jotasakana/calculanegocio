@@ -1,0 +1,43 @@
+---
+// Páginas informativas y legales (contacto, aviso legal, privacidad, cookies, condiciones). Una sola vista:
+// el texto de cada una sale de src/locales/<idioma>/pages/legal-<id>.html y los datos del titular de src/data/legal.js.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site.js';
+import { LEGAL } from '../data/legal.js';
+import { PAGE_IDS } from '../i18n/publish.js';
+import { breadcrumbLd } from '../lib/jsonld.js';
+import { fragment } from '../locales/fragments.js';
+import { renderFragment } from '../lib/fragments.js';
+import { legalField } from '../lib/legal.js';
+
+const { ctx, pageId } = Astro.props;
+const { ui } = ctx;
+const p = ui.legalPages[pageId];
+const crumbs = [
+  { label: ui.nav.home, href: ctx.path('home'), path: ctx.path('home') },
+  { label: p.title, path: ctx.path('page:' + pageId) },
+];
+const body = renderFragment(fragment(ctx.locale, 'pages', 'legal-' + pageId), ctx.fragmentCtx);
+const updated = legalField('updated', { ui, intl: ctx.loc.intl });
+const others = PAGE_IDS.filter((id) => id !== pageId);
+---
+<BaseLayout ctx={ctx} pageKey={'page:' + pageId} title={p.metaTitle} description={p.metaDescription} jsonLd={[breadcrumbLd(crumbs)]}>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} label={ui.a11y.breadcrumbs} />
+    <div class="pagehead">
+      <span class="kicker">{p.kicker}</span>
+      <h1>{p.title}</h1>
+      <p>{p.lead}</p>
+    </div>
+    <article class="content">
+      <div class="prose" set:html={body} />
+      <p class="legal-updated">{ui.legal.updatedLabel}: <span set:html={updated} /></p>
+      <div class="prose"><h2 class="sec">{ui.legal.relatedTitle}</h2>
+      <ul class="related">
+        <li><a href={ctx.path('methodology')}>{ui.nav.methodology}</a></li>
+        {others.map((id) => <li><a href={ctx.path('page:' + id)}>{ui.legalPages[id].title}</a></li>)}
+      </ul></div>
+    </article>
+  </div>
+</BaseLayout>

@@ -5,7 +5,7 @@
 //   'draft'   -> existe en el registro para preparar la arquitectura, pero NO genera ninguna página.
 // defaultCurrency: solo cuando la combinación idioma-región apunta a una moneda de forma inequívoca;
 // null = no se asume ninguna moneda (el usuario la elige; nunca se presupone USD por hablar inglés).
-// Un idioma se activa con contenidos 'reviewed' o, mientras el sitio esté en modo desarrollo, 'unreviewed' (ver publish.js).
+// Un idioma se activa con contenidos 'reviewed' o 'unreviewed' (traducción sin revisión nativa, ver publish.js).
 
 /** @typedef {{code:string, hreflang:string, prefix:string, dir:'ltr'|'rtl', intl:string, script:string,
  *   name:string, defaultCurrency:string, status:'enabled'|'draft', ogLocale:string}} LocaleConfig */

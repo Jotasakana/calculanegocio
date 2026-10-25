@@ -9,6 +9,7 @@
 export const slugs = {
   tools: 'calculator-suchi',
   methodology: 'karya-paddhati',
+  pages: { contact: 'sampark', legal: 'kanooni-soochna', privacy: 'gopaniyata-neeti', cookies: 'cookie-neeti', terms: 'upyog-ki-shartein' },
   categories: { 'margenes-y-precios': 'margin-aur-mulya', facturacion: 'invoice-aur-kar', crecimiento: 'laabh-aur-vikas' },
   toolPages: {
     margen: 'munafa-margin-calculator',

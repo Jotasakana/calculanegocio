@@ -1,4 +1,6 @@
 ---
+import { CONSENT } from '../data/consent.js';
+import { PAGE_IDS } from '../i18n/publish.js';
 const { ctx } = Astro.props;
 const { ui } = ctx;
 ---
@@ -8,7 +10,6 @@ const { ui } = ctx;
       <div>
         <a class="foot-brand" href={ctx.path('home')}>Calcula<span>Negocio</span></a>
         <p>{ui.footer.blurb}</p>
-        <small>{ui.footer.status}</small>
       </div>
       <div>
         <strong>{ui.footer.calculators}</strong>
@@ -22,9 +23,8 @@ const { ui } = ctx;
       <div>
         <strong>{ui.footer.info}</strong>
         <a href={ctx.path('methodology')}>{ui.footer.methodology}</a>
-        <span class="footer-soon">{ui.footer.contactSoon}</span>
-        <span class="footer-soon">{ui.footer.privacySoon}</span>
-        <span class="footer-soon">{ui.footer.legalSoon}</span>
+        {PAGE_IDS.map((id) => <a href={ctx.path('page:' + id)}>{ui.legalPages[id].footerLabel}</a>)}
+        {CONSENT.enabled && <button type="button" class="footer-link" data-cmp-open>{ui.footer.cookieSettings}</button>}
       </div>
     </div>
     <div class="footer-bottom">

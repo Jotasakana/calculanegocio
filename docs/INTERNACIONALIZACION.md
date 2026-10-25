@@ -1,6 +1,6 @@
 # Arquitectura internacional de CalculaNegocio
 
-Estado: **Fase 3B**. Publicados: `es` (fuente) y `en`, `pt-br`, `de`, `fr`, `hi` (estado `unreviewed`, solo en modo desarrollo). Los idiomas
+Estado: **Fase 7A** (arquitectura de la Fase 3B). Publicados e indexables: `es` (fuente) y `en`, `pt-br`, `de`, `fr`, `hi` (estado `unreviewed`: traducción asistida sin revisión nativa, publicada igualmente). 114 páginas: 84 indexables y 30 legales con `noindex`. Los idiomas
 restantes están registrados pero **no generan ninguna página**. Novedades de la 3B: alemán, francés e hindi; selector con seis idiomas;
 lectura de números con agrupación india; ajustes tipográficos del devanagari (ver `CAMBIOS-FASE3B.md`).
 
@@ -71,7 +71,7 @@ mercados "verificados", y detecta traducciones sin hacer (>15 % de textos idént
 
 ## Fase 3B: alemán, francés e hindi
 
-* Las tres traducciones están en `src/locales/{de,fr,hi}/` con la misma estructura que `es/`. Estado `unreviewed`: solo se publican con `SITE_INDEXABLE` ≠ `true`.
+* Las tres traducciones están en `src/locales/{de,fr,hi}/` con la misma estructura que `es/`. Estado `unreviewed`: sin revisión nativa; se publican (`UNREVIEWED_OK` en `src/i18n/publish.js`).
 * Impuestos: `de`, `fr` y `hi` pertenecen al **mercado genérico** (como `en` y `pt-br`): el usuario escribe el porcentaje (ejemplo 10 %), con aviso visible,
   moneda elegible y sin insignia de país. No hay calculadora de Umsatzsteuer/MwSt, TVA ni GST ni se citan tipos o autoridades de esos países.
 * Monedas: `de` y `fr` no presuponen moneda (se elige en el selector; EUR, CHF y CAD están en la lista); `hi` usa INR por defecto.

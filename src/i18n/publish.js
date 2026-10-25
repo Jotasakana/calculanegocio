@@ -1,5 +1,6 @@
 // ¿Qué se publica? Un contenido se publica solo si su idioma está habilitado, su estado editorial es
-// 'source' o 'reviewed' y, si la calculadora es fiscal, el idioma pertenece a un mercado verificado.
+// 'source', 'reviewed' o 'unreviewed' (este último mientras UNREVIEWED_OK sea true) y, si la calculadora es fiscal,
+// el idioma pertenece a un mercado habilitado.
 // Lo que no se publica no genera página, ni entrada en el selector, el sitemap o hreflang.
 //
 // Todas las funciones aceptan un `world` ({ locales, content, markets }) para poder probarlas con datos
@@ -13,11 +14,16 @@ import { CATALOG, CATALOG_CATEGORIES } from '../domain/catalog.js';
 
 // Estados editoriales:
 //   source / reviewed  -> se publican siempre.
-//   unreviewed         -> traducción hecha pero SIN revisión nativa registrada: solo se publica en el modo de
-//                         desarrollo (SITE_INDEXABLE distinto de "true"). Al activar la indexación desaparece sola
-//                         hasta que una persona la revise y se registre como 'reviewed'. Nunca se simula una revisión.
+//   unreviewed         -> traducción hecha pero SIN revisión nativa registrada. Con UNREVIEWED_OK = true (valor actual)
+//                         se publica y se indexa igual que el resto; no depende de SITE_INDEXABLE. Nunca se simula una
+//                         revisión: pasa a 'reviewed' solo cuando una persona la revise y se registre con revisor, fecha y ámbito.
+// Páginas informativas y legales (clave 'page:<id>'). Cada idioma debe tener su slug y su fragmento pages/legal-<id>.html.
+export const PAGE_IDS = ['contact', 'legal', 'privacy', 'cookies', 'terms'];
+
 export const PUBLISHABLE = new Set(['source', 'reviewed']);
-const UNREVIEWED_OK = process.env.SITE_INDEXABLE !== 'true';
+// Mantener los idiomas sin revisión nativa disponibles para los visitantes (hoy: en, pt-br, de, fr, hi).
+// La etiqueta noindex se decide por página en seo.js (solo las legales); ninguna revisión se simula.
+const UNREVIEWED_OK = true;
 export const isPublishableStatus = (status, world) => PUBLISHABLE.has(status) || (status === 'unreviewed' && (world?.allowUnreviewed ?? UNREVIEWED_OK));
 
 export const REAL_WORLD = { locales: LOCALES, content: CONTENT, markets: MARKETS, tools: TOOL_REGISTRY, categories: CATEGORY_REGISTRY, catalog: CATALOG, catalogCategories: CATALOG_CATEGORIES };
@@ -48,7 +54,7 @@ export function toolAvailable(localeCode, toolId, world = REAL_WORLD) {
   return marketFor(localeCode, toolId, world) !== null;
 }
 
-/** pageKey: 'home' | 'tools' | 'methodology' | 'category:<id>' | 'tool:<id>' */
+/** pageKey: 'home' | 'tools' | 'methodology' | 'page:<id>' | 'category:<id>' | 'tool:<id>' */
 export function isPublished(localeCode, pageKey, world = REAL_WORLD) {
   if (world.locales[localeCode]?.status !== 'enabled' || !world.content[localeCode]) return false;
   if (!isPublishableStatus(reviewOf(localeCode, pageKey, world).status, world)) return false;
@@ -60,11 +66,10 @@ export function isPublished(localeCode, pageKey, world = REAL_WORLD) {
   return true;
 }
 
-// Un idioma cuenta como publicado solo si tiene al menos UNA página publicada. Con la indexación activada (SITE_INDEXABLE=true)
-// los idiomas 'unreviewed' no generan ninguna página: no deben aparecer en el selector, en hreflang ni en el sitemap
-// (antes de la Fase 3B el selector habría enlazado entonces a páginas inexistentes).
+// Un idioma cuenta como publicado solo si tiene al menos UNA página publicada. Si un idioma no publica ninguna página
+// (p. ej. 'unreviewed' con UNREVIEWED_OK = false) no debe aparecer en el selector, en hreflang ni en el sitemap.
 const hasPublishedPage = (code, world) =>
-  ['home', 'tools', 'methodology', ...Object.keys(world.categories).map((id) => 'category:' + id), ...Object.keys(world.tools).map((id) => 'tool:' + id)]
+  ['home', 'tools', 'methodology', ...PAGE_IDS.map((id) => 'page:' + id), ...Object.keys(world.categories).map((id) => 'category:' + id), ...Object.keys(world.tools).map((id) => 'tool:' + id)]
     .some((key) => isPublished(code, key, world));
 
 export const publishedLocales = (world = REAL_WORLD) =>

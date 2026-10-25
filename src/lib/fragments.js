@@ -5,6 +5,8 @@
 //   {{home}} {{tools}} {{methodology}}        URL de esas páginas, en el idioma de la página
 //   {{tool:ID}} {{category:ID}}               URL de una calculadora / categoría
 //   {{tool.title:ID}} {{category.title:ID}}   su título en el idioma de la página
+//   {{page:ID}}                               URL de una página legal (contact, legal, privacy, cookies, terms)
+//   {{legal:CAMPO}}                           dato legal del titular (src/data/legal.js), ya escapado
 // Un marcador que no se pueda resolver detiene el build (nunca se publica un enlace roto).
 
 const PLACEHOLDER = /\{\{([\w.-]+)(?::([\w-]+))?\}\}/g;
@@ -17,6 +19,8 @@ export function applyPlaceholders(html, ctx) {
   return html.replace(PLACEHOLDER, (all, name, id) => {
     if (name === 'home' || name === 'tools' || name === 'methodology') return ctx.path(name);
     if (name === 'tool' || name === 'category') return ctx.path(`${name}:${id}`);
+    if (name === 'page') return ctx.path(`page:${id}`);
+    if (name === 'legal') { if (!ctx.legal) throw new Error(`Marcador legal sin contexto: ${all}`); return ctx.legal(id); }
     if (name === 'tool.title') return ctx.title('tool', id);
     if (name === 'category.title') return ctx.title('category', id);
     throw new Error(`Marcador desconocido en un fragmento: ${all}`);

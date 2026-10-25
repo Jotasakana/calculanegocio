@@ -1,6 +1,7 @@
 // Comprobaciones multilingües sobre dist/ (HTML real): idioma de cada página, selector de idioma, hreflang recíproco,
 // canonical, noindex, enlaces internos, URLs inexistentes y textos del idioma equivocado. Sin navegador.
 // Uso: node scripts/check-languages.mjs [carpeta=dist]
+import { LEGAL } from '../src/data/legal.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { routeTable, pathFor } from '../src/i18n/routes.js';
@@ -9,7 +10,7 @@ import { REAL_WORLD, publishedLocales } from '../src/i18n/publish.js';
 const root = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, '..', 'dist'));
 if (!fs.existsSync(root)) { console.error(`No existe ${root}. Ejecuta antes: npm run build`); process.exit(1); }
 const site = (process.env.SITE_URL || 'https://calculanegocio.com').replace(/\/$/, '');
-const indexed = process.env.SITE_INDEXABLE === 'true';
+const indexed = process.env.SITE_INDEXABLE !== 'false';
 const problems = [];
 const bad = (m) => problems.push(m);
 let checks = 0;
@@ -29,6 +30,9 @@ const visibleText = (html) => {
   const text = body.replace(/<[^>]+>/g, ' ');
   return (text + ' ' + attrs.join(' ')).replace(/&[a-z]+;|&#\d+;/gi, ' ').replace(/https?:\/\/\S+/g, ' ').replace(/CalculaNegocio/g, ' ').replace(/\s+/g, ' ');
 };
+// Nombres propios que se escriben tal cual en todos los idiomas: la dirección postal del titular (src/data/legal.js) y la
+// lista de nombres de impuestos de las condiciones de uso ("IVA, VAT, GST, ICMS…"), que cita el IVA español a propósito.
+const PROPER_NAMES = [new RegExp(LEGAL.address.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), /\((?:IVA|TVA),[^)]*\)/g];
 const SPANISH = /\b(margen|recargo|coste|costes|precio|aut[oó]nomos?|descuentos?|herramientas?|Espa[ñn]a|IVA|IRPF|desarrollo|disponibles?)\b|[¿¡ñ]/i;
 const ENGLISH = /\b(the|and|your|with|calculator|margin)\b/i;
 // Palabras que existen en el idioma revisado y coinciden con el patrón español: se excluyen solo en ese idioma.
@@ -41,7 +45,7 @@ for (const r of table) {
   ok(new RegExp(`<html\\b[^>]*\\blang="${loc.hreflang}"`, 'i').test(html), `${r.path}: lang debería ser ${loc.hreflang}`);
   ok(html.includes(`<link rel="canonical" href="${site}${r.path}"`), `${r.path}: canonical propio incorrecto`);
   const robots = html.match(/<meta\b[^>]*name="robots"[^>]*>/i)?.[0] ?? '';
-  ok(indexed ? !/noindex/i.test(robots) : /noindex,nofollow/i.test(robots), `${r.path}: robots inesperado (${robots})`);
+  ok(indexed ? (r.key.startsWith('page:') ? /noindex/i.test(robots) : !/noindex/i.test(robots)) : /noindex,follow/i.test(robots), `${r.path}: robots inesperado (${robots})`);
   ok(/<meta\b[^>]*property="og:locale"[^>]*content="[a-z]{2}_[A-Z]{2}"/i.test(html) || /content="[a-z]{2}_[A-Z]{2}"[^>]*property="og:locale"/i.test(html), `${r.path}: falta og:locale`);
 
   // hreflang: exactamente las versiones equivalentes, recíprocas y absolutas
@@ -79,7 +83,8 @@ for (const r of table) {
 
   // Idioma de los textos
   const text = visibleText(html);
-  const textEs = SPANISH_OK[r.locale] ? text.replace(SPANISH_OK[r.locale], ' ') : text;
+  const textNoNames = PROPER_NAMES.reduce((t, re) => t.replace(re, ' '), text);
+  const textEs = SPANISH_OK[r.locale] ? textNoNames.replace(SPANISH_OK[r.locale], ' ') : textNoNames;
   if (r.locale !== 'es') ok(!SPANISH.test(textEs), `${r.path}: restos de español → «${textEs.match(SPANISH)?.[0]}» …${textEs.slice(Math.max(0, textEs.search(SPANISH) - 30), textEs.search(SPANISH) + 40)}`);
   if (!['es', 'en'].includes(r.locale)) {
     const textEn = ENGLISH_OK[r.locale] ? text.replace(ENGLISH_OK[r.locale], ' ') : text;
@@ -118,9 +123,10 @@ for (const r of table) {
 // Sitemap multilingüe
 {
   const xml = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
-  ok((xml.match(/<loc>/g) || []).length === table.length, 'sitemap: número de URLs');
-  for (const r of table) ok(xml.includes(`<loc>${site}${r.path}</loc>`), `sitemap: falta ${r.path}`);
-  for (const l of locales) ok((xml.match(new RegExp(`hreflang="${REAL_WORLD.locales[l].hreflang}"`, 'g')) || []).length === table.length / locales.length * locales.length, `sitemap: hreflang ${REAL_WORLD.locales[l].hreflang} por cada URL`);
+  const indexedRoutes = indexed ? table.filter((r) => !r.key.startsWith('page:')) : table;
+  ok((xml.match(/<loc>/g) || []).length === indexedRoutes.length, 'sitemap: número de URLs');
+  for (const r of indexedRoutes) ok(xml.includes(`<loc>${site}${r.path}</loc>`), `sitemap: falta ${r.path}`);
+  for (const l of locales) ok((xml.match(new RegExp(`hreflang="${REAL_WORLD.locales[l].hreflang}"`, 'g')) || []).length === (indexed ? indexedRoutes.length : table.length), `sitemap: hreflang ${REAL_WORLD.locales[l].hreflang} por cada URL`);
   ok(!/\/(it|nl|pl|ar|id|ja|zh|ru|uk|cs)\//.test(xml), 'sitemap: contiene idiomas no publicados');
 }
 // No se generan carpetas de idiomas no publicados

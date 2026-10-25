@@ -1,6 +1,6 @@
 {
   "name": "calculanegocio",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "private": true,
   "type": "module",
   "description": "CalculaNegocio — calculadoras gratuitas para autónomos y pequeños negocios (Astro, HTML estático; español, inglés, portugués de Brasil, alemán, francés e hindi).",
@@ -8,8 +8,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "node scripts/test-calculators.mjs && node scripts/test-fase4.mjs && node scripts/test-i18n.mjs && node scripts/test-languages.mjs && node scripts/test-catalog.mjs && node scripts/check-i18n.mjs && node scripts/check-source.mjs",
-    "test:dist": "node scripts/check-site.mjs && node scripts/check-languages.mjs",
+    "test": "node scripts/test-calculators.mjs && node scripts/test-fase4.mjs && node scripts/test-i18n.mjs && node scripts/test-languages.mjs && node scripts/test-catalog.mjs && node scripts/check-i18n.mjs && node scripts/check-source.mjs && node scripts/check-privacy.mjs",
+    "test:dist": "node scripts/check-site.mjs && node scripts/check-languages.mjs && node scripts/check-privacy.mjs",
     "test:layout": "node scripts/check-layout.mjs",
     "test:a11y": "node scripts/check-a11y.mjs",
     "test:behavior": "node scripts/check-behavior.mjs",
