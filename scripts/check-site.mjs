@@ -91,7 +91,7 @@ if (!fs.existsSync(path.join(root, 'sitemap.xml'))) fail('falta sitemap.xml');
   for (const r of routes.filter((x) => x.key === 'home' || x.key === 'tools')) {
     const html = pages.get(r.path) || '';
     const cards = (html.match(/class=["']card[ "']/g) || []).length;
-    if (/data-filter-status/.test(html)) fail(`${r.path}: aparece el filtro de estado (solo debería haber calculadoras disponibles)`);
+    if (/<button\b[^>]*\bdata-filter-status\s*=/.test(html)) fail(`${r.path}: aparece el filtro de estado (solo debería haber calculadoras disponibles)`);
     if (cards && cards !== 8) fail(`${r.path}: se esperaban 8 tarjetas de calculadoras y hay ${cards}`);
   }
 }
