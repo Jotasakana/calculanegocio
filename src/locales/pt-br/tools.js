@@ -39,7 +39,7 @@ export const categories = {
   crecimiento: {
     title: 'Rentabilidade e crescimento',
     kicker: 'CATEGORIA',
-    short: 'Variação, ponto de equilíbrio, ROI e publicidade',
+    short: 'Ponto de equilíbrio e ROI de um investimento',
     description:
       'Calculadoras para saber quantas unidades você precisa vender para cobrir seus custos fixos e que retorno um investimento deixa.',
   },

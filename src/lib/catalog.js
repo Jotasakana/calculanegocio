@@ -6,6 +6,8 @@
 //    (p. ej. una fiscal fuera de su mercado) NO se muestra: no se promete algo que no existe en ese idioma.
 //  · Una calculadora fuera del registro se muestra «en desarrollo», sin enlace, si el idioma tiene su texto
 //    y (si es fiscal) pertenece al mercado de ese idioma.
+//  · Con `includePlanned: false` (así lo usa el sitio desde la Fase 7A) las calculadoras «en desarrollo» NO se muestran:
+//    el catálogo anuncia solo las que ya funcionan. No cambia rutas, sitemap ni hreflang (las planificadas nunca tuvieron URL).
 //  · Las categorías sin ninguna tarjeta en ese idioma no aparecen. Solo tienen página las que publica la tabla de rutas.
 
 import { marketFor } from '../i18n/publish.js';
@@ -17,8 +19,9 @@ export const STATUS = { available: 'available', planned: 'planned' };
  * @param {string} localeCode
  * @param {(pageKey:string)=>boolean} published
  * @param {(pageKey:string)=>string} pathOf
+ * @param {{ includePlanned?: boolean }} [options] por defecto true (comportamiento histórico, usado por las pruebas)
  */
-export function buildCatalog(world, localeCode, published, pathOf) {
+export function buildCatalog(world, localeCode, published, pathOf, { includePlanned = true } = {}) {
   const content = world.content[localeCode];
   const entries = world.catalog ?? [];
   const catIds = world.catalogCategories ?? Object.keys(world.categories);
@@ -35,6 +38,7 @@ export function buildCatalog(world, localeCode, published, pathOf) {
       });
       continue;
     }
+    if (!includePlanned) continue;
     const txt = content.catalog?.planned?.[e.id];
     if (!txt) continue; // check-i18n avisa si falta el texto
     if (e.scope === 'fiscal' && !world.markets[e.market]?.locales.includes(localeCode)) continue;

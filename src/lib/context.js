@@ -7,10 +7,12 @@ import { pathFor } from '../i18n/routes.js';
 import { createCalculator } from './present.js';
 import { currencyOptions } from '../i18n/currencies.js';
 import { buildCatalog } from './catalog.js';
-import { FEATURED_TOOLS } from '../domain/catalog.js';
+import { FEATURED_TOOLS, SHOW_PLANNED_TOOLS } from '../domain/catalog.js';
 import { fill } from './fill.js';
 import { withToc } from './toc.js';
 import { legalField } from './legal.js';
+import { LEGAL } from '../data/legal.js';
+import { TRUST } from '../data/trust.js';
 
 export function buildContext(localeCode, world = REAL_WORLD) {
   const loc = world.locales[localeCode];
@@ -54,7 +56,17 @@ export function buildContext(localeCode, world = REAL_WORLD) {
   const categoryById = Object.fromEntries(categories.map((c) => [c.id, c]));
 
   const defaultCurrency = loc.defaultCurrency;
-  const catalog = buildCatalog(world, localeCode, published, path);
+  const catalog = buildCatalog(world, localeCode, published, path, { includePlanned: SHOW_PLANNED_TOOLS });
+  // Señales de confianza (solo datos verificables, ver src/data/trust.js). Los enlaces son null si la página no se publica.
+  const maybePath = (key) => (published(key) ? path(key) : null);
+  const trust = {
+    updatedIso: TRUST.contentUpdated,
+    updated: new Intl.DateTimeFormat(loc.intl, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(TRUST.contentUpdated + 'T00:00:00Z')),
+    publisher: LEGAL.tradeName,
+    methodologyPath: maybePath('methodology'),
+    legalPath: maybePath('page:legal'),
+    contactPath: maybePath('page:contact'),
+  };
   const featuredTools = FEATURED_TOOLS.filter((id) => toolById[id]).map((id) => toolById[id]);
 
   /**
@@ -77,7 +89,7 @@ export function buildContext(localeCode, world = REAL_WORLD) {
     path,
     versions,
     tools, toolById, categories, categoryById,
-    catalog, featuredTools,
+    catalog, featuredTools, trust,
     /** Rellena los marcadores {x} de un texto de interfaz. */
     fill,
     /** Añade ids a los apartados de un fragmento y devuelve el índice: { html, toc:[{id,title}] }. */

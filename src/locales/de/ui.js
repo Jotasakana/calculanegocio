@@ -6,7 +6,6 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Rechner für Selbstständige und kleine Unternehmen',
-    devLabel: 'PRIVATE DEMO · v0.10 · Übersetzung wartet auf muttersprachliche Prüfung',
   },
   a11y: {
     skip: 'Zum Inhalt springen',
@@ -26,7 +25,6 @@ export const ui = {
   },
   footer: {
     blurb: 'Kostenlose Werkzeuge, um die Zahlen hinter Ihrem Unternehmen zu verstehen.',
-    status: 'Projekt in Entwicklung',
     calculators: 'Rechner',
     explore: 'Entdecken',
     allTools: 'Alle Rechner',
@@ -37,9 +35,6 @@ export const ui = {
     market: 'Für kleine Unternehmen weltweit entwickelt',
   },
   legal: {
-    draftTitle: 'Entwurf – Prüfung ausstehend.',
-    draftNotice: 'Dieser Text wurde auf Grundlage der vom Inhaber mitgeteilten Angaben erstellt und ist noch kein endgültiges Rechtsdokument: Es stehen noch Prüfungen aus. Bitte betrachten Sie ihn erst als endgültigen Rechtstext, wenn dieser Hinweis entfernt wurde.',
-    devNote: 'Entwicklungshinweis: Die Website ist eine private, nicht indexierbare Demo. Diese Seiten werden als endgültig veröffentlicht, sobald die ausstehenden Prüfungen abgeschlossen sind.',
     emailPending: '(vorgeschlagene Adresse, Verifizierung ausstehend: noch kein verfügbarer Kontaktkanal)',
     contactPending: 'Die Kontakt-E-Mail ist noch nicht in Betrieb; sie wird hier veröffentlicht, sobald sie verifiziert ist.',
     contactOperative: 'Sie können uns unter der angegebenen E-Mail-Adresse schreiben.',
@@ -50,7 +45,7 @@ export const ui = {
     contact: {
       footerLabel: 'Kontakt',
       metaTitle: 'Kontakt | CalculaNegocio',
-      metaDescription: 'Angaben zum Inhaber von CalculaNegocio und Status der Kontakt-E-Mail (Verifizierung ausstehend).',
+      metaDescription: 'Angaben zum Inhaber von CalculaNegocio und Kontakt-E-Mail.',
       kicker: 'INFORMATION',
       title: 'Kontakt',
       lead: 'Wer hinter der Website steht und wie Sie uns erreichen.',
@@ -129,7 +124,7 @@ export const ui = {
     ],
     catalogKicker: 'KATALOG',
     catalogTitle: 'Ein Katalog mit {total} Rechnern für Ihr Unternehmen',
-    catalogLead: '{available} jetzt verfügbar und {planned} in Entwicklung. Suchen Sie nach dem Namen oder filtern Sie nach Thema und Status.',
+    catalogLead: '{available} Rechner verfügbar. Suchen Sie nach dem Namen oder filtern Sie nach Thema.',
     catalogAll: 'Gesamten Katalog ansehen',
     contrastKicker: 'DAMIT SIE SICH NICHT VERRECHNEN',
     contrastTitle: 'Marge und Aufschlag sind nicht dasselbe',
@@ -172,7 +167,6 @@ export const ui = {
       'Lesen Sie die Annahmen des jeweiligen Rechners.',
       'Bei steuerlichen Pflichten wenden Sie sich an amtliche Quellen oder Ihre Beratung.',
     ],
-    devNote: 'Hinweis zur Entwicklung: Die rechtlichen Seiten und die Prüfung der steuerlichen Regeln werden vor dem Start abgeschlossen.',
     faqKicker: 'HÄUFIGE FRAGEN',
     faqTitle: 'Was am häufigsten gefragt wird',
     faq: [
@@ -185,9 +179,16 @@ export const ui = {
     ctaText: 'Halten Sie die Kosten Ihres Produkts oder Ihrer Leistung bereit und rechnen Sie in weniger als einer Minute.',
     ctaButton: 'Zum Rechner',
   },
+  trust: {
+    updated: 'Inhalt aktualisiert',
+    tests: 'Formeln durch automatisierte Tests geprüft',
+    method: 'So rechnen wir',
+    publisher: 'Herausgegeben von',
+    contact: 'Kontakt',
+  },
   toolsHub: {
     metaTitle: 'Kostenlose Rechner für Selbstständige | CalculaNegocio',
-    metaDescription: 'Der Katalog von CalculaNegocio: verfügbare Rechner (Gewinnmarge, Aufschlag, Rabatte, Verkaufspreis, Rentabilität, Gewinnschwelle, ROI, Nettobetrag) und Rechner in Entwicklung.',
+    metaDescription: 'Der Katalog von CalculaNegocio: Gewinnmarge, Aufschlag, Rabatte, Verkaufspreis, Rentabilität, Gewinnschwelle, ROI und Nettobetrag.',
     kicker: 'RECHNERKATALOG',
     title: 'Rechner für Selbstständige und kleine Unternehmen',
     lead: 'Werkzeuge für Marge, Preis, Rabatte, Gewinnschwelle, ROI und die Steuer Ihrer Rechnungen. Jeder erklärt seine Formel und enthält durchgerechnete Beispiele.',
@@ -214,7 +215,6 @@ export const ui = {
     kicker: 'TRANSPARENZ',
     title: 'Methodik und Umfang',
     lead: 'Was die Werkzeuge berechnen, nach welchen Kriterien und wie weit sie reichen.',
-    devNote: 'Hinweis zur Entwicklung: Diese Seite beschreibt die aktuelle Funktionsweise und wird vor dem Start erweitert.',
     calculators: 'Rechner',
   },
   tool: {
@@ -229,7 +229,6 @@ export const ui = {
     noscript: 'Aktivieren Sie JavaScript, damit beim Ändern der Zahlen neu gerechnet wird. Angezeigt wird das Ergebnis des Beispiels.',
     currencyLabel: 'Währung',
     currencyNone: 'Ohne Währung',
-    devNote: 'Hinweis zur Entwicklung: Die erklärenden Inhalte werden derzeit geprüft. Steuerliche Angaben müssen vor dem Start validiert werden.',
     genericTax: 'Diese Version wendet den Steuersatz an, den Sie eingeben. Sie kennt die Steuervorschriften keines Landes: Prüfen Sie Satz und Berechnungsweise anhand amtlicher Quellen oder mit Ihrer Beratung.',
     fiscalPending: 'Der steuerliche Teil dieses Rechners wartet auf die Prüfung durch eine Fachperson. Bis dahin ist er als Orientierung zu verstehen.',
     formulasKicker: 'WICHTIGE FORMELN',

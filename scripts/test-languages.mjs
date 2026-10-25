@@ -8,6 +8,7 @@ import { TOOL_REGISTRY } from '../src/domain/registry.js';
 import { validateWorld } from '../src/i18n/validate.js';
 import { sitemapXml } from '../src/i18n/sitemap.js';
 import { headModel } from '../src/i18n/seo.js';
+import { buildCatalog } from '../src/lib/catalog.js';
 
 let fails = 0, total = 0;
 function check(name, got, want) {
@@ -128,9 +129,11 @@ for (const key of ALL_KEYS) {
   check('moneda por defecto: de y fr ninguna (no se presupone), hi INR', ['de', 'fr', 'hi'].map((l) => buildContext(l).defaultCurrency).join(), ',,INR');
   check('es: aviso fiscal pendiente conservado', es.toolById.iva.fiscalPending, true);
   check('idiomas genéricos: el catálogo no muestra la insignia de país', others.every((c) => c.catalog.items.every((i) => !i.fiscal)), true);
-  check('es: el catálogo conserva la insignia «España»', es.catalog.items.filter((i) => i.fiscal).map((i) => i.id).sort().join(), 'equivalencia,irpf,iva,precio');
+  check('es: el catálogo conserva la insignia «España» (solo IVA y precio, que existen)', es.catalog.items.filter((i) => i.fiscal).map((i) => i.id).sort().join(), 'iva,precio');
+  check('Fase 7A: el catálogo solo muestra las 8 calculadoras disponibles (ninguna «en desarrollo»)', [es, ...others].every((c) => c.catalog.counts.total === 8 && c.catalog.counts.available === 8 && c.catalog.counts.planned === 0 && c.catalog.items.every((i) => i.status === 'available' && i.path)), true);
   check('idiomas genéricos: sin IRPF ni recargo de equivalencia (solo España)', others.every((c) => !c.catalog.items.some((i) => ['irpf', 'equivalencia'].includes(i.id))), true);
-  check('idiomas genéricos: 16 en el catálogo, 8 disponibles', others.map((c) => `${c.catalog.counts.total}/${c.catalog.counts.available}`).join(), TRANSLATED.map(() => '16/8').join());
+  check('idiomas genéricos: 8 en el catálogo, 8 disponibles', others.map((c) => `${c.catalog.counts.total}/${c.catalog.counts.available}`).join(), TRANSLATED.map(() => '8/8').join());
+  check('buildCatalog con includePlanned:true conserva el comportamiento anterior (16 / 8) en idiomas genéricos', TRANSLATED.map((l) => { const c = buildCatalog(REAL_WORLD, l, (k) => isPublished(l, k), (k) => pathFor(l, k), { includePlanned: true }).counts; return `${c.total}/${c.available}`; }).join(), TRANSLATED.map(() => '16/8').join());
   check('catálogo: las 12 calculadoras no españolas restantes y 4 disponibles (sin enlaces a páginas inexistentes)', others.every((c) => c.catalog.items.filter((i) => i.status === 'planned').every((i) => !i.href)), true);
 }
 

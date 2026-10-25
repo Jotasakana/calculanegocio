@@ -97,11 +97,18 @@ try {
     ok((await page.$$('#searchResults .empty')).length === 1, 'portada: el buscador no avisa de «sin resultados»');
     // filtros del catálogo
     const count = async () => (await page.$$('[data-filter-item]:not(.is-filtered-out)')).length;
-    await page.click('[data-filter-status="planned"]');
-    ok((await count()) === expected.planned, `filtro «en desarrollo»: ${await count()} ≠ ${expected.planned}`);
-    await page.click('[data-filter-status="available"]');
-    ok((await count()) === expected.available, `filtro «disponibles»: ${await count()} ≠ ${expected.available}`);
-    await page.click('[data-filter-status=""]');
+    if (expected.planned > 0) {
+      await page.click('[data-filter-status="planned"]');
+      ok((await count()) === expected.planned, `filtro «en desarrollo»: ${await count()} ≠ ${expected.planned}`);
+      await page.click('[data-filter-status="available"]');
+      ok((await count()) === expected.available, `filtro «disponibles»: ${await count()} ≠ ${expected.available}`);
+      await page.click('[data-filter-status=""]');
+    } else {
+      // Fase 7A: solo hay calculadoras disponibles; no debe existir el filtro de estado ni tarjetas «en desarrollo».
+      ok((await page.$$('[data-filter-status]')).length === 0, 'portada: aparece el filtro de estado sin calculadoras en desarrollo');
+      ok((await page.$$('[data-filter-item].is-planned, .card.is-planned')).length === 0, 'portada: hay tarjetas «en desarrollo»');
+      ok(expected.total === 8 && expected.available === 8, `portada: se esperaban 8 calculadoras disponibles y hay ${expected.available}/${expected.total}`);
+    }
     await page.click(`[data-filter-category="${ctx.catalog.categories[0].id}"]`);
     ok((await count()) === ctx.catalog.categories[0].total, 'filtro por tema: recuento incorrecto');
     await page.click('[data-filter-category=""]');

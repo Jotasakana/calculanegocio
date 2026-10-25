@@ -42,7 +42,7 @@ export const categories = {
   crecimiento: {
     title: 'Rentabilität und Wachstum',
     kicker: 'KATEGORIE',
-    short: 'Veränderung, Gewinnschwelle, ROI und Werbung',
+    short: 'Gewinnschwelle und ROI einer Investition',
     description:
       'Rechner, um herauszufinden, wie viele Einheiten Sie verkaufen müssen, um Ihre Fixkosten zu decken, und welche Rendite eine Investition bringt.',
   },

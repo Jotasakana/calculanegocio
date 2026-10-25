@@ -1,9 +1,15 @@
 # CalculaNegocio (Astro · HTML estático)
 
-Calculadoras gratuitas para autónomos y pequeños negocios. Versión **v0.10** (Fase 4: ocho calculadoras): **español, inglés, portugués de Brasil, alemán, francés e hindi** con selector de idioma en la cabecera, sobre la arquitectura
-internacional de la Fase 2A (fórmulas, textos, configuración regional y componentes separados). Inglés, portugués, alemán, francés e hindi están
-*sin revisión nativa*: solo se publican mientras el sitio esté en modo desarrollo (ver `CAMBIOS-FASE3A.md` y `CAMBIOS-FASE3B.md`).
-**Modo desarrollo**: `noindex` en todas las páginas y `robots.txt` con `Disallow: /`. No publicar ni activar AdSense sin autorización.
+Calculadoras gratuitas para autónomos y pequeños negocios. Versión **v0.11** (Fase 7A): **ocho calculadoras** en **español, inglés, portugués de Brasil, alemán, francés e hindi**, con selector de idioma en la cabecera, sobre la arquitectura
+internacional de la Fase 2A (fórmulas, textos, configuración regional y componentes separados).
+
+**Estado real del sitio (publicado e indexable):**
+* **114 páginas**: 84 indexables (14 por idioma × 6: portada, calculadoras, metodología, 3 categorías y 8 calculadoras) con `index,follow`, y **30 páginas legales** (5 por idioma × 6: contacto, aviso legal, privacidad, cookies y condiciones) con `noindex,follow`.
+* `sitemap.xml` lista exactamente las **84 URL indexables** (cada una con sus 6 alternativas hreflang + `x-default`); las legales no entran.
+* Inglés, portugués de Brasil, alemán, francés e hindi son traducciones asistidas **sin revisión nativa** (estado `unreviewed`); se publican igualmente y no se simula ninguna revisión (ver `src/locales/*/review.js`).
+* `SITE_INDEXABLE`: sin definir (o con cualquier valor distinto de `false`) el sitio es indexable; solo el valor exacto `false` da `noindex` + `robots.txt` con `Disallow` (previews y pruebas locales). Está **pendiente** decidir un valor por defecto «seguro» tras verificar las variables de Cloudflare (ver `PENDIENTES-FASE7A.md`).
+* No hay publicidad, analítica ni cookies. Antes de activar AdSense u otra medición: CMP certificada y actualizar privacidad/cookies (`docs/CMP-GOOGLE-TCF.md`).
+
 Fase 4 (recargo, descuentos, punto de equilibrio y ROI): [`CAMBIOS-FASE4.md`](CAMBIOS-FASE4.md).
 Detalles de la arquitectura: [`docs/INTERNACIONALIZACION.md`](docs/INTERNACIONALIZACION.md) · cambios: [`CAMBIOS-v0.6.md`](CAMBIOS-v0.6.md).
 
@@ -30,7 +36,8 @@ Se generan desde la tabla de rutas (`src/i18n/routes.js`): `/<idioma>/<slug>/`. 
 | URL | Contenido |
 |---|---|
 | `/` | Redirección temporal (302) a `/es/` (sin detección de idioma) |
-| `/en/…`, `/pt-br/…`, `/de/…`, `/fr/…`, `/hi/…` | Mismas 14 páginas en inglés, portugués de Brasil, alemán, francés e hindi (slugs traducidos) |
+| `/en/…`, `/pt-br/…`, `/de/…`, `/fr/…`, `/hi/…` | Mismas 14 páginas indexables en inglés, portugués de Brasil, alemán, francés e hindi (slugs traducidos) |
+| `…/contacto/`, aviso legal, privacidad, cookies y condiciones (cada idioma con sus slugs) | 5 páginas legales por idioma (30 en total), `noindex,follow`, fuera del sitemap |
 | `/es/` | Portada (Home v0.3) |
 | `/es/herramientas/` | Catálogo con filtros y búsqueda |
 | `/es/metodologia/` | Criterios, redondeo, privacidad y límites |
@@ -52,8 +59,9 @@ src/styles/       site.css (propiedades lógicas, RTL)
 scripts/          pruebas y comprobaciones
 ```
 
-## Para publicar (cuando se autorice)
+## Despliegue
 
-Definir `SITE_URL` y `SITE_INDEXABLE=true` en el entorno de build. Con ello desaparecen `noindex`, la etiqueta "DEMO PRIVADA" y
-los avisos de desarrollo, y `robots.txt` anuncia el sitemap. Antes: páginas legales, validación fiscal con fuentes oficiales y
-consentimiento (CMP) si se usa AdSense.
+Cloudflare Pages construye `main` con `npm run build` (salida `dist/`). `SITE_URL` por defecto es `https://calculanegocio.com`.
+No hace falta definir `SITE_INDEXABLE` en producción (el sitio es indexable salvo que valga exactamente `false`). `robots.txt` anuncia el sitemap.
+Pendiente de cerrar (no son parte de esta entrega de código): revisión jurídica final de las páginas legales, validación fiscal con fuentes oficiales,
+revisión nativa de las traducciones y, si algún día se usa publicidad, CMP certificada. Detalle en `PENDIENTES-FASE7A.md` y `DATOS-LEGALES-PENDIENTES.md`.

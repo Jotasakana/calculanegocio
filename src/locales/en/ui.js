@@ -6,7 +6,6 @@ export const ui = {
   site: {
     name: 'CalculaNegocio',
     tagline: 'Calculators for freelancers and small businesses',
-    devLabel: 'PRIVATE DEMO · v0.10 · translation pending native review',
   },
   a11y: {
     skip: 'Skip to content',
@@ -26,7 +25,6 @@ export const ui = {
   },
   footer: {
     blurb: 'Free tools to understand the numbers behind your business.',
-    status: 'Project in development',
     calculators: 'Calculators',
     explore: 'Explore',
     allTools: 'All calculators',
@@ -37,9 +35,6 @@ export const ui = {
     market: 'Built for small businesses worldwide',
   },
   legal: {
-    draftTitle: 'Draft pending review.',
-    draftNotice: 'This text was prepared from the details provided by the site owner and is not yet a final legal document: some checks are still pending. Do not treat it as final legal text until this notice is removed.',
-    devNote: 'Development note: the site is a private, non-indexable demo. These pages will be published as final once the pending checks are completed.',
     emailPending: '(proposed address, pending verification: not yet an available contact channel)',
     contactPending: 'The contact email is not yet operational; it will be published here once verified.',
     contactOperative: 'You can write to us at the email address shown.',
@@ -50,7 +45,7 @@ export const ui = {
     contact: {
       footerLabel: 'Contact',
       metaTitle: 'Contact | CalculaNegocio',
-      metaDescription: 'Details of the CalculaNegocio site owner and the status of the contact email, pending verification.',
+      metaDescription: 'Details of the CalculaNegocio site owner and how to get in touch by email.',
       kicker: 'INFORMATION',
       title: 'Contact',
       lead: 'Who is behind the site and how to get in touch.',
@@ -129,7 +124,7 @@ export const ui = {
     ],
     catalogKicker: 'CATALOGUE',
     catalogTitle: 'A catalogue of {total} calculators for your business',
-    catalogLead: '{available} available now and {planned} in development. Search by name or filter by topic and status.',
+    catalogLead: '{available} calculators available. Search by name or filter by topic.',
     catalogAll: 'See the full catalogue',
     contrastKicker: 'AVOID THE TRAP',
     contrastTitle: 'Margin and markup are not the same thing',
@@ -172,7 +167,6 @@ export const ui = {
       'Read the assumptions of each tool.',
       'For tax obligations, check official sources or ask your adviser.',
     ],
-    devNote: 'Development note: legal pages and the review of tax rules will be completed before launch.',
     faqKicker: 'FREQUENTLY ASKED QUESTIONS',
     faqTitle: 'What people ask most',
     faq: [
@@ -185,9 +179,16 @@ export const ui = {
     ctaText: 'Have the cost of your product or service at hand and calculate in under a minute.',
     ctaButton: 'Go to the calculator',
   },
+  trust: {
+    updated: 'Content updated',
+    tests: 'Formulas checked with automated tests',
+    method: 'How we calculate',
+    publisher: 'Published by',
+    contact: 'Contact',
+  },
   toolsHub: {
     metaTitle: 'Free calculators for freelancers | CalculaNegocio',
-    metaDescription: 'The CalculaNegocio catalogue: available calculators (profit margin, markup, discounts, selling price, profitability, break-even, ROI, tax base) and those in development.',
+    metaDescription: 'The CalculaNegocio catalogue: profit margin, markup, discounts, selling price, profitability, break-even, ROI and tax base.',
     kicker: 'CALCULATOR CATALOGUE',
     title: 'Calculators for freelancers and small businesses',
     lead: 'Tools to work out margins, prices, discounts, break-even, ROI and the tax on your invoices. Each one explains its formula and includes worked examples.',
@@ -214,7 +215,6 @@ export const ui = {
     kicker: 'TRANSPARENCY',
     title: 'Methodology and scope',
     lead: 'What the tools calculate, with which criteria and how far they go.',
-    devNote: 'Development note: this page describes how things work today and will be expanded before launch.',
     calculators: 'Calculators',
   },
   tool: {
@@ -229,7 +229,6 @@ export const ui = {
     noscript: 'Turn on JavaScript to recalculate as you change the figures. The result for the example is shown.',
     currencyLabel: 'Currency',
     currencyNone: 'No currency',
-    devNote: 'Development note: explanatory content is under review. Tax information needs validation before launch.',
     genericTax: 'This version applies the tax percentage you type. It does not know the tax rules of any country: check the rate and how it is calculated with official sources or your adviser.',
     fiscalPending: 'The tax side of this calculator is pending review by a professional. Until then, treat it as indicative.',
     formulasKicker: 'KEY FORMULAS',
