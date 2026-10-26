@@ -1,0 +1,10 @@
+# Cloudflare Pages: seguridad básica sin alterar los scripts de Astro.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+# Los ficheros de Astro tienen nombres con hash; se pueden cachear indefinidamente.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -273,7 +273,10 @@ const FORMULAS = {
     } else {
       const byRate = new Map();
       for (let i = 1; i <= 3; i++) {
-        if (n['qty' + i] <= 0) stop('quantities-positive');
+        const qty = n['qty' + i];
+        // La primera línea es obligatoria; las siguientes admiten cantidad vacía o cero.
+        if (i > 1 && (qty === null || qty === 0)) continue;
+        if (qty == null || qty <= 0) stop('quantities-positive');
         const b = toMinor((n['qty' + i] * n['unit' + i] * (100 - (n['disc' + i] || 0))) / 100, exp);
         const rate = n['vat' + i];
         byRate.set(rate, (byRate.get(rate) || 0) + b);

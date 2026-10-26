@@ -45,13 +45,17 @@ let diffs = 0, firstDiff = '';
 for (const c of golden.cases) {
   const now = calcEs.compute(c.tool, c.mode, c.raw);
   const old = c.out;
-  const same =
+  // Cambio deliberado Fase 7B: una segunda línea con cantidad 0 se omite, no invalida toda la factura.
+  const allowedIvaZeroLine = c.tool === 'iva' && c.mode === 2 && !old.ok &&
+    (['0', ''].includes(c.raw.qty2) || ['0', ''].includes(c.raw.qty3)) && now.ok === true &&
+    ['Las cantidades deben ser positivas.', 'Introduce un número válido en todos los campos.'].includes(old.error);
+  const same = allowedIvaZeroLine || (
     now.ok === old.ok &&
     (old.ok
       ? ['label', 'main', 'note', 'assumption'].every((k) => nb(now[k]) === nb(old[k])) &&
         now.lines.length === old.lines.length &&
         sameLines(now.lines, old.lines.map(([k, v]) => [upgradeOld(k), v]), c.tool === 'iva')
-      : now.error === old.error);
+      : now.error === old.error));
   if (!same) { diffs++; firstDiff ||= JSON.stringify({ case: c.tool + '/' + c.mode, raw: c.raw, now, old }); }
 }
 check(`regresión v0.5: ${golden.cases.length} casos idénticos`, diffs ? `${diffs} difieren: ${firstDiff}` : 'ok', 'ok');
