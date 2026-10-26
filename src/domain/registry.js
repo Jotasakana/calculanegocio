@@ -121,7 +121,7 @@ export const TOOL_REGISTRY = {
     modes: [
       [f('base', 'money', 1250), f('vat', 'pct', 21)],
       [f('total', 'money', 605), f('vat', 'pct', 21)],
-      [f('qty1', 'qty', 3), f('unit1', 'money', 120), f('disc1', 'pct', 10), f('vat1', 'pct', 21), f('qty2', 'qty', 1), f('unit2', 'money', 450), f('vat2', 'pct', 21), f('qty3', 'qty', 12), f('unit3', 'money', 8.5), f('vat3', 'pct', 10)],
+      [f('qty1', 'qty', 3), f('unit1', 'money', 120), f('disc1', 'pct', 10), f('vat1', 'pct', 21), fo('qty2', 'qty', 1), f('unit2', 'money', 450), f('vat2', 'pct', 21), fo('qty3', 'qty', 12), f('unit3', 'money', 8.5), f('vat3', 'pct', 10)],
     ],
   },
 };
