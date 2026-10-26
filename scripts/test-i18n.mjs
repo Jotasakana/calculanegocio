@@ -47,7 +47,8 @@ for (const c of golden.cases) {
   const old = c.out;
   // Cambio deliberado Fase 7B: una segunda línea con cantidad 0 se omite, no invalida toda la factura.
   const allowedIvaZeroLine = c.tool === 'iva' && c.mode === 2 && !old.ok &&
-    c.raw.qty2 === '0' && now.ok === true && old.error === 'Las cantidades deben ser positivas.';
+    (['0', ''].includes(c.raw.qty2) || ['0', ''].includes(c.raw.qty3)) && now.ok === true &&
+    ['Las cantidades deben ser positivas.', 'Introduce un número válido en todos los campos.'].includes(old.error);
   const same = allowedIvaZeroLine || (
     now.ok === old.ok &&
     (old.ok
