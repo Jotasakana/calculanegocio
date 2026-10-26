@@ -201,12 +201,12 @@ for (const unit of ['0,01', '0,333', '1,005', '8,5', '19,99', '120', '1234,56'])
 check('varias líneas: descuadres', String(badLines), '0');
 check('varias líneas: primera cantidad cero', ml({ qty1: '0' }).error, 'Las cantidades deben ser positivas.');
 const oneLine = ml({ qty2: '', qty3: '' });
-check('varias líneas: solo una línea', oneLine.ok, true);
+check('varias líneas: solo una línea', oneLine.ok, 'true');
 check('varias líneas: total con una línea', oneLine.main, '392,04 €');
 const twoLines = ml({ qty3: '0' });
-check('varias líneas: dos líneas', twoLines.ok, true);
-check('varias líneas: dos líneas cuadran', toCents(line(twoLines, 'Base imponible')) + toCents(line(twoLines, 'IVA')), toCents(twoLines.main));
-check('varias líneas: cantidad negativa', ml({ qty2: '-1' }).error, 'No se admiten importes negativos.');
+check('varias líneas: dos líneas', twoLines.ok, 'true');
+check('varias líneas: dos líneas cuadran', String(toCents(line(twoLines, 'Base imponible')) + toCents(line(twoLines, 'IVA'))), String(toCents(twoLines.main)));
+check('varias líneas: cantidad negativa', ml({ qty2: '-1' }).error, 'Los importes y porcentajes no pueden ser negativos.');
 
 
 console.log(fails ? `\n${fails} de ${total} comprobaciones FALLAN` : `OK · ${total} comprobaciones de fórmulas superadas`);
