@@ -33,3 +33,17 @@ const { ui } = ctx;
     </div>
   </div>
 </footer>
+{CONSENT.enabled && <script is:inline>
+  // Revocación de consentimiento mediante la API oficial de Privacy & Messaging.
+  // El callback espera a que la CMP esté preparada; no crea un banner casero.
+  document.querySelectorAll('[data-cmp-open]').forEach((button) => {
+    button.addEventListener('click', () => {
+      window.googlefc = window.googlefc || {};
+      window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
+      window.googlefc.callbackQueue.push({
+        CONSENT_API_READY: () => window.googlefc.showRevocationMessage(),
+      });
+    });
+  });
+</script>}
+
