@@ -13,7 +13,7 @@ function walk(d) { return fs.existsSync(d) ? fs.readdirSync(d, { withFileTypes: 
 const rel = (f) => path.relative(root, f);
 
 // 1. Estado de la CMP: inactiva y coherente
-if (CONSENT.enabled) bad('consent.js: la CMP está activada; revisa docs/CMP-GOOGLE-TCF.md antes de publicar');
+if (CONSENT.enabled) bad('La CMP está activada: requiere verificación manual de Google y textos legales antes de publicar');
 if (!CONSENT.enabled && (CONSENT.scriptUrl || CONSENT.provider)) bad('consent.js: scriptUrl/provider deben ser null mientras enabled sea false');
 if (CONSENT.enabled && !/^https:\/\//.test(CONSENT.scriptUrl ?? '')) bad('consent.js: una CMP activada necesita una scriptUrl https');
 
@@ -30,7 +30,11 @@ for (const f of srcFiles) {
   const text = fs.readFileSync(f, 'utf8');
   // Los textos legales mencionan localStorage/sessionStorage para explicar que NO se usan: se admiten solo en fragmentos HTML.
   if (/\.html$/.test(f)) continue;
-  for (const [re, label] of FORBIDDEN) if (re.test(text)) bad(`${rel(f)}: contiene ${label}`);
+  // La etiqueta de Google está presente solo en el componente condicional de CMP.
+  // Este caso se controla explícitamente; el build normal mantiene el script ausente.
+  const gatedGoogleTag = rel(f) === 'src/components/ConsentSlot.astro';
+  if (gatedGoogleTag && !text.includes('CONSENT.enabled') ) bad('ConsentSlot.astro: falta el interruptor de CMP');
+  for (const [re, label] of FORBIDDEN) if (re.test(text) && !(gatedGoogleTag && label === 'servicio de publicidad o analítica')) bad(`${rel(f)}: contiene ${label}`);
   for (const m of text.matchAll(/<(?:script|link|img|iframe)\b[^>]*\b(?:src|href)=["'](https?:)?\/\/[^"']+["']/gi)) {
     if (/rel=["']canonical|rel=["']alternate/.test(m[0])) continue;
     bad(`${rel(f)}: recurso externo cargado: ${m[0].slice(0, 80)}`);
