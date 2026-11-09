@@ -1,7 +1,8 @@
 ---
-// Punto de integración de una futura CMP certificada por Google (ver src/data/consent.js y docs/CMP-GOOGLE-TCF.md).
-// Mientras CONSENT.enabled sea false (estado actual) no renderiza nada: no hay ningún script de terceros.
 import { CONSENT } from '../data/consent.js';
-const active = CONSENT.enabled && typeof CONSENT.scriptUrl === 'string' && /^https:\/\//.test(CONSENT.scriptUrl);
+// Solo cargar la etiqueta de AdSense cuando la CMP de Google ya esté publicada
+// y se hayan actualizado los textos legales. En el resto de situaciones:
+// metaetiqueta y ads.txt son suficientes para la verificación.
+const active = CONSENT.enabled && CONSENT.provider === 'google-adsense';
 ---
-{active && <script is:inline src={CONSENT.scriptUrl}></script>}
+{active && <script is:inline async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${CONSENT.publisherId}`} crossorigin="anonymous"></script>}
