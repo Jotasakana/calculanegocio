@@ -30,10 +30,13 @@ for (const f of srcFiles) {
   const text = fs.readFileSync(f, 'utf8');
   // Los textos legales mencionan localStorage/sessionStorage para explicar que NO se usan: se admiten solo en fragmentos HTML.
   if (/\.html$/.test(f)) continue;
-  for (const [re, label] of FORBIDDEN) if (re.test(text)) bad(`${rel(f)}: contiene ${label}`);
+  // El código de AdSense solo existe en el componente protegido por el interruptor CMP;
+  // el HTML compilado en el estado predeterminado debe seguir libre de publicidad.
+  const conditionalAds = rel(f) === 'src/components/ConsentSlot.astro' && text.includes('adsEnabled && cmpConfigured');
+  for (const [re, label] of FORBIDDEN) if (re.test(text) && !(conditionalAds && label === 'servicio de publicidad o analítica')) bad(`${rel(f)}: contiene ${label}`);
   for (const m of text.matchAll(/<(?:script|link|img|iframe)\b[^>]*\b(?:src|href)=["'](https?:)?\/\/[^"']+["']/gi)) {
     if (/rel=["']canonical|rel=["']alternate/.test(m[0])) continue;
-    bad(`${rel(f)}: recurso externo cargado: ${m[0].slice(0, 80)}`);
+    if (!(conditionalAds && m[0].includes('pagead2.googlesyndication.com'))) bad(`${rel(f)}: recurso externo cargado: ${m[0].slice(0, 80)}`);
   }
 }
 
