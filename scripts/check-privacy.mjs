@@ -1,6 +1,6 @@
 // Comprobación de privacidad y consentimiento (no requiere Astro para el código fuente; revisa también dist/ si existe).
-// Garantiza que el sitio NO carga cookies, almacenamiento local, scripts de terceros ni publicidad mientras no exista una CMP
-// certificada y activada (ver docs/CMP-GOOGLE-TCF.md y src/data/consent.js).
+// Permite únicamente la etiqueta AdSense oficial indicada abajo; bloquea otras integraciones de publicidad.
+// El tratamiento publicitario y las cookies exigen comprobación adicional con la CMP.
 import fs from 'node:fs';
 import path from 'node:path';
 import { CONSENT } from '../src/data/consent.js';
@@ -11,6 +11,11 @@ const problems = [];
 const bad = (m) => problems.push(m);
 function walk(d) { return fs.existsSync(d) ? fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)])) : []; }
 const rel = (f) => path.relative(root, f);
+const ADS_URL = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9242108088602528';
+const allowAdsenseScript = (filename, text) => {
+  if (filename !== 'src/layouts/BaseLayout.astro' && !filename.startsWith('dist/')) return false;
+  return text.includes(ADS_URL);
+};
 
 // 1. Estado de la CMP: inactiva y coherente
 if (CONSENT.enabled) bad('consent.js: la CMP está activada; revisa docs/CMP-GOOGLE-TCF.md antes de publicar');
@@ -32,11 +37,12 @@ for (const f of srcFiles) {
   if (/\.html$/.test(f)) continue;
   // El código de AdSense solo existe en el componente protegido por el interruptor CMP;
   // el HTML compilado en el estado predeterminado debe seguir libre de publicidad.
-  const conditionalAds = rel(f) === 'src/components/ConsentSlot.astro' && text.includes('adsEnabled && cmpConfigured');
-  for (const [re, label] of FORBIDDEN) if (re.test(text) && !(conditionalAds && label === 'servicio de publicidad o analítica')) bad(`${rel(f)}: contiene ${label}`);
+  const conditionalAds = rel(f) === 'src/components/ConsentSlot.astro';
+  const officialAds = allowAdsenseScript(rel(f), text);
+  for (const [re, label] of FORBIDDEN) if (re.test(text) && !((conditionalAds || officialAds) && label === 'servicio de publicidad o analítica')) bad(`${rel(f)}: contiene ${label}`);
   for (const m of text.matchAll(/<(?:script|link|img|iframe)\b[^>]*\b(?:src|href)=["'](https?:)?\/\/[^"']+["']/gi)) {
     if (/rel=["']canonical|rel=["']alternate/.test(m[0])) continue;
-    if (!(conditionalAds && m[0].includes('pagead2.googlesyndication.com'))) bad(`${rel(f)}: recurso externo cargado: ${m[0].slice(0, 80)}`);
+    if (!(officialAds && m[0].includes(ADS_URL))) bad(`${rel(f)}: recurso externo cargado: ${m[0].slice(0, 80)}`);
   }
 }
 
@@ -46,10 +52,10 @@ let htmlCount = 0;
 for (const f of walk(dist).filter((f) => /\.(html|js|css)$/.test(f))) {
   htmlCount += f.endsWith('.html') ? 1 : 0;
   const text = fs.readFileSync(f, 'utf8');
-  for (const [re, label] of FORBIDDEN.slice(0, 1).concat(FORBIDDEN.slice(3))) if (re.test(text)) bad(`${rel(f)}: contiene ${label}`);
+  for (const [re, label] of FORBIDDEN.slice(0, 1).concat(FORBIDDEN.slice(3))) if (re.test(text) && !(allowAdsenseScript(rel(f), text) && label === 'servicio de publicidad o analítica')) bad(`${rel(f)}: contiene ${label}`);
   if (/\.html$/.test(f)) for (const m of text.matchAll(/<(?:script|link|img|iframe)\b[^>]*\b(?:src|href)=["'](https?:)?\/\/[^"']+["']/gi)) {
     if (/rel=["'](canonical|alternate)/.test(m[0])) continue;
-    bad(`${rel(f)}: recurso externo cargado: ${m[0].slice(0, 80)}`);
+    if (!(allowAdsenseScript(rel(f), text) && m[0].includes(ADS_URL))) bad(`${rel(f)}: recurso externo cargado: ${m[0].slice(0, 80)}`);
   }
 }
 
