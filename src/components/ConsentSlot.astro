@@ -1,10 +1,8 @@
 ---
-// Etiqueta AdSense de la cuenta actual. Solo se carga tras verificar y configurar
-// consentimiento de esta cuenta en AdSense y activar la bandera de despliegue.
-// La verificación del sitio utiliza la metaetiqueta de BaseLayout y public/ads.txt.
+// El script oficial AdSense se carga UNA vez desde BaseLayout.astro.
+// Esta ranura queda reservada para una CMP certificada, si se configura.
+// No duplicar aquí la etiqueta adsbygoogle.js.
 import { CONSENT } from '../data/consent.js';
-const adsEnabled = import.meta.env.PUBLIC_ADSENSE_READY === 'true';
-const cmpConfigured = CONSENT.enabled && typeof CONSENT.scriptUrl === 'string' && /^https:\/\//.test(CONSENT.scriptUrl);
+const active = CONSENT.enabled && typeof CONSENT.scriptUrl === 'string' && /^https:\/\//.test(CONSENT.scriptUrl);
 ---
-{cmpConfigured && <script is:inline src={CONSENT.scriptUrl}></script>}
-{adsEnabled && cmpConfigured && <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3562913599767371" crossorigin="anonymous"></script>}
+{active && <script is:inline src={CONSENT.scriptUrl}></script>}
